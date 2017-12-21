@@ -8,7 +8,7 @@ package model;
 public class User implements Entity {
 	int ID;
 	String User;
-	Sring Name;
+	String Name;
 	String Last_Name;
 	String Type;
 	
@@ -30,26 +30,26 @@ public class User implements Entity {
 	
 	
 	
-	public void setID() {
+	public void setID(int ID) {
 		this.ID = ID;
 	}
-	public void setUser() {
+	public void setUser(String User) {
 		this.User = User;
 	}
-	public void setName() {
+	public void setName(String Name) {
 		this.Name = Name;
 	}
-	public void setLast_Name() {
+	public void setLast_Name(String Last_Name) {
 		this.Last_Name = Last_Name;
 	}
-	public void setType() {
+	public void setType(String Type) {
 		this.Type = Type;
 	}
 	
 	
 	public User() {	
 	}
-	public User(int ID, String User, Sring Name, String Last_Name, String Type) {
+	public User(int ID, String User, String Name, String Last_Name, String Type) {
 		this.ID = ID;
 		this.User = User;
 		this.Name = Name;

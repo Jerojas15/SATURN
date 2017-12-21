@@ -16,19 +16,19 @@ public class Session implements Entity {
 	public int getHours() {
 		return Hours;
 	}
-	public int getClassroom_Type() {
+	public String getClassroom_Type() {
 		return Classroom_Type;
 	}
 	
 	
 	
-	public void setGroup_ID() {
+	public void setGroup_ID(int Group_ID) {
 		this.Group_ID = Group_ID;
 	}
-	public void setHours() {
+	public void setHours(int Hours) {
 		this.Hours = Hours;
 	}
-	public void setClassroom_Type() {
+	public void setClassroom_Type(String Classroom_Type) {
 		this.Classroom_Type = Classroom_Type;
 	}
 	

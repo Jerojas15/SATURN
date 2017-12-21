@@ -14,44 +14,44 @@ public class Group implements Entity {
     int Number;
     
     public int getID() {
-		return ID;
-	}
+        return ID;
+    }
     public int getCapacity() {
-		return Capacity;
-	}
+        return Capacity;
+    }
     public String getCareer() {
-		return Career;
-	}
+        return Career;
+    }
     public int getTeacher() {
-		return Teacher;
-	}
+        return Teacher;
+    }
     public int getPeriod() {
-		return Period;
-	}
+        return Period;
+    }
     public int getNumber() {
-		return Number;
-	}
+        return Number;
+    }
     
     
     
-    public void setID() {
-		this.ID = ID;
-	}
-    public void setCapacity() {
-		this.Capacity = Capacity;
-	}
-    public void setCareer() {
-		this.Career = Career;
-	}
-    public void setTeacher() {
-		this.Teacher = Teacher;
-	}
-    public void setPeriod() {
-		this.Period = Period;
-	}
-    public void setNumber() {
-		this.Number = Number;
-	}
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+    public void setCapacity(int Capacity) {
+        this.Capacity = Capacity;
+    }
+    public void setCareer(String Career) {
+        this.Career = Career;
+    }
+    public void setTeacher(int Teacher) {
+        this.Teacher = Teacher;
+    }
+    public void setPeriod(int Period) {
+        this.Period = Period;
+    }
+    public void setNumber(int Number) {
+        this.Number = Number;
+    }
     
     public Group() {	
     }
