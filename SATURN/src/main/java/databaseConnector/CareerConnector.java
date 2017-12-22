@@ -16,7 +16,7 @@ import model.Career;
  * @author julio
  */
 public class CareerConnector {
-    public Boolean insertNewCareer(Connection conn, Career c) throws ClassNotFoundException{
+    public boolean insertNewCareer(Connection conn, Career c) throws ClassNotFoundException{
         boolean state = false;
         try{
         Class.forName("com.mysql.jdbc.Driver");
@@ -52,5 +52,52 @@ public class CareerConnector {
             e.printStackTrace();
         }
         return rs;
+    }
+    
+    public boolean updateCareer(Connection conn, Career c, String Career, String Plan) throws ClassNotFoundException{
+        boolean state =  false;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String sql = "UPDATE Career SET University = ?, CareerName = ?, Plan = ? WHERE CareerName = ? and Plan = ?";
+
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, c.getUniversity());
+            statement.setString(2, c.getCareer());
+            statement.setString(3, c.getPlan());
+            statement.setString(4, Career);
+            statement.setString(5, Plan);
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Career was updated!");
+                state = true;
+            }
+
+        } catch(SQLException ex) {
+           ex.printStackTrace();
+        }
+        return state;
+    }
+    
+    public boolean deleteCareer(Connection conn, Career c) throws ClassNotFoundException{
+        boolean state = false;
+            try{
+                Class.forName("com.mysql.jdbc.Driver");
+
+                String sql = "delete From Career WHERE CareerName = ? and Plan = ?";
+
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setString(1, c.getCareer());
+                statement.setString(2, c.getPlan());
+                
+                int rowsInserted = statement.executeUpdate();
+                if (rowsInserted > 0) {
+                    System.out.println("Career was deleted!");
+                    state = true;
+                }
+
+            } catch(SQLException ex) {
+               ex.printStackTrace();
+            }
+           return state;
     }
 }
