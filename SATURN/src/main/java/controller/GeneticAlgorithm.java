@@ -12,13 +12,16 @@ public class GeneticAlgorithm {
     ArrayList<Integer> capacity = new ArrayList<>();//Capacidad de cada aula
     ArrayList<Integer> groups = new ArrayList<>();//capacidad de los grupos a insertar
     ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> sessions = new ArrayList<>();//sesiones de grupos, con par(ID,(duracion, (idGrupo, Profesor)))
-    ArrayList<Pair<Integer,
-                Pair<Integer,
-                Pair<Integer,Integer>>>> professor = new ArrayList<>();//disponibilidad de profesores, (ID,(Dia,(inicio,salida)))
+    ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor = new ArrayList<>();//disponibilidad de profesores, (ID,(Dia,(inicio,salida)))
     
-    
-    
-    
+    public GeneticAlgorithm(ArrayList<Integer> capacity, ArrayList<Integer> groups, 
+                            ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> sessions, 
+                            ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor){
+        this.capacity = capacity;
+        this.groups = groups;
+        this.sessions = sessions;
+        this.professor = professor;
+    }
     
     public Individual getBestIndividual(ArrayList<Individual>generation){
         Individual best = generation.get(0);
@@ -112,4 +115,25 @@ public class GeneticAlgorithm {
         
         return newGeneration;
     }
+    
+    
+    public ArrayList<Individual> StartAlgorithm(int size, int need){
+        ArrayList<Individual> generation = new ArrayList<>();
+        ArrayList<Individual> newGeneration = new ArrayList<>(); 
+        ArrayList<Individual> result = new ArrayList<>(); 
+        for(int  i = 0;i<size;i++){//crea la primera poblacion
+            generation.add(new Individual(professor, capacity, groups, new ArrayList<>(sessions)));
+        }
+        System.out.println(generation.size());
+        for(int i = 0;i<2;i++){
+              newGeneration = cross(generation);
+              generation = newGeneration;
+        }
+        for(int i = 0;i<need;i++){
+            result.add(newGeneration.get(i));
+        }
+        return result;
+    }
+    
+    
 }
