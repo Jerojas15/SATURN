@@ -1,6 +1,8 @@
 package view.career;
 
+import controller.DatabaseController;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +29,9 @@ public class CareerServlet {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public static List<Career> getCareers() {
-		List<Career> l = new ArrayList<Career>();
+	public static List<Career> getCareers() throws SQLException, ClassNotFoundException {
+                DatabaseController d = new DatabaseController();
+		List<Career> l = d.getCareers("TEC");
 		return l;
 	}
 	

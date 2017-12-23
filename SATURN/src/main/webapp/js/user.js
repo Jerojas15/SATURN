@@ -21,7 +21,7 @@ function showUsers(){
      
     
     $.ajax({
-        //url: 'http://localhost:8080/BasesProyecto/rest/proyects/list',
+        //url: 'http://localhost:8080/SATURN/',
         dataType: 'json',
         type: 'GET',
         success: function( Users, textStatus, jQxhr ){
