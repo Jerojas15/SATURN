@@ -8,7 +8,7 @@ package model;
 public class Group implements Entity {
     int ID;
     int Capacity;
-    String Career;
+    int CourseId;
     int Teacher;
     int Period;
     int Number;
@@ -19,8 +19,8 @@ public class Group implements Entity {
     public int getCapacity() {
         return Capacity;
     }
-    public String getCareer() {
-        return Career;
+    public int getCourseId() {
+        return CourseId;
     }
     public int getTeacher() {
         return Teacher;
@@ -40,8 +40,8 @@ public class Group implements Entity {
     public void setCapacity(int Capacity) {
         this.Capacity = Capacity;
     }
-    public void setCareer(String Career) {
-        this.Career = Career;
+    public void setCourseId(int CourseId) {
+        this.CourseId = CourseId;
     }
     public void setTeacher(int Teacher) {
         this.Teacher = Teacher;
@@ -55,10 +55,10 @@ public class Group implements Entity {
     
     public Group() {	
     }
-    public Group(int ID, int Capacity, String Career, int Teacher, int Period, int Number) {
+    public Group(int ID, int Capacity, int CourseId, int Teacher, int Period, int Number) {
     	this.ID = ID;
     	this.Capacity = Capacity;
-    	this.Career = Career;
+    	this.CourseId = CourseId;
     	this.Teacher = Teacher;
     	this.Period = Period;
     	this.Number = Number;

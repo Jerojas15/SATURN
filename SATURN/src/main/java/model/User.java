@@ -10,7 +10,7 @@ public class User implements Entity {
 	String User;
 	String Name;
 	String Last_Name;
-	String Type;
+	int Type;
 	
 	public int getID() {
 		return ID;
@@ -24,7 +24,7 @@ public class User implements Entity {
 	public String getLast_Name() {
 		return Last_Name;
 	}
-	public String getType() {
+	public int getType() {
 		return Type;
 	}
 	
@@ -42,14 +42,14 @@ public class User implements Entity {
 	public void setLast_Name(String Last_Name) {
 		this.Last_Name = Last_Name;
 	}
-	public void setType(String Type) {
+	public void setType(int Type) {
 		this.Type = Type;
 	}
 	
 	
 	public User() {	
 	}
-	public User(int ID, String User, String Name, String Last_Name, String Type) {
+	public User(int ID, String User, String Name, String Last_Name, int Type) {
 		this.ID = ID;
 		this.User = User;
 		this.Name = Name;

@@ -8,7 +8,7 @@ package model;
 public class Course implements Entity {
     int Code;
     String Name;
-    String Semester;
+    int Semester;
     String Career;
     String Plan;
 
@@ -18,7 +18,7 @@ public class Course implements Entity {
     public String getName() {
         return Name;
     }
-    public String getSemester() {
+    public int getSemester() {
         return Semester;
     }
     public String getCareer() {
@@ -36,7 +36,7 @@ public class Course implements Entity {
     public void setName(String Name){
         this.Name = Name;
     }
-    public void setSemester(String Semester){
+    public void setSemester(int Semester){
         this.Semester = Semester;
     }
     public void setCareer(String Career){
@@ -49,7 +49,7 @@ public class Course implements Entity {
 
     public Course() {
     }
-    public Course(int Code, String Name, String Semester, String Career, String Plan) {
+    public Course(int Code, String Name, int Semester, String Career, String Plan) {
         this.Code = Code;
         this.Name = Name;
         this.Semester = Semester;
