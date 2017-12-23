@@ -53,12 +53,11 @@ public class UserConnector {
         return rs;
     }
     
-    public ResultSet getUserbyUserName(Connection conn, String UserName) throws ClassNotFoundException{
+    public ResultSet getUser(Connection conn) throws ClassNotFoundException{
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName FROM Users Where UserName = ?");
-            stmt.setString(1, UserName);
+            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName FROM Users");
             rs = stmt.executeQuery();
             
         } catch (SQLException e){

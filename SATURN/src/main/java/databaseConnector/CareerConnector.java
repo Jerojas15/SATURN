@@ -40,12 +40,11 @@ public class CareerConnector {
         return state;
     }
     
-    public ResultSet getCareerbyUniversity(Connection conn, String University) throws ClassNotFoundException{
+    public ResultSet getCareer(Connection conn) throws ClassNotFoundException{
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Career where University = ?");
-            stmt.setString(1, University);
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Career");
             rs = stmt.executeQuery();
             
         } catch (SQLException e){

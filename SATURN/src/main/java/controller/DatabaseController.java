@@ -37,10 +37,10 @@ public class DatabaseController {
         return status;
     }
     
-    public ArrayList<Career> getCareers(String University) throws ClassNotFoundException, SQLException{
+    public ArrayList<Career> getCareers() throws ClassNotFoundException, SQLException{
         CareerConnector connector = new CareerConnector();
         ArrayList<Career> list = new ArrayList<>();
-        ResultSet rs = connector.getCareerbyUniversity(conn, University);
+        ResultSet rs = connector.getCareer(conn);
         
         while(rs.next()){
             Career c = new Career();
@@ -59,10 +59,26 @@ public class DatabaseController {
         return status;
     }
     
+    
     public ArrayList<User> getUserbyType(int Type) throws SQLException, ClassNotFoundException{
         UserConnector connector = new UserConnector();
         ArrayList<User> list = new ArrayList<>();
         ResultSet rs = connector.getUserbyType(conn, Type);
+        
+        while(rs.next()){
+            User u = new User();
+            u.setLast_Name(rs.getString("LastName"));
+            u.setName(rs.getString("Name"));
+            u.setType(rs.getInt("UserType"));
+            list.add(u); 
+        }
+        return list;
+    }
+    
+    public ArrayList<User> getUser() throws SQLException, ClassNotFoundException{
+        UserConnector connector = new UserConnector();
+        ArrayList<User> list = new ArrayList<>();
+        ResultSet rs = connector.getUser(conn);
         
         while(rs.next()){
             User u = new User();
@@ -107,13 +123,13 @@ public class DatabaseController {
         c.setUniversity("TEC");
         Boolean status = d.updateCareer(c,"Carrera","asd");
 
-        ArrayList<Career> list = d.getCareers("TEC");
+        ArrayList<Career> list = d.getCareers();
         
         for(int i = 0;i<list.size();i++){
             System.out.println(list.get(i).getCareer());
         }
         Boolean status2 = d.deleteCareer(c);
-        ArrayList<Career> list2 = d.getCareers("TEC");
+        ArrayList<Career> list2 = d.getCareers();
         
         for(int i = 0;i<list2.size();i++){
             System.out.println(list2.get(i).getCareer());

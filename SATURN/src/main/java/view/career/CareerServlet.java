@@ -28,10 +28,11 @@ public class CareerServlet {
 	
 
 	@GET
+        @Path("/list")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<Career> getCareers() throws SQLException, ClassNotFoundException {
                 DatabaseController d = new DatabaseController();
-		List<Career> l = d.getCareers("TEC");
+		List<Career> l = d.getCareers();
 		return l;
 	}
 	

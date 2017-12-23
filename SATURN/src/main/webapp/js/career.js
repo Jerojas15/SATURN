@@ -23,7 +23,7 @@ function showCareers(){
      
     
     $.ajax({
-        url: 'http://localhost:8080/SATURN/careers',
+        url: 'http://localhost:8080/SATURN/careers/list',
         dataType: 'json',
         type: 'GET',
         success: function( Careers, textStatus, jQxhr ){

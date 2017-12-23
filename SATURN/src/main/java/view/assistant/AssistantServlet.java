@@ -1,6 +1,8 @@
 package view.assistant;
 
+import controller.DatabaseController;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +28,11 @@ public class AssistantServlet {
 	
 
 	@GET
+        @Path("/list")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static List<User> getAssistants() {
-		List<User> l = new ArrayList<User>();
+	public static List<User> getAssistants() throws SQLException, ClassNotFoundException {
+                DatabaseController d = new DatabaseController();
+		List<User> l = d.getUser();
 		return l;
 	}
 	

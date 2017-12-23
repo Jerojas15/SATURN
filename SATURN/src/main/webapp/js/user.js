@@ -21,7 +21,7 @@ function showUsers(){
      
     
     $.ajax({
-        //url: 'http://localhost:8080/SATURN/',
+        url: 'http://localhost:8080/SATURN/assistants/list',
         dataType: 'json',
         type: 'GET',
         success: function( Users, textStatus, jQxhr ){
