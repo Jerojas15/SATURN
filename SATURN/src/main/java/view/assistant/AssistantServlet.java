@@ -28,7 +28,6 @@ public class AssistantServlet {
 	
 
 	@GET
-        @Path("/list")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<User> getAssistants() throws SQLException, ClassNotFoundException {
                 DatabaseController d = new DatabaseController();
@@ -45,7 +44,6 @@ public class AssistantServlet {
 	}
 	
 	@POST
-	@Path("/create")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createAssistant(User usr) {
 		
@@ -55,7 +53,7 @@ public class AssistantServlet {
 	}
 	
 	@PUT
-	@Path("/update/{id}")
+	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateAssistant(@PathParam("id") String idStr) {
 		
@@ -65,7 +63,7 @@ public class AssistantServlet {
 	}
 
 	@DELETE
-    @Path("/delete/{id}")
+    @Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response deleteAssistant(@PathParam("id") String idStr) {
 		

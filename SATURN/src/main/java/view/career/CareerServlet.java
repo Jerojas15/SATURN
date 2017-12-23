@@ -28,7 +28,6 @@ public class CareerServlet {
 	
 
 	@GET
-        @Path("/list")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<Career> getCareers() throws SQLException, ClassNotFoundException {
                 DatabaseController d = new DatabaseController();
@@ -45,7 +44,6 @@ public class CareerServlet {
 	}
 	
 	@POST
-	@Path("/create")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createCareer(Career career) {
 		
@@ -55,7 +53,7 @@ public class CareerServlet {
 	}
 	
 	@PUT
-	@Path("/update/{id}")
+	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response deleteAssistant(@PathParam("id") String idStr) {
 		
@@ -65,7 +63,7 @@ public class CareerServlet {
 	}
 
 	@DELETE
-    @Path("/delete/{id}")
+    @Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response deleteCareer(@PathParam("id") String idStr) {
 		
