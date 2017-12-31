@@ -1,4 +1,4 @@
-package view.assistant;
+package view;
 
 import controller.DatabaseController;
 import java.io.IOException;
@@ -18,10 +18,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import model.User;
-
-/**
- * Servlet implementation class CareerServlet
- */
 
 @Path("/assistants")
 public class AssistantServlet {

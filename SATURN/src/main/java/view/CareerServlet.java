@@ -1,4 +1,4 @@
-package view.career;
+package view;
 
 import controller.DatabaseController;
 import java.io.IOException;
@@ -18,10 +18,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import model.Career;
-
-/**
- * Servlet implementation class CareerServlet
- */
 
 @Path("/careers")
 public class CareerServlet {
