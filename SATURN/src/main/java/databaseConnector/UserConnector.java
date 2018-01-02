@@ -22,10 +22,10 @@ public class UserConnector {
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, u.getType());
-        statement.setString(2, u.getUser());
+        statement.setString(2, u.getUserName());
         statement.setString(3, "123");
         statement.setString(4, u.getName());
-        statement.setString(5, u.getLast_Name());
+        statement.setString(5, u.getLastName());
 
         int rowsInserted = statement.executeUpdate();
         if (rowsInserted > 0) {
@@ -88,7 +88,7 @@ public class UserConnector {
 
             PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setString(1, u.getName());
-                statement.setString(2, u.getLast_Name());            
+                statement.setString(2, u.getLastName());            
                 statement.setInt(3, u.getID());
 
                 int rowsInserted = statement.executeUpdate();

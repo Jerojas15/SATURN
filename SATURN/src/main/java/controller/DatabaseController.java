@@ -67,7 +67,7 @@ public class DatabaseController {
         
         while(rs.next()){
             User u = new User();
-            u.setLast_Name(rs.getString("LastName"));
+            u.setLastName(rs.getString("LastName"));
             u.setName(rs.getString("Name"));
             u.setType(rs.getInt("UserType"));
             list.add(u); 
@@ -82,7 +82,7 @@ public class DatabaseController {
         
         while(rs.next()){
             User u = new User();
-            u.setLast_Name(rs.getString("LastName"));
+            u.setLastName(rs.getString("LastName"));
             u.setName(rs.getString("Name"));
             u.setType(rs.getInt("UserType"));
             list.add(u); 
