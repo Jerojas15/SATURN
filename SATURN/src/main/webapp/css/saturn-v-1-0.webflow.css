@@ -167,7 +167,6 @@
 .s_text1 {
   display: block;
   margin: 10px 5px;
-  padding-right: 0px;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -190,6 +189,8 @@
 .s_listitem1 {
   margin-top: 5px;
   margin-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-radius: 5px;
   background-color: #fff;
 }
@@ -202,8 +203,8 @@
 }
 
 .s_text2 {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  display: block;
+  width: auto;
   color: #000;
   font-size: 18px;
   font-weight: 600;
@@ -226,6 +227,8 @@
 }
 
 .s_column1 {
+  padding-right: 100px;
+  padding-left: 100px;
   border-right: 4px solid #002746;
   border-left: 4px solid #002746;
 }
@@ -243,4 +246,9 @@
   border-radius: 5px;
   color: hsla(0, 0%, 100%, .81);
   font-size: 14px;
+}
+
+.s_text3 {
+  color: #002746;
+  text-align: center;
 }
