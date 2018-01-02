@@ -14,6 +14,11 @@ import model.LogIn;
 
 @Path("/login")
 public class LogInServlet {
+	
+	private final String USR_TYPE_MANAGER = "manager";
+	private final String USR_TYPE_ASSISTANT = "assistant";
+	private final String USR_TYPE_COORDINATOR = "coordinator";
+	private final String USR_TYPE_TEACHER = "teacher";
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -22,12 +27,11 @@ public class LogInServlet {
 		JSONObject object = new JSONObject();
 		try {
 			object.put("status", "OK");
+			object.put("usrType", USR_TYPE_MANAGER);  //Se debe completar
+			object.put("helloMsg", "Bienvenido, Administrador"); //Se debe completar
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
 		return Response.status(200).entity(object.toString()).build();
 	}
 }
