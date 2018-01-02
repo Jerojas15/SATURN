@@ -6,34 +6,44 @@
 package model;
 
 public class Career implements Entity {
-    String University;
-    String Career;
-    String Plan;
+	
+	private int	id;
+	private String university;
+	private String career;
+	private String plan;
+	
+	public Career() {}
+	
+    public Career(int id, String university, String career, String plan) {
+    	this.id = id;
+        this.university = university;
+        this.career = career;
+        this.plan = plan;
+    }
     
+    public int getId() {
+    	return id;
+    }
     public String getUniversity() {
-	return University;
+    	return university;
     }
     public String getCareer() {
-        return Career;
+        return career;
     }
     public String getPlan() {
-        return Plan;
+        return plan;
     }
-    public void setUniversity(String University) {
-        this.University = University;
+    
+    public void setId(int id) {
+    	this.id = id;
     }
-    public void setCareer(String Career) {
-        this.Career = Career;
+    public void setUniversity(String university) {
+        this.university = university;
     }
-    public void setPlan(String Plan) {
-        this.Plan = Plan;
+    public void setCareer(String career) {
+        this.career = career;
     }
-
-    public Career() {
-    }
-    public Career(String University, String Career, String Plan) {
-        this.University = University;
-        this.Career = Career;
-        this.Plan = Plan;
+    public void setPlan(String plan) {
+        this.plan = plan;
     }
 }
