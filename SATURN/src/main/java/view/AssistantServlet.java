@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import model.Career;
 import model.User;
 
 @Path("/assistants")
@@ -26,8 +27,14 @@ public class AssistantServlet {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<User> getAssistants() throws SQLException, ClassNotFoundException {
-                DatabaseController d = new DatabaseController();
-		List<User> l = d.getUser();
+		//DatabaseController d = new DatabaseController();
+		//List<User> l = d.getUser();
+		ArrayList<User> l = new ArrayList<>();
+		l.add(new User(0, "jyock1997@gmail.com", "Jose Paulo", "Yock Fuentes", 0));
+		l.add(new User(1, "je@hotmail.com", "Julio Esteban", "Rojas", 0));
+		l.add(new User(2, "sjenkins@siua.ac.cr", "Scarlet", "Jenkins", 0));
+		l.add(new User(3, "jmiguelh@gmail.com", "Jose Miguel", "Hernandez", 0));
+		
 		return l;
 	}
 	
