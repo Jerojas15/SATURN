@@ -17,6 +17,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 import model.Career;
 import model.User;
 
@@ -50,9 +53,17 @@ public class AssistantServlet {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createAssistant(User usr) {
 		
-		String result = "Resultado.......";
+		System.out.println(usr.getUserName());
+		System.out.println(usr.getName());
+		System.out.println(usr.getLastName());
 		
-		return Response.status(200).entity(result).build();
+		JSONObject object = new JSONObject();
+		try {
+			object.put("status", "OK"); //object.put("status", "ALREADY_EXISTS");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
 	}
 	
 	@PUT

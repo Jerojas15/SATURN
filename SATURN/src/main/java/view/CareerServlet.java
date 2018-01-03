@@ -17,6 +17,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 import model.Career;
 
 @Path("/careers")
@@ -49,9 +52,17 @@ public class CareerServlet {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createCareer(Career career) {
 
-		String result = "Resultado.......";
+		System.out.println(career.getUniversity());
+		System.out.println(career.getCareer());
+		System.out.println(career.getPlan());
 
-		return Response.status(200).entity(result).build();
+		JSONObject object = new JSONObject();
+		try {
+			object.put("status", "OK"); //object.put("status", "ALREADY_EXISTS");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
 	}
 
 	@PUT
