@@ -55,8 +55,7 @@
 
 .s_button1 {
   display: inline-block;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px 5px;
   padding: 9px 15px;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
@@ -97,7 +96,7 @@
   margin-bottom: 200px;
 }
 
-.boldcentertext {
+.s_boldcentertext {
   color: #fff;
   text-align: center;
 }
@@ -248,7 +247,10 @@
   font-size: 14px;
 }
 
-.s_text3 {
-  color: #002746;
-  text-align: center;
+.addcareers {
+  margin: 50px 100px 200px;
+}
+
+.addassistants {
+  margin: 50px 100px 200px;
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com  -->
-<!--  Last Published: Tue Jan 02 2018 06:31:22 GMT+0000 (UTC)  -->
+<!--  Last Published: Tue Jan 02 2018 20:28:03 GMT+0000 (UTC)  -->
 <html data-wf-page="5a3dda643472ef0001454691" data-wf-site="5a3dda643472ef0001454690">
 <head>
   <meta charset="utf-8">
@@ -71,8 +71,8 @@
   <div id="LogIn" class="login" style="display: none;">
     <div>
       <div class="s_center w-form">
-        <form id="email-form" name="email-form" data-name="Email Form" class="s_form1"><label for="email-2" class="boldcentertext">Usuario:</label><input type="email" class="w-input" maxlength="256" name="email" data-name="email" placeholder="Email" id="TextBox_Email" required=""><label for="pass" class="boldcentertext">Contraseña:</label><input type="password" class="w-input" maxlength="256" name="pass" data-name="pass" placeholder="********" id="TextBox_Password" required="">
-          <div class="s_center"><a href="#" id="Btn_LogInSumbit" class="s_button1 w-button">Ingresar</a></div>
+        <form data-name="Email Form" name="email-form" class="s_form1"><label for="email-2" class="s_boldcentertext">Usuario:</label><input type="email" class="w-input" maxlength="256" name="email" data-name="email" placeholder="Email" id="TextBox_Email" required=""><label for="pass" class="s_boldcentertext">Contraseña:</label><input type="password" class="w-input" maxlength="256" name="pass" data-name="pass" placeholder="********" id="TextBox_Password" required="">
+          <div class="s_center"><a href="#" id="Btn_LogInSubmit" class="s_button1 w-button">Ingresar</a></div>
         </form>
         <div class="w-form-done">
           <div>Thank you! Your submission has been received!</div>
@@ -173,6 +173,36 @@
   <div class="courses"></div>
   <div class="availability"></div>
   <div class="afinity"></div>
+  <div id="AddCareers" class="addcareers" style="display: none;">
+    <div class="s_center">
+      <div class="s_form1 w-form">
+        <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Universidad:</label><input type="text" class="w-input" maxlength="5" placeholder="[TEC] [UCR] [UNA] [UNED]" id="TextBox_University" required=""><label class="s_boldcentertext">Nombre Carrera:</label><input type="text" required="" id="TextBox_CareerName" maxlength="60" class="w-input"><label class="s_boldcentertext">Plan:</label><input type="text" id="TextBox_Plan" required="" maxlength="5" class="w-input">
+          <div><a href="#" id="Btn_AddCareerSubmit" class="s_button1 w-button">Aceptar</a><a href="#" id="Btn_AddCareerCancel" class="s_button1 w-button">Cancelar</a></div>
+        </form>
+        <div class="w-form-done">
+          <div>Thank you! Your submission has been received!</div>
+        </div>
+        <div class="w-form-fail">
+          <div>Oops! Something went wrong while submitting the form.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="AddAssistants" class="addassistants" style="display: none;">
+    <div class="s_center">
+      <div class="s_form1 w-form">
+        <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Nombre Usuario:</label><input type="email" class="w-input" maxlength="256" placeholder="Correo Institucional" id="TextBox_UserName" required=""><label class="s_boldcentertext">Nombre:</label><input type="text" maxlength="256" id="TextBox_Name" required="" class="w-input"><label class="s_boldcentertext">Apellidos:</label><input type="text" id="TextBox_LastName" maxlength="256" class="w-input">
+          <div><a href="#" id="Btn_AddAssistantSubmit" class="s_button1 w-button">Aceptar</a><a href="#" id="Btn_AddAssistantCancel" class="s_button1 w-button">Cancelar</a></div>
+        </form>
+        <div class="w-form-done">
+          <div>Thank you! Your submission has been received!</div>
+        </div>
+        <div class="w-form-fail">
+          <div>Oops! Something went wrong while submitting the form.</div>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
   <script src="js/webflow.js" type="text/javascript"></script>
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
