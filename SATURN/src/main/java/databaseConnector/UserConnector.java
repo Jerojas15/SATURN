@@ -57,7 +57,7 @@ public class UserConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName FROM Users");
+            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName,UserName FROM Users");
             rs = stmt.executeQuery();
             
         } catch (SQLException e){
@@ -70,7 +70,7 @@ public class UserConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName FROM Users Where UserType = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT UserName,UserId,Name,UserType,LastName FROM Users Where UserType = ?");
             stmt.setInt(1, Type);
             rs = stmt.executeQuery();
             
