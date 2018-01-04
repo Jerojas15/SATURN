@@ -33,10 +33,11 @@ public class AssistantServlet {
 		//DatabaseController d = new DatabaseController();
 		//List<User> l = d.getUser();
 		ArrayList<User> l = new ArrayList<>();
-		l.add(new User(0, "jyock1997@gmail.com", "Jose Paulo", "Yock Fuentes", 0));
-		l.add(new User(1, "je@hotmail.com", "Julio Esteban", "Rojas", 0));
-		l.add(new User(2, "sjenkins@siua.ac.cr", "Scarlet", "Jenkins", 0));
-		l.add(new User(3, "jmiguelh@gmail.com", "Jose Miguel", "Hernandez", 0));
+                Career careerTemp = new Career(0, "TEC", "Ing. Computación", "410");
+		l.add(new User(0, "jyock1997@gmail.com", "Jose Paulo", "Yock Fuentes", 0, careerTemp));
+		l.add(new User(1, "je@hotmail.com", "Julio Esteban", "Rojas", 0, careerTemp));
+		l.add(new User(2, "sjenkins@siua.ac.cr", "Scarlet", "Jenkins", 0, careerTemp));
+		l.add(new User(3, "jmiguelh@gmail.com", "Jose Miguel", "Hernandez", 0, careerTemp));
 		
 		return l;
 	}
@@ -77,7 +78,7 @@ public class AssistantServlet {
 	}
 
 	@DELETE
-    @Path("/{id}")
+        @Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response deleteAssistant(@PathParam("id") String idStr) {
 		
