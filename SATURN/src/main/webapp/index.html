@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com  -->
-<!--  Last Published: Tue Jan 02 2018 20:28:03 GMT+0000 (UTC)  -->
+<!--  Last Published: Wed Jan 03 2018 22:00:26 GMT+0000 (UTC)  -->
 <html data-wf-page="5a3dda643472ef0001454691" data-wf-site="5a3dda643472ef0001454690">
 <head>
   <meta charset="utf-8">
@@ -169,14 +169,50 @@
   <div class="schedules"></div>
   <div class="coordinators"></div>
   <div class="groups"></div>
-  <div class="teachers"></div>
+  <div id="Teachers" class="teachers" style="display: none;">
+    <div class="s_center">
+      <ul class="s_unorderedlist1 w-list-unstyled">
+        <li class="s_listitem1">
+          <div class="w-row">
+            <div class="w-col w-col-6">
+              <div class="s_text2">Usuario</div>
+            </div>
+            <div class="s_column2 w-col w-col-6">
+              <div class="s_text2">Nombre</div>
+            </div>
+          </div>
+        </li>
+        <li class="s_listitem3"><a href="#" id="Btn_AddTeacher" class="s_button5 w-button"></a></li>
+        <li class="s_listitem2">
+          <div class="w-row">
+            <div class="s_center w-col w-col-6">
+              <div class="s_text1">jyock1997@gmail.com</div>
+            </div>
+            <div class="s_center w-col w-col-6">
+              <div class="s_text1">Jose Paulo Yock Fuentes</div>
+            </div>
+          </div>
+        </li>
+        <li class="s_listitem2">
+          <div class="w-row">
+            <div class="s_center w-col w-col-6">
+              <div class="s_text1">nombre@itcr.ac.cr</div>
+            </div>
+            <div class="s_center w-col w-col-6">
+              <div class="s_text1">Nombre y Apellido</div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
   <div class="courses"></div>
   <div class="availability"></div>
   <div class="afinity"></div>
   <div id="AddCareers" class="addcareers" style="display: none;">
     <div class="s_center">
       <div class="s_form1 w-form">
-        <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Universidad:</label><input type="text" class="w-input" maxlength="5" placeholder="[TEC] [UCR] [UNA] [UNED]" id="TextBox_University" required=""><label class="s_boldcentertext">Nombre Carrera:</label><input type="text" required="" id="TextBox_CareerName" maxlength="60" class="w-input"><label class="s_boldcentertext">Plan:</label><input type="text" id="TextBox_Plan" required="" maxlength="5" class="w-input">
+        <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Universidad:</label><input type="text" class="w-input" maxlength="5" placeholder="[TEC] [UCR] [UNA] [UNED]" id="TextBox_AddCareer_University" required=""><label class="s_boldcentertext">Nombre Carrera:</label><input type="text" required="" id="TextBox_AddCareer_CareerName" maxlength="60" class="w-input"><label class="s_boldcentertext">Plan:</label><input type="text" id="TextBox_AddCareer_Plan" required="" maxlength="5" class="w-input">
           <div><a href="#" id="Btn_AddCareerSubmit" class="s_button1 w-button">Aceptar</a><a href="#" id="Btn_AddCareerCancel" class="s_button1 w-button">Cancelar</a></div>
         </form>
         <div class="w-form-done">
@@ -188,11 +224,27 @@
       </div>
     </div>
   </div>
-  <div id="AddAssistants" class="addassistants" style="display: none;">
+  <div id="AddUser" class="adduser" style="display: none;">
     <div class="s_center">
       <div class="s_form1 w-form">
-        <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Nombre Usuario:</label><input type="email" class="w-input" maxlength="256" placeholder="Correo Institucional" id="TextBox_UserName" required=""><label class="s_boldcentertext">Nombre:</label><input type="text" maxlength="256" id="TextBox_Name" required="" class="w-input"><label class="s_boldcentertext">Apellidos:</label><input type="text" id="TextBox_LastName" maxlength="256" class="w-input">
-          <div><a href="#" id="Btn_AddAssistantSubmit" class="s_button1 w-button">Aceptar</a><a href="#" id="Btn_AddAssistantCancel" class="s_button1 w-button">Cancelar</a></div>
+        <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Nombre Usuario:</label><input type="email" class="w-input" maxlength="256" placeholder="Correo Institucional" id="TextBox_AddUser_UserName" required="">
+          <div id="Form_CareerSelector" style="display: none;">
+              <label class="s_boldcentertext">Carrera:</label>
+              <select required="" id="Select_AddUser_Career" class="w-select">
+                  <option value="none">None</option>
+                  <option value="ic">Ingenieria en Computacion</option>
+              </select>
+          </div>
+          <label class="s_boldcentertext">Nombre:</label>
+          <input type="text" maxlength="256" id="TextBox_AddUser_Name" required="" class="w-input">
+          <label class="s_boldcentertext">Apellidos:</label>
+          <input type="text" id="TextBox_AddUser_LastName" maxlength="256" class="w-input">
+          <div>
+              <a href="#" id="Btn_AddAssistantSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>
+              <a href="#" id="Btn_AddTeacherSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>
+              <a href="#" id="Btn_AddAssistantCancel" class="s_button1 w-button" style="display: none;">Cancelar</a>
+              <a href="#" id="Btn_AddTeacherCancel" class="s_button1 w-button" style="display: none;">Cancelar</a>
+          </div>
         </form>
         <div class="w-form-done">
           <div>Thank you! Your submission has been received!</div>

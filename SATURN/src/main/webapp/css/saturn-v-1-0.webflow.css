@@ -96,6 +96,10 @@
   margin-bottom: 200px;
 }
 
+.teachers {
+  margin: 50px 100px 200px;
+}
+
 .s_boldcentertext {
   color: #fff;
   text-align: center;
@@ -212,10 +216,10 @@
 .s_button5 {
   margin-right: 50px;
   padding: 15px;
-  border: 1px solid #000;
-  border-radius: 50px;
+  border: 2px solid #e7e7e7;
+  border-radius: 100px;
   background-color: transparent;
-  background-image: url('../images/cruz.png');
+  background-image: url('../images/plus.png');
   background-position: 0px 0px;
   background-size: contain;
   text-align: center;
@@ -251,6 +255,14 @@
   margin: 50px 100px 200px;
 }
 
-.addassistants {
+.adduser {
   margin: 50px 100px 200px;
+}
+
+.addteachers {
+  margin: 50px 100px 200px;
+}
+
+.div-block {
+  display: block;
 }

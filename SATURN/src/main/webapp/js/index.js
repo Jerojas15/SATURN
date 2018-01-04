@@ -1,11 +1,12 @@
 var URL_LOGIN = "/SATURN/rest/login";
 var URL_CAREERS = "/SATURN/rest/careers";
 var URL_ASSISTANTS = "/SATURN/rest/assistants";
+var URL_TEACHERS = "/SATURN/rest/teachers";
 
-var USR_TYPE_MANAGER = "manager";
-var USR_TYPE_ASSISTANT = "assistant";
-var USR_TYPE_COORDINATOR = "coordinator";
-var USR_TYPE_TEACHER = "teacher";
+var USR_TYPE_MANAGER = 0;
+var USR_TYPE_ASSISTANT = 1;
+var USR_TYPE_COORDINATOR = 2;
+var USR_TYPE_TEACHER = 3;
 
 var CAREER_LIST_TEMPLATE1 = "<li id=\"";
 var CAREER_LIST_TEMPLATE2 = "\" class=\"s_listitem2\"><div class=\"w-row\"><div class=\"s_center w-col w-col-3\"><div class=\"s_text1\">";
@@ -13,10 +14,10 @@ var CAREER_LIST_TEMPLATE3 = "</div></div><div class=\"s_center w-col w-col-6\"><
 var CAREER_LIST_TEMPLATE4 = "</div></div><div class=\"s_center w-col w-col-3\"><div class=\"s_text1\">";
 var CAREER_LIST_TEMPLATE5 = "</div></div></div></li>";
 
-var ASSISTANT_LIST_TEMPLATE1 = "<li id=\"";
-var ASSISTANT_LIST_TEMPLATE2 = "\"class=\"s_listitem2\"><div class=\"w-row\"><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">";
-var ASSISTANT_LIST_TEMPLATE3 = "</div></div><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">";
-var ASSISTANT_LIST_TEMPLATE4 = "</div></div></div></li>";
+var USER_LIST_TEMPLATE1 = "<li id=\"";
+var USER_LIST_TEMPLATE2 = "\"class=\"s_listitem2\"><div class=\"w-row\"><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">";
+var USER_LIST_TEMPLATE3 = "</div></div><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">";
+var USER_LIST_TEMPLATE4 = "</div></div></div></li>";
 
 var usrType;
 
@@ -51,7 +52,17 @@ function fShowAddCareer() {
 
 function fShowAddAssistant() {
 	$("#Assistants").hide();
-	$("#AddAssistants").show();
+	$("#AddUser").show();
+	$("#Form_CareerSelector").show();
+	$("#Btn_AddAssistantSubmit").show();
+	$("#Btn_AddAssistantCancel").show();
+}
+
+function fShowAddTeacher() {
+	$("#Teachers").hide();
+	$("#AddUser").show();
+	$("#Btn_AddTeacherSubmit").show();
+	$("#Btn_AddTeacherCancel").show();
 }
 
 /*
@@ -110,9 +121,9 @@ function fLogIn() {
 }
 
 function fAddCareer() {
-	var university = $("#TextBox_University").val();
-	var career = $("#TextBox_CareerName").val();
-	var plan = $("#TextBox_Plan").val();
+	var university = $("#TextBox_AddCareer_University").val();
+	var career = $("#TextBox_AddCareer_CareerName").val();
+	var plan = $("#TextBox_AddCareer_Plan").val();
 
 	if (university && career && plan) {
 		$.ajax({
@@ -143,25 +154,25 @@ function fAddCareer() {
 }
 
 function fClearAddCareer() {
-	$("#TextBox_University").val("");
-	$("#TextBox_CareerName").val("");
-	$("#TextBox_Plan").val("");
+	$("#TextBox_AddCareer_University").val("");
+	$("#TextBox_AddCareer_CareerName").val("");
+	$("#TextBox_AddCareer_Plan").val("");
 	$("#AddCareers").hide();
 	fDisplayCareers();
 
 }
 
 function fAddAssistant() {
-	var userName = $("#TextBox_UserName").val();
-	var name = $("#TextBox_Name").val();
-	var lastName = $("#TextBox_LastName").val();
+	var userName = $("#TextBox_AddUser_UserName").val();
+	var name = $("#TextBox_AddUser_Name").val();
+	var lastName = $("#TextBox_AddUser_LastName").val();
 	if (userName && name && lastName) {
 		$.ajax({
 			method: 'POST',
 			url: URL_ASSISTANTS,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName}),
+			data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName, "type" : USR_TYPE_ASSISTANT}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
@@ -184,11 +195,57 @@ function fAddAssistant() {
 }
 
 function fClearAddAssistant() {
-	$("#TextBox_UserName").val("");
-	$("#TextBox_Name").val("");
-	$("#TextBox_LastName").val("");
-	$("#AddAssistants").hide();
+	$("#TextBox_AddUser_UserName").val("");
+	$("#TextBox_AddUser_Name").val("");
+	$("#TextBox_AddUser_LastName").val("");
+	$("#Form_CareerSelector").hide();
+	$("#Btn_AddAssistantSubmit").hide();
+	$("#Btn_AddAssistantCancel").hide();
+	$("#AddUser").hide();
 	fDisplayAssistants();
+}
+
+function fAddTeacher() {
+	var userName = $("#TextBox_AddUser_UserName").val();
+	var name = $("#TextBox_AddUser_Name").val();
+	var lastName = $("#TextBox_AddUser_LastName").val();
+	if (userName && name && lastName) {
+		$.ajax({
+			method: 'POST',
+			url: URL_TEACHERS,
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName, "type" : USR_TYPE_TEACHER}),
+
+			success: function(result){
+				console.log("[Login] Result " + JSON.stringify(result));
+
+				if(result.status === "OK"){
+					fClearAddTeacher();
+				}
+				else if(result.status === "ALREADY_EXISTS"){
+					alert("Se febe mostrar mensaje de que ya existe el profesor");
+				}
+			},
+
+			error: function(request, status, error){
+				console.log("[Login] Error: " + error);
+			}
+		});
+	} else {
+		alert("Se febe mostrar mensaje de que se requieren datos");
+	}
+}
+
+function fClearAddTeacher() {
+	$("#TextBox_AddUser_UserName").val("");
+	$("#TextBox_AddUser_Name").val("");
+	$("#TextBox_AddUser_LastName").val("");
+	$("#Form_CareerSelector").hide();
+	$("#Btn_AddAssistantSubmit").hide();
+	$("#Btn_AddAssistantCancel").hide();
+	$("#AddUser").hide();
+	fDisplayTeachers();
 }
 
 function fDisplayCareers() {
@@ -234,10 +291,37 @@ function fDisplayAssistants() {
 		success: function(result){
 			//alert(JSON.stringify(result));
 			for (i in result) {
-				$("#Assistants ul").append(	ASSISTANT_LIST_TEMPLATE1 + result[i].id +
-					 						ASSISTANT_LIST_TEMPLATE2 + result[i].userName +
-											ASSISTANT_LIST_TEMPLATE3 + result[i].name + " " + result[i].lastName +
-											ASSISTANT_LIST_TEMPLATE4);
+				$("#Assistants ul").append(	USER_LIST_TEMPLATE1 + result[i].id +
+					 						USER_LIST_TEMPLATE2 + result[i].userName +
+											USER_LIST_TEMPLATE3 + result[i].name + " " + result[i].lastName +
+											USER_LIST_TEMPLATE4);
+			}
+		},
+		error: function(request, status, error){
+			console.log("[Login] Error: " + error);
+		}
+	});
+}
+
+function fDisplayTeachers() {
+	$("#AssistantMenu").hide();
+	$("#Teachers").show();
+	$("#Teachers li").each(function( index ) {
+		if(index !== 0 && index !==1){
+			$(this).remove();
+		}
+	});
+	$.ajax({
+		method: 'GET',
+		url: URL_TEACHERS,
+
+		success: function(result){
+			//alert(JSON.stringify(result));
+			for (i in result) {
+				$("#Teachers ul").append(	USER_LIST_TEMPLATE1 + result[i].id +
+					 						USER_LIST_TEMPLATE2 + result[i].userName +
+											USER_LIST_TEMPLATE3 + result[i].name + " " + result[i].lastName +
+											USER_LIST_TEMPLATE4);
 			}
 		},
 		error: function(request, status, error){
@@ -253,12 +337,19 @@ $(document).ready(function(){
 	$("#Btn_LogInSubmit").click(fLogIn);
 	$("#Btn_Careers").click(fDisplayCareers);
 	$("#Btn_Assistants").click(fDisplayAssistants);
+	//$("#Btn_Schedules").click();
 	$("#Btn_AddCareer").click(fShowAddCareer);
 	$("#Btn_AddCareerSubmit").click(fAddCareer);
 	$("#Btn_AddCareerCancel").click(fClearAddCareer);
 	$("#Btn_AddAssistant").click(fShowAddAssistant);
 	$("#Btn_AddAssistantSubmit").click(fAddAssistant);
 	$("#Btn_AddAssistantCancel").click(fClearAddAssistant);
+	//$("Btn_Coordinators").click();
+	//$("Btn_Groups1").click();
+	$("#Btn_Teachers1").click(fDisplayTeachers);
+	$("#Btn_AddTeacher").click(fShowAddTeacher);
+	$("#Btn_AddTeacherSubmit").click(fAddTeacher);
+	$("#Btn_AddTeacherCancel").click(fClearAddCareer);
 });
 
 /* eliminar elementos de una lista eceptuando los elementos 0 y 1
