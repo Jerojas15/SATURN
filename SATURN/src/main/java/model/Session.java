@@ -1,11 +1,6 @@
-/*
- * SATURN 2017
- * Autors: blah blah
- */
-
 package model;
 
-public class Session implements Entity {
+public class Session {
 	int Group_ID;
 	int Hours;
 	String Classroom_Type;

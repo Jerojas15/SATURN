@@ -1,11 +1,6 @@
-/*
- * SATURN 2017
- * Autors: blah blah
- */
-
 package model;
 
-public class Schedule implements Entity {
+public class Schedule {
     int Day;
     int Start_Time;
     int Finish_Time;

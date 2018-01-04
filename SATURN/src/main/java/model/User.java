@@ -1,11 +1,6 @@
-/*
- * SATURN 2017
- * Autors: blah blah
- */
-
 package model;
 
-public class User implements Entity {
+public class User {
 	
 	private int id;
 	private String userName;

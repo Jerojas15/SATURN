@@ -1,11 +1,6 @@
-/*
- * SATURN 2017
- * Autors: blah blah
- */
-
 package model;
 
-public class Classroom implements Entity {
+public class Classroom {
     int ID;
     int Capacity;
     String Type;
