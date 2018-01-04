@@ -21,13 +21,16 @@ import model.User;
  */
 public class DatabaseController {
     private Connection conn;
-    public DatabaseController() throws SQLException{
+    public DatabaseController() throws SQLException, ClassNotFoundException{
+    	Class.forName("com.mysql.jdbc.Driver");
         conn = makeConnection();
     }
     
     public Connection makeConnection() throws SQLException{
         //manera de acceso a la base de Julio
-        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin"); 
+        //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
+      //manera de acceso a la base de Yock
+        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "password");
         return conn;
     }
     
@@ -67,8 +70,9 @@ public class DatabaseController {
         
         while(rs.next()){
             User u = new User();
-            u.setLastName(rs.getString("LastName"));
+            u.setUserName(rs.getString("UserName"));
             u.setName(rs.getString("Name"));
+            u.setLastName(rs.getString("LastName"));
             u.setType(rs.getInt("UserType"));
             list.add(u); 
         }
@@ -82,8 +86,9 @@ public class DatabaseController {
         
         while(rs.next()){
             User u = new User();
-            u.setLastName(rs.getString("LastName"));
+            u.setUserName(rs.getString("UserName"));
             u.setName(rs.getString("Name"));
+            u.setLastName(rs.getString("LastName"));
             u.setType(rs.getInt("UserType"));
             list.add(u); 
         }
