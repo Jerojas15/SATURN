@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package databaseConnector;
 
 import model.User;
 import java.sql.*;
 
-/**
- *
- * @author julio
- */
 public class UserConnector {
     public Boolean insertNewUser(Connection conn, User u) throws ClassNotFoundException{
         boolean state = false;
