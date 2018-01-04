@@ -6,6 +6,8 @@
 package model;
 
 public class User implements Entity {
+    
+    public static enum TYPE {MANAGER, ASSISTANT, COORDINATOR, TEACHER}
 	
 	private int id;
 	private String userName;
