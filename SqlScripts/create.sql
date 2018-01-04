@@ -17,7 +17,6 @@ CREATE TABLE Users (
     Password    char(64)    NOT NULL,
     Name        char(255)   NOT NULL,
     LastName    char(255)   NOT NULL,
-    University  char(255)   NOT NULL,
     CareerName  char(255)   NOT NULL,
     Plan        char(255)   NOT NULL,
     PRIMARY KEY (UserId),
