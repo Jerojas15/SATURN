@@ -65,16 +65,6 @@ public class CareerServlet {
 		return Response.status(200).entity(object.toString()).build();
 	}
 
-	@PUT
-	@Path("/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteAssistant(@PathParam("id") String idStr) {
-
-		String result = "Resultado.......";
-
-		return Response.status(200).entity(result).build();
-	}
-
 	@DELETE
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
