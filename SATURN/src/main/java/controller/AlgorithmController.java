@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.util.Pair;
 
-/**
- *
- * @author julio
- */
 public class AlgorithmController {
     ArrayList<Integer> capacity = new ArrayList<>();//Capacidad de cada aula
     ArrayList<Integer> groups = new ArrayList<>();//capacidad de los grupos a insertar

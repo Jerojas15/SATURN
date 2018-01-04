@@ -1,13 +1,9 @@
-/*
- * SATURN 2017
- * Autors: blah blah
- */
-
 package model;
 
-public class User implements Entity {
+public class User {
     
     public static enum TYPE {MANAGER, ASSISTANT, COORDINATOR, TEACHER}
+
 	
 	private int id;
 	private String userName;
@@ -25,7 +21,7 @@ public class User implements Entity {
 		this.type = type;
 	}
 	
-	public int getID() {
+	public int getId() {
 		return id;
 	}
 	public String getUserName() {
@@ -43,7 +39,7 @@ public class User implements Entity {
 	
 	
 	
-	public void setID(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public void setUserName(String userName) {

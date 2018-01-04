@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import databaseConnector.CareerConnector;
@@ -15,10 +10,6 @@ import java.util.ArrayList;
 import model.Career;
 import model.User;
 
-/**
- *
- * @author julio
- */
 public class DatabaseController {
     private Connection conn;
     public DatabaseController() throws SQLException, ClassNotFoundException{

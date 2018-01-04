@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package databaseConnector;
 
 import java.sql.Connection;
@@ -11,10 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Course;
 
-/**
- *
- * @author julio
- */
 public class CourseConnector {
     public Boolean insertNewCourse(Connection conn, Course c) throws ClassNotFoundException{
         boolean state = false;

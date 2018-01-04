@@ -1,11 +1,6 @@
-/*
- * SATURN 2017
- * Autors: blah blah
- */
-
 package model;
 
-public class Availability implements Entity {
+public class Availability {
     int Teacher;
     int Start_Time;
     int Finish_Time;

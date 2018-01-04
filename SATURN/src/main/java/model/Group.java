@@ -1,11 +1,6 @@
-/*
- * SATURN 2017
- * Autors: blah blah
- */
-
 package model;
 
-public class Group implements Entity {
+public class Group {
     int ID;
     int Capacity;
     int CourseId;

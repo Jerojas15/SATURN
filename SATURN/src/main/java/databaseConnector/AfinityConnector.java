@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package databaseConnector;
 
 import java.sql.Connection;
@@ -11,10 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Afinity;
 
-/**
- *
- * @author julio
- */
 public class AfinityConnector {
     public Boolean insertNewAfinity(Connection conn, Afinity a) throws ClassNotFoundException{
         boolean state = false;
