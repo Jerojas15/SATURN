@@ -1,7 +1,5 @@
 package view;
 
-import controller.DatabaseController;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,41 +18,41 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import model.Career;
+import controller.DatabaseController;
 import model.User;
 
-@Path("/assistants")
-public class AssistantServlet {
+@Path("/teachers")
+public class TeacherServlet {
 	
-
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<User> getAssistants() throws SQLException, ClassNotFoundException {
 		DatabaseController d = new DatabaseController();
-		List<User> l = d.getUserbyType(User.TYPE.ASSISTANT.ordinal());
+		List<User> l = d.getUserbyType(User.TYPE.TEACHER.ordinal());
+		System.out.println(User.TYPE.TEACHER.ordinal());
 		/*
 		ArrayList<User> l = new ArrayList<>();
 		l.add(new User(0, "jyock1997@gmail.com", "Jose Paulo", "Yock Fuentes", 0));
 		l.add(new User(1, "je@hotmail.com", "Julio Esteban", "Rojas", 0));
 		l.add(new User(2, "sjenkins@siua.ac.cr", "Scarlet", "Jenkins", 0));
 		l.add(new User(3, "jmiguelh@gmail.com", "Jose Miguel", "Hernandez", 0));
-		*/
 		
+		*/
 		return l;
 	}
 	
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static User getAssistant(@PathParam("id") String idStr) {
+	public static User getTeacher(@PathParam("id") String idStr) {
 		User c =  new User();
 		return c;
 	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createAssistant(User usr) {
-
+	public Response createTeacher(User usr) {
+		
 		String status;
 		JSONObject object;		
 		DatabaseController d;
@@ -82,7 +80,7 @@ public class AssistantServlet {
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateAssistant(@PathParam("id") String idStr) {
+	public Response updateTeacher(@PathParam("id") String idStr) {
 		
 		String result = "Resultado.......";
 		
@@ -91,10 +89,11 @@ public class AssistantServlet {
 
 	@DELETE
     @Path("/{id}")
-	public Response deleteAssistant() {
+	public Response deleteTeacher() {
 		
 		String result = "Resultado.......";
 		
 		return Response.status(200).entity(result).build();
 	}
+
 }
