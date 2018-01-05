@@ -3,12 +3,22 @@ CREATE DATABASE `SaturnDB`;
 
 USE `SaturnDB`;
 
-CREATE TABLE Career (
+CREATE TABLE Plans (
+    PlanId       int         NOT NULL AUTO_INCREMENT,
+    PlanNumber   char(255)   NOT NULL,
+    PRIMARY KEY(PlanId)
+);
+
+CREATE TABLE Careers (
+    CareerId    int         NOT NULL AUTO_INCREMENT,
     University  char(255)   NOT NULL,
     CareerName  char(255)   NOT NULL,
-    Plan        char(255)   NOT NULL,
-    PRIMARY KEY(CareerName, Plan)
+    PlanId      int         NOT NULL,
+    PRIMARY KEY(CareerId),
+    FOREIGN KEY (PlanId)
+        REFERENCES Plans(PlanId)
 );
+
 
 CREATE TABLE Users (
     UserId      int         NOT NULL AUTO_INCREMENT,
@@ -17,23 +27,21 @@ CREATE TABLE Users (
     Password    char(64)    NOT NULL,
     Name        char(255)   NOT NULL,
     LastName    char(255)   NOT NULL,
-    CareerName  char(255)   NOT NULL,
-    Plan        char(255)   NOT NULL,
+    CareerId    int         NOT NULL,
     PRIMARY KEY (UserId),
-    FOREIGN KEY (CareerName, Plan)
-        REFERENCES Career(CareerName, Plan)
+    FOREIGN KEY (CareerId)
+        REFERENCES Careers(CareerId)
 );
 
-CREATE TABLE Course (
+CREATE TABLE Courses (
     CourseId    int         NOT NULL AUTO_INCREMENT,
     CourseCode  char(255)   NOT NULL,
     CourseName  char(255)   NOT NULL,
     Semester    int,
-    CareerName  char(255)   NOT NULL,
-    Plan        char(255)   NOT NULL,
+    CareerId    int         NOT NULL,
     PRIMARY KEY(CourseId),
-    FOREIGN KEY (CareerName, Plan)
-        REFERENCES Career(CareerName, Plan)
+    FOREIGN KEY (CareerId)
+        REFERENCES Careers(CareerId)
 );
 
 CREATE TABLE Groups (
@@ -47,30 +55,36 @@ CREATE TABLE Groups (
     FOREIGN KEY (ProfessorId)
         REFERENCES Users(UserId),
     FOREIGN KEY (CourseId)
-        REFERENCES Course(CourseId)
+        REFERENCES Courses(CourseId)
 );
 
-CREATE TABLE Availability (
+CREATE TABLE Availabilities (
     ProfessorId int         NOT NULL,
     StartHour   tinyint     NOT NULL,
     EndHour     tinyint     NOT NULL,
-    Day         tinyint     NOT NULL
+    Day         tinyint     NOT NULL,
+    FOREIGN KEY (ProfessorId)
+        REFERENCES Users(UserId)
 );
 
-CREATE TABLE Afinity (
+CREATE TABLE Afinities (
     ProfessorId int         NOT NULL,
     CourseId    int         NOT NULL,
-    Level       tinyint     NOT NULL
+    Level       tinyint     NOT NULL,
+    FOREIGN KEY (ProfessorId)
+        REFERENCES Users(UserId),
+    FOREIGN KEY (CourseId)
+        REFERENCES Courses(CourseId)
 );
 
-CREATE TABLE Classroom (
-    ClassroomId int         NOT NULL,
-    Capacity    int         NOT NULL,
+CREATE TABLE Classrooms (
+    ClassroomId   int       NOT NULL,
+    Capacity      int       NOT NULL,
     ClassroomType int       NOT NULL,
     PRIMARY KEY(ClassroomId)
 );
 
-CREATE TABLE Session (
+CREATE TABLE Sessions (
     GroupId     int         NOT NULL,
     Hour        int         NOT NULL,
     Type        char(255)   NOT NULL,
@@ -78,7 +92,7 @@ CREATE TABLE Session (
         REFERENCES Groups(GroupId)
 );
 
-CREATE TABLE Timetable (
+CREATE TABLE Timetables (
     Day         tinyint     NOT NULL,
     StartHour   tinyint     NOT NULL,
     EndHour     tinyint     NOT NULL,
@@ -87,5 +101,5 @@ CREATE TABLE Timetable (
     FOREIGN KEY (GroupId)
         REFERENCES Groups(GroupId),
     FOREIGN KEY (ClassroomId)
-        REFERENCES Classroom(ClassroomId)
+        REFERENCES Classrooms(ClassroomId)
 );
