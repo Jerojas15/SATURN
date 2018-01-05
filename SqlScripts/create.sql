@@ -5,7 +5,7 @@ USE `SaturnDB`;
 
 CREATE TABLE Plans (
     PlanId       int         NOT NULL AUTO_INCREMENT,
-    PlanNumber   char(255)   NOT NULL,
+    PlanName     char(255)   NOT NULL,
     PRIMARY KEY(PlanId)
 );
 
@@ -13,7 +13,7 @@ CREATE TABLE Careers (
     CareerId    int         NOT NULL AUTO_INCREMENT,
     University  char(255)   NOT NULL,
     CareerName  char(255)   NOT NULL,
-    PRIMARY KEY(CareerId),
+    PRIMARY KEY(CareerId)
 );
 
 CREATE TABLE CareersPlans (
