@@ -32,10 +32,10 @@ public class CoordinatorServlet {
 		//DatabaseController d = new DatabaseController();
 		//List<User> l = d.getUser();
 		ArrayList<User> l = new ArrayList<>();
-		l.add(new User(0, "jyock1997@gmail.com", "Jose Paulo", "Yock Fuentes", 0, "Ing. en Computación", "410"));
-		l.add(new User(1, "je@hotmail.com", "Julio Esteban", "Rojas", 0, "Ing. en Computación", "410"));
-		l.add(new User(2, "sjenkins@siua.ac.cr", "Scarlet", "Jenkins", 0, "Ing. en Computación", "410"));
-		l.add(new User(3, "jmiguelh@gmail.com", "Jose Miguel", "Hernandez", 0, "Ing. en Computación", "410"));
+		l.add(new User(0, "jyock1997@gmail.com", null, "Jose Paulo", "Yock Fuentes", 0, "Ing. en Computación"));
+		l.add(new User(1, "je@hotmail.com", null, "Julio Esteban", "Rojas", 0, "Ing. en Computación"));
+		l.add(new User(2, "sjenkins@siua.ac.cr", null, "Scarlet", "Jenkins", 0, "Ing. en Computación"));
+		l.add(new User(3, "jmiguelh@gmail.com", null, "Jose Miguel", "Hernandez", 0, "Ing. en Computación"));
 		
 		return l;
 	}

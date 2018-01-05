@@ -16,9 +16,10 @@ public class User {
 
 	public User() {}
 
-	public User(int id, String userName, String name, String lastName, int type, String careerName, String plan) {
+	public User(int id, String userName, String password, String name, String lastName, int type, String careerName) {
 		this.id = id;
 		this.userName = userName;
+		this.password = password;
 		this.name = name;
 		this.lastName = lastName;
 		this.type = type;
@@ -33,7 +34,7 @@ public class User {
 		return userName;
 	}
 	public String getPassword() {
-		return userName;
+		return password;
 	}
 	public String getName() {
 		return name;
@@ -59,7 +60,7 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public void serPassword(String password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 	public void setName(String name) {

@@ -16,19 +16,28 @@ var CAREER_LIST_TEMPLATE4 = "</div></div><div class=\"s_center w-col w-col-3\"><
 var CAREER_LIST_TEMPLATE5 = "</div></div></div></li>";
 */
 
-var CAREER_LIST_TEMPLATE1 = "<li class=\"s_listitem2\"><div class=\"w-row\"><div class=\"s_center w-col w-col-3\"><div class=\"s_text1\">"
-var CAREER_LIST_TEMPLATE2 = "</div></div><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">"
-var CAREER_LIST_TEMPLATE3 = "</div></div><div class=\"s_center w-col w-col-3\"><div class=\"s_flex1\"><div class=\"s_text1\">"
-var CAREER_LIST_TEMPLATE4 = "</div><div id=\"Btn_Edit_Delete\" class=\"s_flex2\" style=\"display: none;\"><a id=\"Btn_Edit_Career\" value=\""
-var CAREER_LIST_TEMPLATE5 = "\" href=\"#\" class=\"s_button6 w-button\"></a><a id=\"Btn_Delete_Career\" value=\""
-var CAREER_LIST_TEMPLATE6 = "\" href=\"#\" class=\"s_button7 w-button\"></a></div></div></div></div></li>"
+var CAREER_LIST_TEMPLATE1 = "<li class=\"s_listitem2\"><div class=\"w-row\"><div class=\"s_center w-col w-col-3\"><div class=\"s_text1\">";
+var CAREER_LIST_TEMPLATE2 = "</div></div><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">";
+var CAREER_LIST_TEMPLATE3 = "</div></div><div class=\"s_center w-col w-col-3\"><div class=\"s_flex1\"><div class=\"s_text1\">";
+var CAREER_LIST_TEMPLATE4 = "</div><div id=\"Btn_Edit_Delete\" class=\"s_flex2\" style=\"display: none;\"><a id=\"Btn_Edit_Career\" value=\"";
+var CAREER_LIST_TEMPLATE5 = "\" href=\"#\" class=\"s_button6 w-button\"></a><a id=\"Btn_Delete_Career\" value=\"";
+var CAREER_LIST_TEMPLATE6 = "\" href=\"#\" class=\"s_button7 w-button\"></a></div></div></div></div></li>";
 
+/*
 var USER_LIST_TEMPLATE1 = "<li id=\"";
 var USER_LIST_TEMPLATE2 = "\"class=\"s_listitem2\"><div class=\"w-row\"><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">";
 var USER_LIST_TEMPLATE3 = "</div></div><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">";
 var USER_LIST_TEMPLATE4 = "</div></div></div></li>";
+*/
+
+var USER_LIST_TEMPLATE1 = "<li class=\"s_listitem2\"><div class=\"w-row\"><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">";
+var USER_LIST_TEMPLATE2 = "</div></div><div class=\"s_center w-col w-col-6\"><div class=\"s_flex1\"><div class=\"s_text1\">";
+var USER_LIST_TEMPLATE3 = "</div><div id=\"Btn_Edit_Delete\" class=\"s_flex2\" style=\"display: none;\"><a id=\"Btn_Edit_User\" value=\"";
+var USER_LIST_TEMPLATE4 = "\" href=\"#\" class=\"s_button6 w-button\"></a><a id=\"Btn_Delete_User\" value=\"";
+var USER_LIST_TEMPLATE5 = "\" href=\"#\" class=\"s_button7 w-button\"></a></div></div></div></div></li>";
 
 var usrType;
+var lastEditDeleteBtn;
 
 /*
  * Función la cual debe volver al inicio de la pagina;
@@ -227,7 +236,7 @@ function fAddTeacher() {
 				url: URL_TEACHERS,
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
-				data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName, "type" : USR_TYPE_TEACHER}),
+				data: JSON.stringify({"userName" : userName, "password" : password, "name" : name, "lastName" : lastName, "type" : USR_TYPE_TEACHER}),
 
 				success: function(result){
 					console.log("[Login] Result " + JSON.stringify(result));
@@ -336,10 +345,11 @@ function fDisplayTeachers() {
 		success: function(result){
 			//alert(JSON.stringify(result));
 			for (i in result) {
-				$("#Teachers ul").append(	USER_LIST_TEMPLATE1 + result[i].id +
-					 						USER_LIST_TEMPLATE2 + result[i].userName +
-											USER_LIST_TEMPLATE3 + result[i].name + " " + result[i].lastName +
-											USER_LIST_TEMPLATE4);
+				$("#Teachers ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
+					 						USER_LIST_TEMPLATE2 + result[i].name + " " + result[i].lastName +
+											USER_LIST_TEMPLATE3 + result[i].id +
+											USER_LIST_TEMPLATE4 + result[i].id +
+											USER_LIST_TEMPLATE5);
 			}
 		},
 		error: function(request, status, error){
@@ -369,11 +379,15 @@ $(document).ready(function(){
 	$("#Btn_AddTeacherSubmit").click(fAddTeacher);
 	$("#Btn_AddTeacherCancel").click(fClearAddTeacher);
 });
-/* Agregar un handler de tipo click a elementos de una lista que aun no han sido agregados
-$(document).on('click','#list li',function(){
-    $(this).children("#Butons").show();
+/* Agregar un handler de tipo click a elementos de una lista que aun no han sido agregados */
+$(document).on('click','ul li',function(){
+	if (lastEditDeleteBtn) {
+		lastEditDeleteBtn.hide();
+	}
+    lastEditDeleteBtn = $(this).find("#Btn_Edit_Delete");
+	lastEditDeleteBtn.show();
 });
-*/
+
 /* Saber si un boton fue oprimido y optener valores del boton
 $(document).on('click','#list #Btn1',function(){
     alert($(this).attr("value"));
