@@ -10,15 +10,19 @@ public class User {
 	private String name;
 	private String lastName;
 	private int type;
+        private String careerName;
+        private String plan;
 	
 	public User() {}
 
-	public User(int id, String userName, String name, String lastName, int type) {
+	public User(int id, String userName, String name, String lastName, int type, String careerName, String plan) {
 		this.id = id;
 		this.userName = userName;
 		this.name = name;
 		this.lastName = lastName;
 		this.type = type;
+                this.careerName = careerName;
+                this.plan = plan;
 	}
 	
 	public int getId() {
@@ -37,7 +41,13 @@ public class User {
 		return type;
 	}
 	
-	
+        public String getCareerName() {
+		return careerName;
+	}
+        
+        public String getPlan() {
+		return plan;
+	}
 	
 	public void setId(int id) {
 		this.id = id;
@@ -53,5 +63,13 @@ public class User {
 	}
 	public void setType(int type) {
 		this.type = type;
+	}
+        
+        public void setCareerName(String careerName) {
+		this.careerName = careerName;
+	}
+        
+        public void setPlan(String plan) {
+		this.plan = plan;
 	}
 }

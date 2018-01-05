@@ -25,7 +25,7 @@ import model.User;
 
 @Path("/assistants")
 public class AssistantServlet {
-	
+
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -38,11 +38,11 @@ public class AssistantServlet {
 		l.add(new User(1, "je@hotmail.com", "Julio Esteban", "Rojas", 0));
 		l.add(new User(2, "sjenkins@siua.ac.cr", "Scarlet", "Jenkins", 0));
 		l.add(new User(3, "jmiguelh@gmail.com", "Jose Miguel", "Hernandez", 0));
-		*/
-		
+		 */
+
 		return l;
 	}
-	
+
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -50,7 +50,7 @@ public class AssistantServlet {
 		User c =  new User();
 		return c;
 	}
-	
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createAssistant(User usr) {
@@ -58,8 +58,7 @@ public class AssistantServlet {
 		String status;
 		JSONObject object;		
 		DatabaseController d;
-		
-		
+
 		try {
 			d = new DatabaseController();
 			if (d.insertNewUser(usr))
@@ -69,7 +68,7 @@ public class AssistantServlet {
 		} catch (ClassNotFoundException | SQLException e1) {
 			return Response.status(500).entity(e1.toString()).build();
 		}
-		
+
 		object = new JSONObject();
 		try {
 			object.put("status", status);
@@ -78,23 +77,24 @@ public class AssistantServlet {
 		}
 		return Response.status(200).entity(object.toString()).build();
 	}
-	
+
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateAssistant(@PathParam("id") String idStr) {
-		
+
 		String result = "Resultado.......";
-		
+
 		return Response.status(200).entity(result).build();
 	}
 
 	@DELETE
-    @Path("/{id}")
-	public Response deleteAssistant() {
-		
+	@Path("/{id}")
+	public Response deleteAssistant(@PathParam("id") String idStr) {
+
+
 		String result = "Resultado.......";
-		
+
 		return Response.status(200).entity(result).build();
 	}
 }
