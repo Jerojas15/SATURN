@@ -8,11 +8,20 @@ var USR_TYPE_ASSISTANT = 1;
 var USR_TYPE_COORDINATOR = 2;
 var USR_TYPE_TEACHER = 3;
 
+/*
 var CAREER_LIST_TEMPLATE1 = "<li id=\"";
 var CAREER_LIST_TEMPLATE2 = "\" class=\"s_listitem2\"><div class=\"w-row\"><div class=\"s_center w-col w-col-3\"><div class=\"s_text1\">";
 var CAREER_LIST_TEMPLATE3 = "</div></div><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">";
 var CAREER_LIST_TEMPLATE4 = "</div></div><div class=\"s_center w-col w-col-3\"><div class=\"s_text1\">";
 var CAREER_LIST_TEMPLATE5 = "</div></div></div></li>";
+*/
+
+var CAREER_LIST_TEMPLATE1 = "<li class=\"s_listitem2\"><div class=\"w-row\"><div class=\"s_center w-col w-col-3\"><div class=\"s_text1\">"
+var CAREER_LIST_TEMPLATE2 = "</div></div><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">"
+var CAREER_LIST_TEMPLATE3 = "</div></div><div class=\"s_center w-col w-col-3\"><div class=\"s_flex1\"><div class=\"s_text1\">"
+var CAREER_LIST_TEMPLATE4 = "</div><div id=\"Btn_Edit_Delete\" class=\"s_flex2\" style=\"display: none;\"><a id=\"Btn_Edit_Career\" value=\""
+var CAREER_LIST_TEMPLATE5 = "\" href=\"#\" class=\"s_button6 w-button\"></a><a id=\"Btn_Delete_Career\" value=\""
+var CAREER_LIST_TEMPLATE6 = "\" href=\"#\" class=\"s_button7 w-button\"></a></div></div></div></div></li>"
 
 var USER_LIST_TEMPLATE1 = "<li id=\"";
 var USER_LIST_TEMPLATE2 = "\"class=\"s_listitem2\"><div class=\"w-row\"><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">";
@@ -207,31 +216,37 @@ function fClearAddAssistant() {
 
 function fAddTeacher() {
 	var userName = $("#TextBox_AddUser_UserName").val();
+	var password = $("#TextBox_AddUser_Password").val();
+	var confirmPassword = $("#TextBox_AddUser_Confirm_Password").val();
 	var name = $("#TextBox_AddUser_Name").val();
 	var lastName = $("#TextBox_AddUser_LastName").val();
-	if (userName && name && lastName) {
-		$.ajax({
-			method: 'POST',
-			url: URL_TEACHERS,
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName, "type" : USR_TYPE_TEACHER}),
+	if (userName && name && lastName && password && confirmPassword) {
+		if (password === confirmPassword) {
+			$.ajax({
+				method: 'POST',
+				url: URL_TEACHERS,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName, "type" : USR_TYPE_TEACHER}),
 
-			success: function(result){
-				console.log("[Login] Result " + JSON.stringify(result));
+				success: function(result){
+					console.log("[Login] Result " + JSON.stringify(result));
 
-				if(result.status === "OK"){
-					fClearAddTeacher();
+					if(result.status === "OK"){
+						fClearAddTeacher();
+					}
+					else if(result.status === "ALREADY_EXISTS"){
+						alert("Se febe mostrar mensaje de que ya existe el profesor");
+					}
+				},
+
+				error: function(request, status, error){
+					console.log("[Login] Error: " + error);
 				}
-				else if(result.status === "ALREADY_EXISTS"){
-					alert("Se febe mostrar mensaje de que ya existe el profesor");
-				}
-			},
-
-			error: function(request, status, error){
-				console.log("[Login] Error: " + error);
-			}
-		});
+			});
+		} else {
+			alert("Contraseña no igual");
+		}
 	} else {
 		alert("Se febe mostrar mensaje de que se requieren datos");
 	}
@@ -241,6 +256,8 @@ function fClearAddTeacher() {
 	$("#TextBox_AddUser_UserName").val("");
 	$("#TextBox_AddUser_Name").val("");
 	$("#TextBox_AddUser_LastName").val("");
+	$("#TextBox_AddUser_Password").val("");
+	$("#TextBox_AddUser_Confirm_Password").val("");
 	$("#Form_CareerSelector").hide();
 	$("#Btn_AddAssistantSubmit").hide();
 	$("#Btn_AddAssistantCancel").hide();
@@ -263,11 +280,12 @@ function fDisplayCareers() {
 		success: function(result){
 			//alert(JSON.stringify(result));
 			for (i in result) {
-				$("#Careers ul").append(CAREER_LIST_TEMPLATE1 + result[i].id +
-					 					CAREER_LIST_TEMPLATE2 + result[i].university +
-										CAREER_LIST_TEMPLATE3 + result[i].career +
-										CAREER_LIST_TEMPLATE4 + result[i].plan +
-										CAREER_LIST_TEMPLATE5);
+				$("#Careers ul").append(CAREER_LIST_TEMPLATE1 + result[i].university +
+					 					CAREER_LIST_TEMPLATE2 + result[i].career +
+										CAREER_LIST_TEMPLATE3 + result[i].plan +
+										CAREER_LIST_TEMPLATE4 + result[i].id +
+										CAREER_LIST_TEMPLATE5 + result[i].id +
+										CAREER_LIST_TEMPLATE6);
 			}
 		},
 		error: function(request, status, error){
@@ -349,9 +367,18 @@ $(document).ready(function(){
 	$("#Btn_Teachers1").click(fDisplayTeachers);
 	$("#Btn_AddTeacher").click(fShowAddTeacher);
 	$("#Btn_AddTeacherSubmit").click(fAddTeacher);
-	$("#Btn_AddTeacherCancel").click(fClearAddCareer);
+	$("#Btn_AddTeacherCancel").click(fClearAddTeacher);
 });
-
+/* Agregar un handler de tipo click a elementos de una lista que aun no han sido agregados
+$(document).on('click','#list li',function(){
+    $(this).children("#Butons").show();
+});
+*/
+/* Saber si un boton fue oprimido y optener valores del boton
+$(document).on('click','#list #Btn1',function(){
+    alert($(this).attr("value"));
+});
+*/
 /* eliminar elementos de una lista eceptuando los elementos 0 y 1
 $("#myList li").each(function( index ) {
 	alert( index + ": " + $( this ).text() );
