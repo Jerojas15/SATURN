@@ -1,7 +1,5 @@
 package model;
 
-import model.Career;
-
 public class User {
 	
 	private int id;
@@ -9,18 +7,19 @@ public class User {
 	private String name;
 	private String lastName;
 	private int type;
-        private String university;
-        private Career career;
+        private String careerName;
+        private String plan;
 	
 	public User() {}
 
-	public User(int id, String userName, String name, String lastName, int type, Career career) {
+	public User(int id, String userName, String name, String lastName, int type, String careerName, String plan) {
 		this.id = id;
 		this.userName = userName;
 		this.name = name;
 		this.lastName = lastName;
 		this.type = type;
-                this.career = career;
+                this.careerName = careerName;
+                this.plan = plan;
 	}
 	
 	public int getID() {
@@ -39,8 +38,12 @@ public class User {
 		return type;
 	}
 	
-        public Career getCareer() {
-		return career;
+        public String getCareerName() {
+		return careerName;
+	}
+        
+        public String getPlan() {
+		return plan;
 	}
 	
 	public void setID(int id) {
@@ -59,7 +62,11 @@ public class User {
 		this.type = type;
 	}
         
-        public void setCareer(Career career) {
-		this.career = career;
+        public void setCareerName(String careerName) {
+		this.careerName = careerName;
+	}
+        
+        public void setPlan(String plan) {
+		this.plan = plan;
 	}
 }
