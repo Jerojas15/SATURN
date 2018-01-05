@@ -14,7 +14,7 @@ public class UserConnector {
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, u.getType());
         statement.setString(2, u.getUserName());
-        statement.setString(3, "123");
+        statement.setString(3, u.getPassword());
         statement.setString(4, u.getName());
         statement.setString(5, u.getLastName());
 

@@ -1,18 +1,19 @@
 package model;
 
 public class User {
-    
-    public static enum TYPE {MANAGER, ASSISTANT, COORDINATOR, TEACHER}
 
-	
+	public static enum TYPE {MANAGER, ASSISTANT, COORDINATOR, TEACHER}
+
+
 	private int id;
 	private String userName;
+	private String password;
 	private String name;
 	private String lastName;
 	private int type;
-        private String careerName;
-        private String plan;
-	
+	private String careerName;
+	private String plan;
+
 	public User() {}
 
 	public User(int id, String userName, String name, String lastName, int type, String careerName, String plan) {
@@ -21,14 +22,17 @@ public class User {
 		this.name = name;
 		this.lastName = lastName;
 		this.type = type;
-                this.careerName = careerName;
-                this.plan = plan;
+		this.careerName = careerName;
+		this.plan = plan;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
 	public String getUserName() {
+		return userName;
+	}
+	public String getPassword() {
 		return userName;
 	}
 	public String getName() {
@@ -40,20 +44,23 @@ public class User {
 	public int getType() {
 		return type;
 	}
-	
-        public String getCareerName() {
+
+	public String getCareerName() {
 		return careerName;
 	}
-        
-        public String getPlan() {
+
+	public String getPlan() {
 		return plan;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public void serPassword(String password) {
+		this.password = password;
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -64,12 +71,12 @@ public class User {
 	public void setType(int type) {
 		this.type = type;
 	}
-        
-        public void setCareerName(String careerName) {
+
+	public void setCareerName(String careerName) {
 		this.careerName = careerName;
 	}
-        
-        public void setPlan(String plan) {
+
+	public void setPlan(String plan) {
 		this.plan = plan;
 	}
 }
