@@ -9,14 +9,16 @@ public class UserConnector {
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT INTO Users(UserType, UserName, Password, Name, LastName) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Users(UserType, UserName, Password, Name, LastName, CareerName, Plan) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, u.getType());
         statement.setString(2, u.getUserName());
-        statement.setString(3, u.getPassword());
+        statement.setString(3, "123");
         statement.setString(4, u.getName());
         statement.setString(5, u.getLastName());
+        statement.setString(6, u.getCareerName());
+        statement.setString(7, u.getPlan());
 
         int rowsInserted = statement.executeUpdate();
         if (rowsInserted > 0) {
@@ -48,7 +50,7 @@ public class UserConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName,UserName FROM Users");
+            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName FROM Users");
             rs = stmt.executeQuery();
             
         } catch (SQLException e){
@@ -61,8 +63,41 @@ public class UserConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT UserName,UserId,Name,UserType,LastName FROM Users Where UserType = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName FROM Users Where UserType = ?");
             stmt.setInt(1, Type);
+            rs = stmt.executeQuery();
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+    
+    public ResultSet getUserbyCareer(Connection conn, String careerName, String plan) throws ClassNotFoundException{
+        ResultSet rs = null;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName, CareerName, Plan "
+                                                            + "FROM Users"
+                                                            + "Where CareerName = ? and Plan = ?");
+            stmt.setString(1, careerName);
+            stmt.setString(2, plan);
+            rs = stmt.executeQuery();
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+    
+    public ResultSet getUserbyUniversity(Connection conn, String university) throws ClassNotFoundException{
+        ResultSet rs = null;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName, CareerName, Plan "
+                                                            + "FROM Users natural join Career "
+                                                            + "Where University = ?");
+            stmt.setString(1, university);
             rs = stmt.executeQuery();
             
         } catch (SQLException e){
@@ -80,7 +115,7 @@ public class UserConnector {
             PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setString(1, u.getName());
                 statement.setString(2, u.getLastName());            
-                statement.setInt(3, u.getId());
+                statement.setInt(3, u.getID());
 
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
@@ -105,7 +140,7 @@ public class UserConnector {
                 
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
-                    System.out.println("User was deleted!");
+                    System.out.println("Users was deleted!");
                     state = true;
                 }
 
