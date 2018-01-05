@@ -13,12 +13,17 @@ CREATE TABLE Careers (
     CareerId    int         NOT NULL AUTO_INCREMENT,
     University  char(255)   NOT NULL,
     CareerName  char(255)   NOT NULL,
-    PlanId      int         NOT NULL,
     PRIMARY KEY(CareerId),
+);
+
+CREATE TABLE CareersPlans (
+    CareerId    int         NOT NULL,
+    PlanId      int         NOT NULL,
+    FOREIGN KEY (CareerId)
+        REFERENCES Careers(CareerId),
     FOREIGN KEY (PlanId)
         REFERENCES Plans(PlanId)
 );
-
 
 CREATE TABLE Users (
     UserId      int         NOT NULL AUTO_INCREMENT,
