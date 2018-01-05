@@ -12,7 +12,7 @@ public class ScheduleConnector {
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT INTO Timetable(Day, StartHour, EndHour, GroupId, ClassroomId) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Timetables(Day, StartHour, EndHour, GroupId, ClassroomId) VALUES (?, ?, ?, ?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, s.getDay());
@@ -37,7 +37,7 @@ public class ScheduleConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Timetable");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Timetables");
             rs = stmt.executeQuery();
             
         } catch (SQLException e){

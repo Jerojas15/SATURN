@@ -12,12 +12,11 @@ public class CareerConnector {
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT INTO Career(University, CareerName, Plan) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Careers(University, CareerName) VALUES (?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, c.getUniversity());
-        statement.setString(2, c.getCareer());
-        statement.setString(3, c.getPlan());
+        statement.setString(2, c.getCareerName());
 
         int rowsInserted = statement.executeUpdate();
         if (rowsInserted > 0) {
@@ -31,11 +30,11 @@ public class CareerConnector {
         return state;
     }
     
-    public ResultSet getCareer(Connection conn) throws ClassNotFoundException{
+    public ResultSet getAllCareers(Connection conn) throws ClassNotFoundException{
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Career");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Careers");
             rs = stmt.executeQuery();
             
         } catch (SQLException e){
@@ -44,18 +43,16 @@ public class CareerConnector {
         return rs;
     }
     
-    public boolean updateCareer(Connection conn, Career c, String Career, String Plan) throws ClassNotFoundException{
+    public boolean updateCareer(Connection conn, Career c) throws ClassNotFoundException{
         boolean state =  false;
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            String sql = "UPDATE Career SET University = ?, CareerName = ?, Plan = ? WHERE CareerName = ? and Plan = ?";
+            String sql = "UPDATE Careers SET University = ?, CareerName = ? WHERE CareerId = ?";
 
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, c.getUniversity());
-            statement.setString(2, c.getCareer());
-            statement.setString(3, c.getPlan());
-            statement.setString(4, Career);
-            statement.setString(5, Plan);
+            statement.setString(2, c.getCareerName());
+
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Career was updated!");
@@ -73,11 +70,10 @@ public class CareerConnector {
             try{
                 Class.forName("com.mysql.jdbc.Driver");
 
-                String sql = "delete From Career WHERE CareerName = ? and Plan = ?";
+                String sql = "delete FROM Careers WHERE CareerId = ?";
 
                 PreparedStatement statement = conn.prepareStatement(sql);
-                statement.setString(1, c.getCareer());
-                statement.setString(2, c.getPlan());
+                statement.setInt(1, c.getCareerId());
                 
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {

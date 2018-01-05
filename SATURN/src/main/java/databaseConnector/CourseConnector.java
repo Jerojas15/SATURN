@@ -12,14 +12,13 @@ public class CourseConnector {
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT INTO Course(CourseCode, CourseName, Semester, CareerName, Plan) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Courses(CourseCode, CourseName, Semester, CareerId) VALUES (?, ?, ?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, c.getCode());
         statement.setString(2, c.getName());
         statement.setInt(3, c.getSemester());
-        statement.setString(4, c.getCareer());
-        statement.setString(5, c.getPlan());
+        statement.setInt(4, c.getCareerId());
 
         int rowsInserted = statement.executeUpdate();
         if (rowsInserted > 0) {
@@ -33,13 +32,13 @@ public class CourseConnector {
         return state;
     }
     
-    public ResultSet getCoursebyCareer(Connection conn, String Career, String Plan) throws ClassNotFoundException{
+    public ResultSet getCoursebyCareer(Connection conn, int careerId) throws ClassNotFoundException{
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Course where CareerName = ? and Plan = ?");
-            stmt.setString(1, Career);
-            stmt.setString(2, Plan);
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Courses where CareerId = ?");
+            stmt.setInt(1, careerId);
+            
             rs = stmt.executeQuery();
             
         } catch (SQLException e){
@@ -53,7 +52,7 @@ public class CourseConnector {
         try{    
             Class.forName("com.mysql.jdbc.Driver");
             PreparedStatement stmt = conn.prepareStatement("SELECT * "
-                                                            + "FROM Course natural join Career"
+                                                            + "FROM Courses natural join Careers"
                                                             + "WHERE University = ?");
             stmt.setString(1, university);  
             rs = stmt.executeQuery();
@@ -68,7 +67,7 @@ public class CourseConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Course where CourseId = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Courses WHERE CourseId = ?");
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
             

@@ -12,7 +12,7 @@ public class AvailabilityConnector {
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT INTO Availability(ProfessorId, StartHour, EndHour, Day) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Availabilities(ProfessorId, StartHour, EndHour, Day) VALUES (?, ?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, a.getTeacher());
@@ -36,7 +36,7 @@ public class AvailabilityConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Availability where ProfessorId = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Availabilities where ProfessorId = ?");
             stmt.setInt(1, professor);
             rs = stmt.executeQuery();
             

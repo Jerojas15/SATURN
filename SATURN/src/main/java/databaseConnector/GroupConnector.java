@@ -12,7 +12,7 @@ public class GroupConnector {
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT INTO Group(Capacity, CourseId, ProfessorId, Period, GroupNumber) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Groups(Capacity, CourseId, ProfessorId, Period, GroupNumber) VALUES (?, ?, ?, ?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, g.getCapacity());

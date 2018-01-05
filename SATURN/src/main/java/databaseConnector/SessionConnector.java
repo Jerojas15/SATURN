@@ -12,7 +12,7 @@ public class SessionConnector {
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT INTO Session(GroupId, Hour, Type) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Sessions(GroupId, Hour, Type) VALUES (?, ?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, s.getGroup_ID());
@@ -35,7 +35,7 @@ public class SessionConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Session");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Sessions");
             rs = stmt.executeQuery();
             
         } catch (SQLException e){
@@ -47,7 +47,7 @@ public class SessionConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Session where Type = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Sessions where Type = ?");
             stmt.setString(1, Type);
             rs = stmt.executeQuery();
             

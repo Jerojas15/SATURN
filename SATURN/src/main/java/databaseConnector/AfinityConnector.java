@@ -12,7 +12,7 @@ public class AfinityConnector {
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT INTO Afinity(ProfessorId, CourseId, Level) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Afinities(ProfessorId, CourseId, Level) VALUES (?, ?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, a.getProfessorId());
@@ -35,7 +35,7 @@ public class AfinityConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Afinity where ProfessorId = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Afinities where ProfessorId = ?");
             stmt.setInt(1, professor);
             rs = stmt.executeQuery();
             
@@ -49,7 +49,7 @@ public class AfinityConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Afinity where CourseId = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Afinities where CourseId = ?");
             stmt.setInt(1, course);
             rs = stmt.executeQuery();
             

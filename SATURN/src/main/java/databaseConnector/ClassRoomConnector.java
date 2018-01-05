@@ -12,7 +12,7 @@ public class ClassRoomConnector {
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT INTO Classroom(ClassroomId, Capacity, ClassroomType) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Classrooms(ClassroomId, Capacity, ClassroomType) VALUES (?, ?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, c.getID());
@@ -35,7 +35,7 @@ public class ClassRoomConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Classroom where Type = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Classrooms where Type = ?");
             stmt.setString(1, Type);
             rs = stmt.executeQuery();
             
