@@ -12,16 +12,13 @@ import model.User;
 
 public class DatabaseController {
     private Connection conn;
-    public DatabaseController() throws SQLException, ClassNotFoundException{
-    	Class.forName("com.mysql.jdbc.Driver");
+    public DatabaseController() throws SQLException{
         conn = makeConnection();
     }
     
     public Connection makeConnection() throws SQLException{
         //manera de acceso a la base de Julio
-        //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
-      //manera de acceso a la base de Yock
-        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "password");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin"); 
         return conn;
     }
     
@@ -61,10 +58,11 @@ public class DatabaseController {
         
         while(rs.next()){
             User u = new User();
-            u.setUserName(rs.getString("UserName"));
-            u.setName(rs.getString("Name"));
             u.setLastName(rs.getString("LastName"));
+            u.setName(rs.getString("Name"));
             u.setType(rs.getInt("UserType"));
+            u.setCareerName("CareerName");
+            u.setPlan("Plan");
             list.add(u); 
         }
         return list;
@@ -77,10 +75,11 @@ public class DatabaseController {
         
         while(rs.next()){
             User u = new User();
-            u.setUserName(rs.getString("UserName"));
-            u.setName(rs.getString("Name"));
             u.setLastName(rs.getString("LastName"));
+            u.setName(rs.getString("Name"));
             u.setType(rs.getInt("UserType"));
+            u.setCareerName("CareerName");
+            u.setPlan("Plan");
             list.add(u); 
         }
         return list;
