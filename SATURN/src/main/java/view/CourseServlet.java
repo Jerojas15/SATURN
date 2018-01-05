@@ -30,10 +30,10 @@ public class CourseServlet {
 		//DatabaseController d = new DatabaseController();
 		//List<Course> l = d.getCourses();
 		ArrayList<Course> l = new ArrayList<>();
-		l.add(new Course(0, "Introducción a la Programación", 1, "Ing. Computación", "410"));
-		l.add(new Course(1, "Taller de Programación", 1, "Ing. Computación", "410"));
-		l.add(new Course(2, "Estructuras de Datos", 2, "Ing. Computación", "410"));
-		l.add(new Course(3, "Programación Orientada a Objetos", 2, "Ing. Computación", "410"));
+		l.add(new Course(0, "Introducción a la Programación", 1, 0));
+		l.add(new Course(1, "Taller de Programación", 1, 1));
+		l.add(new Course(2, "Estructuras de Datos", 2, 2));
+		l.add(new Course(3, "Programación Orientada a Objetos", 2, 3));
 		
 		return l;
 	}
@@ -42,7 +42,7 @@ public class CourseServlet {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static Course getCourse(@PathParam("id") String idStr) {
-		Course c =  new Course(0, "Introducción a la Programación", 1, "Ing. Computación", "410");
+		Course c =  new Course(0, "Introducción a la Programación", 1, 0);
 		return c;
 	}
 
@@ -52,8 +52,7 @@ public class CourseServlet {
 
 		System.out.println(course.getName());
                 System.out.println(course.getSemester());
-		System.out.println(course.getCareer());
-		System.out.println(course.getPlan());
+		System.out.println(course.getCareerId());
 
 		JSONObject object = new JSONObject();
 		try {
