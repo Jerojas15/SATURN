@@ -1,38 +1,36 @@
 package model;
 
 public class Session {
-	int Group_ID;
-	int Hours;
-	String Classroom_Type;
+    
+	int groupId;
+	int hours;
+	String classroomType;
 	
+        public Session() {}
+        
+	public Session(int groupId, int hours, String classroomType) {
+		this.groupId = groupId;
+		this.hours = hours;
+		this.classroomType = classroomType;
+	}
+        
 	public int getGroup_ID() {
-		return Group_ID;
+		return groupId;
 	}
 	public int getHours() {
-		return Hours;
+		return hours;
 	}
 	public String getClassroom_Type() {
-		return Classroom_Type;
+		return classroomType;
 	}
 	
-	
-	
-	public void setGroup_ID(int Group_ID) {
-		this.Group_ID = Group_ID;
+	public void setGroup_ID(int groupId) {
+		this.groupId = groupId;
 	}
-	public void setHours(int Hours) {
-		this.Hours = Hours;
+	public void setHours(int hours) {
+		this.hours = hours;
 	}
-	public void setClassroom_Type(String Classroom_Type) {
-		this.Classroom_Type = Classroom_Type;
-	}
-	
-	
-	public Session() {	
-	}
-	public Session(int Group_ID, int Hours, String Classroom_Type) {
-		this.Group_ID = Group_ID;
-		this.Hours = Hours;
-		this.Classroom_Type = Classroom_Type;
+	public void setClassroom_Type(String classroomType) {
+		this.classroomType = classroomType;
 	}
 }
