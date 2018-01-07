@@ -47,7 +47,7 @@ public class TeacherServlet {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static User getTeacher(@PathParam("id") String idStr) {
-		User c =  new User(0, "jyock1997@gmail.com", null, "Jose Paulo", "Yock Fuentes", 0, "Ing. Comp");
+		User c =  new User(0, "jyock1997@gmail.com", null, "Jose Paulo", "Yock Fuentes", 0, 0);
 		return c;
 	}
 	
