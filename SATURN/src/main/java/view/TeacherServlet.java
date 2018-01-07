@@ -47,7 +47,7 @@ public class TeacherServlet {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static User getTeacher(@PathParam("id") String idStr) {
-		User c =  new User();
+		User c =  new User(0, "jyock1997@gmail.com", null, "Jose Paulo", "Yock Fuentes", 0, "Ing. Comp");
 		return c;
 	}
 	
@@ -82,20 +82,42 @@ public class TeacherServlet {
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateTeacher(@PathParam("id") String idStr) {
+	public Response updateTeacher(@PathParam("id") String idStr, User usr) {
+		System.out.println(idStr);
 		
-		String result = "Resultado.......";
+		String status;
+		JSONObject object;
 		
-		return Response.status(200).entity(result).build();
+		System.out.println(idStr);
+		status = "OK";
+		
+		object = new JSONObject();
+		try {
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
 	}
 
 	@DELETE
     @Path("/{id}")
-	public Response deleteTeacher() {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteTeacher(@PathParam("id") String idStr) {
 		
-		String result = "Resultado.......";
+		String status;
+		JSONObject object;
 		
-		return Response.status(200).entity(result).build();
+		System.out.println(idStr);
+		status = "OK";
+		
+		object = new JSONObject();
+		try {
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
 	}
 
 }
