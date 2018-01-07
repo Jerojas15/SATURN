@@ -1,47 +1,44 @@
 package model;
 
 public class Availability {
-    int Teacher;
-    int Start_Time;
-    int Finish_Time;
-    int Day;
+        int teacher;
+        int startTime;
+        int finishTime;
+        int day;
 
-    public int getTeacher() {
-        return Teacher;
-    }
-    public int getStart_Time() {
-        return Start_Time;
-    }
-    public int getFinish_Time() {
-        return Finish_Time;
-    }
-    public int getDay() {
-        return Day;
-    }
+        public Availability() {}
+        
+        public Availability(int teacher, int startTime, int finishTime, int day) {
+            this.teacher = teacher;
+            this.startTime = startTime;
+            this.finishTime = finishTime;
+            this.day = day;
+        }
+        
+        public int getTeacher() {
+            return teacher;
+        }
+        public int getStart_Time() {
+            return startTime;
+        }
+        public int getFinish_Time() {
+            return finishTime;
+        }
+        public int getDay() {
+            return day;
+        }
 
+        public void setTeacher(int teacher) {
+            this.teacher = teacher;
+        }
+        public void setStart_Time(int startTime) {
+            this.startTime = startTime;
+        }
+        public void setFinish_Time(int finishTime) {
+            this.finishTime = finishTime;
+        }
+        public void setDay(int day) {
+            this.day = day;
+        }
 
-
-    public void setTeacher(int Teacher) {
-        this.Teacher = Teacher;
-    }
-    public void setStart_Time(int Start_Time) {
-        this.Start_Time = Start_Time;
-    }
-    public void setFinish_Time(int Finish_Time) {
-        this.Finish_Time = Finish_Time;
-    }
-    public void setDay(int Day) {
-        this.Day = Day;
-    }
-
-
-    public Availability() {
-    }
-    public Availability(int Teacher, int Start_Time, int Finish_Time, int Day) {
-        this.Teacher = Teacher;
-        this.Start_Time = Start_Time;
-        this.Finish_Time = Finish_Time;
-        this.Day = Day;
-    }
-    
 }

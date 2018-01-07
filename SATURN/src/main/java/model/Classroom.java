@@ -1,38 +1,39 @@
 package model;
 
 public class Classroom {
-    int ID;
-    int Capacity;
-    String Type;
+        int id;
+        int capacity;
+        String type;
 
-    public int getID() {
-        return ID;
-    }
-    public int getCapacity() {
-        return Capacity;
-    }
-    public String getType() {
-        return Type;
-    }
+        public Classroom() {}
 
+        public Classroom(int id, int capacity, String type) {
+            this.id = id;
+            this.capacity = capacity;
+            this.type = type;
+        }
 
+        public int getID() {
+            return id;
+        }
+        
+        public int getCapacity() {
+            return capacity;
+        }
+        
+        public String getType() {
+            return type;
+        }
 
-    public void setId(int ID){
-        this.ID = ID;
-    }
-    public void setCapacity(int Capacity){
-        this.Capacity = Capacity;
-    }
-    public void setType(String Type){
-        this.Type = Type;
-    }
-
-    public Classroom() {	
-    }
-    public Classroom(int ID, int Capacity, String Type) {
-        this.ID = ID;
-        this.Capacity = Capacity;
-        this.Type = Type;
-    }
-	
+        public void setId(int ID){
+            this.id = ID;
+        }
+        
+        public void setCapacity(int capacity){
+            this.capacity = capacity;
+        }
+        
+        public void setType(String type){
+            this.type = type;
+        }	
 }

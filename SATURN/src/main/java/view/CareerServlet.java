@@ -32,10 +32,10 @@ public class CareerServlet {
 		//DatabaseController d = new DatabaseController();
 		//List<Career> l = d.getCareers();
 		ArrayList<Career> l = new ArrayList<>();
-		l.add(new Career(0, "TEC", "Ing. Computación", "410"));
-		l.add(new Career(1, "TEC", "Ing. Computación", "410"));
-		l.add(new Career(2, "TEC", "Ing. Computación", "410"));
-		l.add(new Career(3, "TEC", "Ing. Computación", "410"));
+		l.add(new Career(0, "TEC", "Ing. Computación"));
+		l.add(new Career(1, "TEC", "Ing. Computación"));
+		l.add(new Career(2, "TEC", "Ing. Computación"));
+		l.add(new Career(3, "TEC", "Ing. Computación"));
 		
 		return l;
 	}
@@ -44,7 +44,7 @@ public class CareerServlet {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static Career getCareer(@PathParam("id") String idStr) {
-		Career c =  new Career(0, "TEC", "Ing. Computación" ,"410");
+		Career c =  new Career(0, "TEC", "Ing. Computación");
 		return c;
 	}
 
@@ -53,8 +53,7 @@ public class CareerServlet {
 	public Response createCareer(Career career) {
 
 		System.out.println(career.getUniversity());
-		System.out.println(career.getCareer());
-		System.out.println(career.getPlan());
+		System.out.println(career.getCareerName());
 
 		JSONObject object = new JSONObject();
 		try {

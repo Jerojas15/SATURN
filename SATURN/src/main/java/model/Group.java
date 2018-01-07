@@ -1,68 +1,68 @@
 package model;
 
 public class Group {
-        int ID;
-        int Capacity;
-        int CourseId;
-        int Teacher;
-        int Period;
-        int Number;
+        int id;
+        int capacity;
+        int courseId;
+        int teacher;
+        int period;
+        int number;
 
-        public Group(int ID, int Capacity, int CourseId, int Teacher, int Period, int Number) {
-            this.ID = ID;
-            this.Capacity = Capacity;
-            this.CourseId = CourseId;
-            this.Teacher = Teacher;
-            this.Period = Period;
-            this.Number = Number;
+        public Group(int id, int capacity, int courseId, int teacher, int period, int number) {
+            this.id = id;
+            this.capacity = capacity;
+            this.courseId = courseId;
+            this.teacher = teacher;
+            this.period = period;
+            this.number = number;
         }
         
         public int getID() {
-            return ID;
+            return id;
         }
         
         public int getCapacity() {
-            return Capacity;
+            return capacity;
         }
         
         public int getCourseId() {
-            return CourseId;
+            return courseId;
         }
         
         public int getTeacher() {
-            return Teacher;
+            return teacher;
         }
         
         public int getPeriod() {
-            return Period;
+            return period;
         }
         
         public int getNumber() {
-            return Number;
+            return number;
         }
 
-        public void setID(int ID) {
-            this.ID = ID;
+        public void setID(int id) {
+            this.id = id;
         }
         
-        public void setCapacity(int Capacity) {
-            this.Capacity = Capacity;
+        public void setCapacity(int capacity) {
+            this.capacity = capacity;
         }
         
-        public void setCourseId(int CourseId) {
-            this.CourseId = CourseId;
+        public void setCourseId(int courseId) {
+            this.courseId = courseId;
         }
         
         public void setTeacher(int Teacher) {
-            this.Teacher = Teacher;
+            this.teacher = Teacher;
         }
         
-        public void setPeriod(int Period) {
-            this.Period = Period;
+        public void setPeriod(int period) {
+            this.period = period;
         }
         
-        public void setNumber(int Number) {
-            this.Number = Number;
+        public void setNumber(int number) {
+            this.number = number;
         }
 
 }

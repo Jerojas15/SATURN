@@ -9,7 +9,7 @@ public class UserConnector {
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT INTO Users(UserType, UserName, Password, Name, LastName, CareerName, Plan) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Users(UserType, UserName, Password, Name, LastName, CareerId) VALUES (?, ?, ?, ?, ?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, u.getType());
@@ -17,8 +17,7 @@ public class UserConnector {
         statement.setString(3, "123");
         statement.setString(4, u.getName());
         statement.setString(5, u.getLastName());
-        statement.setString(6, u.getCareerName());
-        statement.setString(7, u.getPlan());
+        statement.setInt(6, u.getCareerId());
 
         int rowsInserted = statement.executeUpdate();
         if (rowsInserted > 0) {
@@ -46,7 +45,7 @@ public class UserConnector {
         return rs;
     }
     
-    public ResultSet getUser(Connection conn) throws ClassNotFoundException{
+    public ResultSet getAllUsers(Connection conn) throws ClassNotFoundException{
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
@@ -73,15 +72,15 @@ public class UserConnector {
         return rs;
     }
     
-    public ResultSet getUserbyCareer(Connection conn, String careerName, String plan) throws ClassNotFoundException{
+    public ResultSet getUserbyCareerId(Connection conn, int careerId) throws ClassNotFoundException{
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName, CareerName, Plan "
+            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName"
                                                             + "FROM Users"
-                                                            + "Where CareerName = ? and Plan = ?");
-            stmt.setString(1, careerName);
-            stmt.setString(2, plan);
+                                                            + "Where careerId = ?");
+            stmt.setInt(1, careerId);
+
             rs = stmt.executeQuery();
             
         } catch (SQLException e){
@@ -94,8 +93,8 @@ public class UserConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName, CareerName, Plan "
-                                                            + "FROM Users natural join Career "
+            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName"
+                                                            + "FROM Users natural join Careers "
                                                             + "Where University = ?");
             stmt.setString(1, university);
             rs = stmt.executeQuery();
@@ -115,7 +114,7 @@ public class UserConnector {
             PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setString(1, u.getName());
                 statement.setString(2, u.getLastName());            
-                statement.setInt(3, u.getID());
+                statement.setInt(3, u.getId());
 
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {

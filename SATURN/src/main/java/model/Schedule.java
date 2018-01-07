@@ -1,54 +1,59 @@
 package model;
 
 public class Schedule {
-    int Day;
-    int Start_Time;
-    int Finish_Time;
-    int Group;
-    int Classroom;
+        int day;
+        int startTime;
+        int finishTime;
+        int group;
+        int classroom;
 
-    public int getDay() {
-            return Day;
-    }
-    public int getStart_Time() {
-            return Start_Time;
-    }
-    public int getFinish_Time() {
-            return Finish_Time;
-    }
-    public int getGroup() {
-            return Group;
-    }
-    public int getClassroom() {
-            return Classroom;
-    }
+        public Schedule() {}
+        
+        public Schedule(int day, int startTime, int finishTime, int group, int classroom) {
+            this.day = day;
+            this.startTime = startTime;
+            this.finishTime = finishTime;
+            this.group = group;
+            this.classroom = classroom;
+        }
+        
+        public int getDay() {
+                return day;
+        }
 
+        public int getStart_Time() {
+                return startTime;
+        }
 
+        public int getFinish_Time() {
+                return finishTime;
+        }
 
-    public void setDay(int Day) {
-        this.Day = Day;
-    }
-    public void setStart_Time(int Start_Time) {
-        this.Start_Time = Start_Time;
-    }
-    public void setFinish_Time(int Finish_Time) {
-        this.Finish_Time = Finish_Time;
-    }
-    public void setGroup(int Group) {
-        this.Group = Group;
-    }
-    public void setClassroom(int Classroom) {
-        this.Classroom = Classroom;
-    }
+        public int getGroup() {
+                return group;
+        }
 
+        public int getClassroom() {
+                return classroom;
+        }
 
-    public Schedule() {
-    }
-    public Schedule(int Day, int Start_Time, int Finish_Time, int Group, int Classroom) {
-        this.Day = Day;
-        this.Start_Time = Start_Time;
-        this.Finish_Time = Finish_Time;
-        this.Group = Group;
-        this.Classroom = Classroom;
-    }
+        public void setDay(int day) {
+            this.day = day;
+        }
+        
+        public void setStart_Time(int startTime) {
+            this.startTime = startTime;
+        }
+        
+        public void setFinish_Time(int finishTime) {
+            this.finishTime = finishTime;
+        }
+        
+        public void setGroup(int group) {
+            this.group = group;
+        }
+        
+        public void setClassroom(int classroom) {
+            this.classroom = classroom;
+        }
 }
