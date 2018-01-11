@@ -72,11 +72,13 @@ public class DatabaseController {
         
         while(rs.next()){
             User u = new User();
+            u.setId(rs.getInt("UserId"));
             u.setLastName(rs.getString("LastName"));
             u.setName(rs.getString("Name"));
             u.setType(rs.getInt("UserType"));
             u.setUserName(rs.getString("UserName"));
             u.setCareerId(1);
+            
             list.add(u); 
         }
         return list;
@@ -110,9 +112,9 @@ public class DatabaseController {
         return status;
     }
     
-    public boolean updateUser(User u) throws ClassNotFoundException{
+    public boolean updateUser(User u, int id) throws ClassNotFoundException{
         UserConnector connector = new UserConnector();
-        Boolean status = connector.updateUser(conn, u);
+        Boolean status = connector.updateUser(conn, u, id);
         return status;
     }
     

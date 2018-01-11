@@ -118,16 +118,24 @@ public class UserConnector {
         return rs;
     }
     
-    public Boolean updateUser(Connection conn, User u) throws ClassNotFoundException{
+    public Boolean updateUser(Connection conn, User u, int id) throws ClassNotFoundException{
         boolean state =  false;
+        int cont = 1, contName, contLast, contUser, contPass, contId;
+        
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            String sql = "UPDATE Users SET Name = ?, LastName = ? WHERE UserId = ?";
-
+            String sql = "UPDATE Users SET";
+            if(u.getName()!=null)sql.concat(" Name = ?");contName = cont++;
+            if(u.getLastName()!=null)sql.concat(" LastName = ?");contLast = cont++;
+            if(u.getUserName()!=null)sql.concat(" UserName = ?");contUser = cont++;
+            if(u.getPassword()!=null)sql.concat(" Password = ?");contPass = cont++;
+            sql.concat(" WHERE UserId = ?");contId = cont++;
             PreparedStatement statement = conn.prepareStatement(sql);
-                statement.setString(1, u.getName());
-                statement.setString(2, u.getLastName());            
-                statement.setInt(3, u.getId());
+            if(u.getName()!=null)statement.setString(contName, u.getName());
+            if(u.getLastName()!=null)statement.setString(contLast, u.getLastName());
+            if(u.getUserName()!=null)statement.setString(contUser, u.getUserName());
+            if(u.getPassword()!=null)statement.setString(contPass, u.getPassword());
+                statement.setInt(contId, id);
 
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {

@@ -78,17 +78,22 @@ public class TeacherServlet {
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateTeacher(@PathParam("id") String idStr, User usr) {
-		System.out.println(idStr);
+	public Response updateTeacher(@PathParam("id") String idStr, User usr) throws SQLException, ClassNotFoundException {
+		//System.out.println(idStr);
 		
 		String status;
 		JSONObject object;
 		
-		System.out.println(idStr);
-		status = "OK";
+		//System.out.println(idStr);
+		status = "WRONG";
 		
 		object = new JSONObject();
 		try {
+                    DatabaseController d = new DatabaseController();
+                    if(d.updateUser(usr, Integer.parseInt(idStr))){
+                        status = "OK";
+                        
+                    }
 			object.put("status", status);
 		} catch (JSONException e) {
 			e.printStackTrace();

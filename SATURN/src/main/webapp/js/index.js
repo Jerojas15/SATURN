@@ -92,6 +92,7 @@ function fShowEditUser() {
 
 	editDeleteUserId = $(this).attr("value");
 	editDeleteUserType = $(this).attr("type");
+        
 	$("#AddUser").show();
 	$("#Btn_UpdateUserSubmit").show();
 	$("#Btn_UpdateUserCancel").show();
@@ -170,13 +171,10 @@ function fLogIn() {
 					}
 					fShowHelloMsg(result.helloMsg);
 				}
-                                else if(result.status === "WRONG_DATA"){
-                                        alert("Usuario o contraseña incorrrectos");
-                                }
 			},
 
 			error: function(request, status, error){
-                                
+                                alert("Usuario o contraseña incorrecto");
 				console.log("[Login] Error: " + error);
 			}
 		});
@@ -204,7 +202,7 @@ function fAddCareer() {
 			url: URL_CAREERS,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"university" : university, "careerName" : career, "plan" : plan}),
+			data: JSON.stringify({"university" : university, "career" : career, "plan" : plan}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
@@ -239,16 +237,13 @@ function fAddAssistant() {
 	var userName = $("#TextBox_AddUser_UserName").val();
 	var name = $("#TextBox_AddUser_Name").val();
 	var lastName = $("#TextBox_AddUser_LastName").val();
-        var password = $("#TextBox_AddUser_Password").val();
-	var confirmPassword = $("#TextBox_AddUser_Confirm_Password").val();
-	var career = $("#Select_AddUser_Career").val();
 	if (userName && name && lastName) {
 		$.ajax({
 			method: 'POST',
 			url: URL_ASSISTANTS,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"userName" : userName, "password" : password, "name" : name, "lastName" : lastName, "type" : USR_TYPE_ASSISTANT, "careerId" : career}),
+			data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName, "type" : USR_TYPE_ASSISTANT}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
@@ -343,7 +338,7 @@ function fDisplayCareers() {
 			//alert(JSON.stringify(result));
 			for (i in result) {
 				$("#Careers ul").append(CAREER_LIST_TEMPLATE1 + result[i].university +
-					 					CAREER_LIST_TEMPLATE2 + result[i].careerName +
+					 					CAREER_LIST_TEMPLATE2 + result[i].career +
 										CAREER_LIST_TEMPLATE3 + result[i].plan +
 										CAREER_LIST_TEMPLATE4 + result[i].id +
 										CAREER_LIST_TEMPLATE5 + result[i].id +
