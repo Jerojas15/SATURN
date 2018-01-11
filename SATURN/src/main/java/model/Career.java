@@ -5,10 +5,11 @@ public class Career {
 	private int id;
 	private String university;
 	private String careerName;
-	
+	private String plan;
+
 	public Career() {}
 	
-        public Career(int id, String university, String careerName) {
+        public Career(String plan, String university, String careerName) {
             this.id = id;
             this.university = university;
             this.careerName = careerName;
@@ -32,5 +33,13 @@ public class Career {
         }
         public void setCareerName(String careerName) {
             this.careerName = careerName;
+        }
+        
+        public String getPlan() {
+            return plan;
+        }
+
+        public void setPlan(String plan) {
+            this.plan = plan;
         }
 }

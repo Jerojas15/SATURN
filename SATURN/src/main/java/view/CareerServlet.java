@@ -29,13 +29,8 @@ public class CareerServlet {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<Career> getCareers() throws SQLException, ClassNotFoundException {
-		//DatabaseController d = new DatabaseController();
-		//List<Career> l = d.getCareers();
-		ArrayList<Career> l = new ArrayList<>();
-		l.add(new Career(0, "TEC", "Ing. Computación"));
-		l.add(new Career(1, "TEC", "Ing. Computación"));
-		l.add(new Career(2, "TEC", "Ing. Computación"));
-		l.add(new Career(3, "TEC", "Ing. Computación"));
+		DatabaseController d = new DatabaseController();
+		List<Career> l = d.getCareers();
 		
 		return l;
 	}
@@ -44,19 +39,19 @@ public class CareerServlet {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static Career getCareer(@PathParam("id") String idStr) {
-		Career c =  new Career(0, "TEC", "Ing. Computación");
-		return c;
+		//Career c =  new Career(0, "TEC", "Ing. Computación");
+		//return c;
+                return null;
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createCareer(Career career) {
-
-		System.out.println(career.getUniversity());
-		System.out.println(career.getCareerName());
-
+	public Response createCareer(Career career) throws SQLException, ClassNotFoundException {
+            
 		JSONObject object = new JSONObject();
 		try {
+                        DatabaseController d = new DatabaseController();
+                        d.insertNewCareer(career);
 			object.put("status", "OK"); //object.put("status", "ALREADY_EXISTS");
 		} catch (JSONException e) {
 			e.printStackTrace();
