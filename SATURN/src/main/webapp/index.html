@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com  -->
-<!--  Last Published: Sat Jan 06 2018 05:15:50 GMT+0000 (UTC)  -->
+<!--  Last Published: Thu Jan 11 2018 23:49:28 GMT+0000 (UTC)  -->
 <html data-wf-page="5a3dda643472ef0001454691" data-wf-site="5a3dda643472ef0001454690">
 <head>
   <meta charset="utf-8">
@@ -17,6 +17,7 @@
   <link href="https://daks2k3a4ib2z.cloudfront.net/img/favicon.ico" rel="shortcut icon" type="image/x-icon">
   <link href="https://daks2k3a4ib2z.cloudfront.net/img/webclip.png" rel="apple-touch-icon">
   <script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
+  <script src="js/availability.js" type="text/javascript"></script>
   <script src="js/index.js" type="text/javascript"></script>
 </head>
 <body class="body">
@@ -26,7 +27,8 @@
           <a href="#" class="s_navlink1 w-nav-link">ACERCA DE</a>
           <a href="#" class="s_navlink1 w-nav-link">SERVICIOS</a>
           <a href="#" id="Btn_LogIn1" class="s_navlink2 w-nav-link">Iniciar Sesión</a>
-          <a href="#" id="Btn_LogOut" class="s_navlink2 w-nav-link" style="display: none;">Cerrar Sesión</a></nav>
+          <a href="#" id="Btn_LogOut" class="s_navlink2 w-nav-link" style="display: none;">Cerrar Sesión</a>
+      </nav>
     </div>
   </div>
   <div id="StartMenu" class="startmenu">
@@ -180,7 +182,48 @@
   </div>
   <div class="schedules"></div>
   <div class="coordinators"></div>
-  <div class="groups"></div>
+  <div id="Groups" class="groups" style="display: none;">
+    <div class="s_center">
+      <ul class="s_unorderedlist1 w-list-unstyled">
+        <li class="s_listitem1">
+          <div class="w-row">
+            <div class="s_column3 w-col w-col-3">
+              <div class="s_text2">Grupo</div>
+            </div>
+            <div class="s_column3 w-col w-col-3">
+              <div class="s_text2">Periodo</div>
+            </div>
+            <div class="s_column3 w-col w-col-3">
+              <div class="s_text2">Profesor</div>
+            </div>
+            <div class="s_column4 w-col w-col-3">
+              <div class="s_text2">Capacidad</div>
+            </div>
+          </div>
+        </li>
+        <li class="s_listitem3"><a href="#" id="Btn_AddTeacher" class="s_button5 w-button"></a></li>
+        <li class="s_listitem2">
+          <div class="w-row">
+            <div class="s_center w-col w-col-3">
+              <div class="s_text1">000</div>
+            </div>
+            <div class="s_center w-col w-col-3">
+              <div class="s_text1">periodo</div>
+            </div>
+            <div class="s_center w-col w-col-3">
+              <div class="s_text1">Jose Paulo Yock</div>
+            </div>
+            <div class="s_center w-col w-col-3">
+              <div class="s_flex1">
+                <div class="s_text1">999</div>
+                <div id="Btn_Edit_Delete" class="s_flex2"><a href="#" class="s_button6 w-button"></a><a href="#" class="s_button7 w-button"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
   <div id="Teachers" class="teachers" style="display: none;">
     <div class="s_center">
       <ul class="s_unorderedlist1 w-list-unstyled">
@@ -225,9 +268,318 @@
     </div>
   </div>
   <div class="courses"></div>
-  <div class="availability"></div>
+  <div id="Availability" class="availability" style="display: none;">
+    <div class="s_center">
+      <ul class="s_unorderedlist2 w-list-unstyled">
+        <li>
+          <div class="s_left"><a href="#" id="Btn_SaveAvailability" class="s_button1 w-button">Guardar</a><a href="#" id="Btn_CancelAvailability" class="s_button1 w-button">Cancelar</a></div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">Horario</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2">
+                  <h5 class="s_heading2">Lunes</h5>
+                </div>
+                <div class="w-col w-col-2">
+                  <h5 class="s_heading2">Martes</h5>
+                </div>
+                <div class="w-col w-col-2">
+                  <h5 class="s_heading2">Miércoles</h5>
+                </div>
+                <div class="w-col w-col-2">
+                  <h5 class="s_heading2">Jueves</h5>
+                </div>
+                <div class="w-col w-col-2">
+                  <h5 class="s_heading2">Viernes</h5>
+                </div>
+                <div class="w-col w-col-2">
+                  <h5 class="s_heading2">Sábado</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="s_listitem4">
+          <div class="w-row">
+            <div class="s_column5 w-col w-col-2">
+              <h5 class="s_heading2">Todo</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" id="Btn_AllMonday" pressed="false" class="s_button8 w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" id="Btn_AllTuesday" pressed="false" class="s_button8 w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" id="Btn_AllWednesday" pressed="false" class="s_button8 w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" id="Btn_AllThursday" pressed="false" class="s_button8 w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" id="Btn_AllFriday" pressed="false" class="s_button8 w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" id="Btn_AllSaturday" pressed="false" class="s_button8 w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">7:00am</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">8:00am</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">9:00am</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">10:00am</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">11:00am</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">12:00pm</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">1:00pm</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">2:00pm</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">3:00pm</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">4:00pm</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">5:00pm</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">6:00pm</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">7:00pm</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">8:00pm</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="w-row">
+            <div class="w-col w-col-2">
+              <h5 class="s_heading2">9:00pm</h5>
+            </div>
+            <div class="w-col w-col-10">
+              <div class="w-row">
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 monday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 tuesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 wednesday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 thursday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 friday w-button" style="background-image: none;"></a></div>
+                <div class="w-col w-col-2"><a href="#" pressed="false" class="s_button8 saturday w-button" style="background-image: none;"></a></div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
   <div class="afinity"></div>
-  <div id="AddCareers" class="addcareers" style="display: none;">
+  <div id="AddCareer" class="addcareer" style="display: none;">
     <div class="s_center">
       <div class="s_form1 w-form">
         <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Universidad:</label><input type="text" class="w-input" maxlength="5" placeholder="[TEC] [UCR] [UNA] [UNED]" id="TextBox_AddCareer_University" required=""><label class="s_boldcentertext">Nombre Carrera:</label><input type="text" required="" id="TextBox_AddCareer_CareerName" maxlength="60" class="w-input"><label class="s_boldcentertext">Plan:</label><input type="text" id="TextBox_AddCareer_Plan" required="" maxlength="5" class="w-input">
@@ -246,7 +598,10 @@
     <div class="s_center">
       <div class="s_form1 w-form">
         <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Nombre Usuario:</label><input type="email" class="w-input" maxlength="256" placeholder="Correo Institucional" id="TextBox_AddUser_UserName" required=""><label class="s_boldcentertext">Contraseña:</label><input type="password" maxlength="256" required="" id="TextBox_AddUser_Password" class="w-input"><label class="s_boldcentertext">Confirmar Contraseña:</label><input type="password" maxlength="256" required="" id="TextBox_AddUser_Confirm_Password" class="w-input">
-          <div id="Form_CareerSelector"><label class="s_boldcentertext">Carrera:</label><select required="" id="Select_AddUser_Career" class="w-select"><option value="none">None</option><option value="ic">Ingenieria en Computacion</option></select></div><label class="s_boldcentertext">Nombre:</label><input type="text" maxlength="256" id="TextBox_AddUser_Name" required="" class="w-input"><label class="s_boldcentertext">Apellidos:</label><input type="text" id="TextBox_AddUser_LastName" maxlength="256" class="w-input">
+          <div id="Form_CareerSelector" style="display: none;">
+              <label class="s_boldcentertext">Carrera:</label><select required="" id="Select_AddUser_Career" class="w-select"><option value="none">None</option><option value="ic">Ingenieria en Computacion</option></select>
+          </div>
+          <label class="s_boldcentertext">Nombre:</label><input type="text" maxlength="256" id="TextBox_AddUser_Name" required="" class="w-input"><label class="s_boldcentertext">Apellidos:</label><input type="text" id="TextBox_AddUser_LastName" maxlength="256" class="w-input">
           <div>
               <a href="#" id="Btn_AddAssistantSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>
               <a href="#" id="Btn_AddTeacherSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>
@@ -265,11 +620,17 @@
       </div>
     </div>
   </div>
-  <div id="ConfirmDelete" class="confirmdelete" style="display: none;">
+  <div class="addgroup"></div>
+  <div id="ConfirmAction" class="confirmaction" style="display: none;">
     <div class="s_center">
       <div class="s_div1">
         <h4 class="s_heading2">Confirmar Acción</h4>
-        <div><a href="#" id="Btn_DeleteUserSubmit" class="s_button1 w-button">Aceptar</a><a href="#" id="Btn_DeleteUserCancel" class="s_button1 w-button">Cancelar</a></div>
+        <div>
+            <a href="#" id="Btn_DeleteUserSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>
+            <a href="#" id="Btn_SaveAvailabilitySubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>
+            <a href="#" id="Btn_DeleteUserCancel" class="s_button1 w-button" style="display: none;">Cancelar</a>
+            <a href="#" id="Btn_SaveAvailabilityCancel" class="s_button1 w-button" style="display: none;">Cancelar</a>
+        </div>
       </div>
     </div>
   </div>

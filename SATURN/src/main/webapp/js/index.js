@@ -16,7 +16,7 @@ var CAREER_LIST_TEMPLATE4 = "</div></div><div class=\"s_center w-col w-col-3\"><
 var CAREER_LIST_TEMPLATE5 = "</div></div></div></li>";
 */
 
-var CAREER_LIST_TEMPLATE1 = "<li class=\"s_listitem2\"><div class=\"w-row\"><div class=\"s_center w-col w-col-3\"><div class=\"s_text1\">";
+var CAREER_LIST_TEMPLATE1 = "<li class=\"s_listitem2 clickable\"><div class=\"w-row\"><div class=\"s_center w-col w-col-3\"><div class=\"s_text1\">";
 var CAREER_LIST_TEMPLATE2 = "</div></div><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">";
 var CAREER_LIST_TEMPLATE3 = "</div></div><div class=\"s_center w-col w-col-3\"><div class=\"s_flex1\"><div class=\"s_text1\">";
 var CAREER_LIST_TEMPLATE4 = "</div><div id=\"Btn_Edit_Delete\" class=\"s_flex2\" style=\"display: none;\"><a id=\"Btn_Edit_Career\" value=\"";
@@ -30,7 +30,7 @@ var USER_LIST_TEMPLATE3 = "</div></div><div class=\"s_center w-col w-col-6\"><di
 var USER_LIST_TEMPLATE4 = "</div></div></div></li>";
 */
 
-var USER_LIST_TEMPLATE1 = "<li class=\"s_listitem2\"><div class=\"w-row\"><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">";
+var USER_LIST_TEMPLATE1 = "<li class=\"s_listitem2 clickable\"><div class=\"w-row\"><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">";
 var USER_LIST_TEMPLATE2 = "</div></div><div class=\"s_center w-col w-col-6\"><div class=\"s_flex1\"><div class=\"s_text1\">";
 var USER_LIST_TEMPLATE3 = "</div><div id=\"Btn_Edit_Delete\" class=\"s_flex2\" style=\"display: none;\"><a id=\"Btn_Edit_User\" value=\"";
 var USER_LIST_TEMPLATE4 = "\" type=\"";
@@ -38,7 +38,8 @@ var USER_LIST_TEMPLATE5 = "\" href=\"#\" class=\"s_button6 w-button\"></a><a id=
 var USER_LIST_TEMPLATE6 = "\" type=\"";
 var USER_LIST_TEMPLATE7 = "\" href=\"#\" class=\"s_button7 w-button\"></a></div></div></div></div></li>";
 
-var usrType;
+var userId;
+var userType;
 var lastEditDeleteBtn;
 var editDeleteUserId;
 var editDeleteUserType;
@@ -69,7 +70,7 @@ function fShowHelloMsg(msg) {
 
 function fShowAddCareer() {
 	$("#Careers").hide();
-	$("#AddCareers").show();
+	$("#AddCareer").show();
 }
 
 function fShowAddAssistant() {
@@ -88,6 +89,7 @@ function fShowAddTeacher() {
 }
 
 function fShowEditUser() {
+	console.log("showEditUser");
 	var url;
 
 	editDeleteUserId = $(this).attr("value");
@@ -146,8 +148,10 @@ function fLogIn() {
 					$("#TextBox_Email").val(""); //Es importante limpiar los campos de texto
 					$("#TextBox_Password").val("");
 					$("#LogIn").hide();
-					usrType = result.usrType;
-					switch (usrType) {
+					userId = result.userId;
+					console.log(userId);
+					userType = result.userType;
+					switch (userType) {
 						case USR_TYPE_MANAGER:
 						$("#ManagerMenu").show();
 						break;null
@@ -222,7 +226,7 @@ function fClearAddCareer() {
 	$("#TextBox_AddCareer_University").val("");
 	$("#TextBox_AddCareer_CareerName").val("");
 	$("#TextBox_AddCareer_Plan").val("");
-	$("#AddCareers").hide();
+	$("#AddCareer").hide();
 	fDisplayCareers();
 
 }
@@ -309,8 +313,8 @@ function fAddTeacher() {
 function fClearAddTeacher() {
 	fClearUserForm();
 	$("#Form_CareerSelector").hide();
-	$("#Btn_AddAssistantSubmit").hide();
-	$("#Btn_AddAssistantCancel").hide();
+	$("#Btn_AddTeacherSubmit").hide();
+	$("#Btn_AddTeacherCancel").hide();
 	$("#AddUser").hide();
 	fDisplayTeachers();
 }
@@ -471,7 +475,7 @@ function fClearEditUser() {
 	$("#TextBox_AddUser_Name").val("");
 	$("#TextBox_AddUser_LastName").val("");
 	$("#Btn_UpdateUserSubmit").hide();
-	$("#Btn_AddTeacherCancel").hide();
+	$("#Btn_UpdateUserCancel").hide();
 	$("#AddUser").hide();
 
 	switch (Number(editDeleteUserType)) {
@@ -503,13 +507,15 @@ function fConfirmDeleteUser() {
 			$("#Teachers").hide();
 			break;
 	}
-	$("#ConfirmDelete").show();
+	$("#ConfirmAction").show();
+	$("#Btn_DeleteUserSubmit").show();
+	$("#Btn_DeleteUserCancel").show();
 }
 
 function fDeleteUser() {
 	var url;
 
-	$("#ConfirmDelete").hide();
+	$("#ConfirmAction").hide();
 
 	switch (Number(editDeleteUserType)) {
 		case USR_TYPE_ASSISTANT:
@@ -563,43 +569,65 @@ function fDeleteCareer() {
 }
 
 $(document).ready(function(){
-	$("#Btn_Start").click(fReload);
-	$("#Btn_LogIn1").click(fShowLogIn);
-	$("#Btn_LogIn2").click(fShowLogIn);
-	$("#Btn_LogInSubmit").click(fLogIn);
-	$("#Btn_Careers").click(fDisplayCareers);
-	$("#Btn_Assistants").click(fDisplayAssistants);
-	//$("#Btn_Schedules").click();
-	$("#Btn_AddCareer").click(fShowAddCareer);
-	$("#Btn_AddCareerSubmit").click(fAddCareer);
-	$("#Btn_AddCareerCancel").click(fClearAddCareer);
-	$("#Btn_AddAssistant").click(fShowAddAssistant);
-	$("#Btn_AddAssistantSubmit").click(fAddAssistant);
-	$("#Btn_AddAssistantCancel").click(fClearAddAssistant);
-	//$("Btn_Coordinators").click();
-	//$("Btn_Groups1").click();
-	$("#Btn_Teachers1").click(fDisplayTeachers);
-	$("#Btn_AddTeacher").click(fShowAddTeacher);
-	$("#Btn_AddTeacherSubmit").click(fAddTeacher);
-	$("#Btn_AddTeacherCancel").click(fClearAddTeacher);
+	$(document).on("click", "#Btn_Start", fReload);
+	$(document).on("click", "#Btn_LogIn1", fShowLogIn);
+	$(document).on("click", "#Btn_LogIn2", fShowLogIn);
+	$(document).on("click", "#Btn_LogInSubmit", fLogIn);
+	$(document).on("click", "#Btn_Careers", fDisplayCareers);
+	$(document).on("click", "#Btn_Assistants", fDisplayAssistants);
+	//$(document).on("click", "#Btn_Schedules", );
+	$(document).on("click", "#Btn_AddCareer", fShowAddCareer);
+	$(document).on("click", "#Btn_AddCareerSubmit", fAddCareer);
+	$(document).on("click", "#Btn_AddCareerCancel", fClearAddCareer);
+	$(document).on("click", "#Btn_AddAssistant", fShowAddAssistant);
+	$(document).on("click", "#Btn_AddAssistantSubmit", fAddAssistant);
+	$(document).on("click", "#Btn_AddAssistantCancel", fClearAddAssistant);
+	//$(document).on("click", "Btn_Coordinators", );
+	//$(document).on("click", "Btn_Groups1", );
+	$(document).on("click", "#Btn_Teachers1", fDisplayTeachers);
+	$(document).on("click", "#Btn_AddTeacher", fShowAddTeacher);
+	$(document).on("click", "#Btn_AddTeacherSubmit", fAddTeacher);
+	$(document).on("click", "#Btn_AddTeacherCancel", fClearAddTeacher);
 
-	$("#Btn_UpdateUserSubmit").click(fEditUser);
-	$("#Btn_UpdateUserCancel").click(fClearEditUser);
-	$("#Btn_DeleteUserSubmit").click(fDeleteUser);
-	$("#Btn_DeleteUserCancel").click(fClearDeleteUser);
-});
-/* Agregar un handler de tipo click a elementos de una lista que aun no han sido agregados */
-$(document).on("click", "ul li",function(){
-	if (lastEditDeleteBtn) {
-		lastEditDeleteBtn.hide();
-	}
-    lastEditDeleteBtn = $(this).find("#Btn_Edit_Delete");
-	lastEditDeleteBtn.show();
-});
+	$(document).on("click", "#Btn_UpdateUserSubmit", fEditUser);
+	$(document).on("click", "#Btn_UpdateUserCancel", fClearEditUser);
+	$(document).on("click", "#Btn_DeleteUserSubmit", fDeleteUser);
+	$(document).on("click", "#Btn_DeleteUserCancel", fClearDeleteUser);
 
-$(document).on("click", "#Btn_Edit_User", fShowEditUser);
-$(document).on("click", "#Btn_Delete_User", fConfirmDeleteUser);
-$(document).on("click", "#Btn_Edit_Career", fEditCareer);
+	$(document).on("click", "#Btn_Availability", {id: userId}, fShowAvailability);
+
+	$(document).on("click", "#Availability .monday", {btnClassName: "monday", btnMarkAll: "Btn_AllMonday"}, fPressBox);
+	$(document).on("click", "#Availability .tuesday", {btnClassName: "tuesday", btnMarkAll: "Btn_AllTuesday"}, fPressBox);
+	$(document).on("click", "#Availability .wednesday", {btnClassName: "wednesday", btnMarkAll: "Btn_AllWednesday"}, fPressBox);
+	$(document).on("click", "#Availability .thursday", {btnClassName: "thursday", btnMarkAll: "Btn_AllThursday"}, fPressBox);
+	$(document).on("click", "#Availability .friday", {btnClassName: "friday", btnMarkAll: "Btn_AllFriday"}, fPressBox);
+	$(document).on("click", "#Availability .saturday", {btnClassName: "saturday", btnMarkAll: "Btn_AllSaturday"}, fPressBox);
+
+	$(document).on("click", "#Btn_AllMonday", {btnClassName: "monday"}, fPressAllBoxes);
+	$(document).on("click", "#Btn_AllTuesday", {btnClassName: "tuesday"}, fPressAllBoxes);
+	$(document).on("click", "#Btn_AllWednesday", {btnClassName: "wednesday"}, fPressAllBoxes);
+	$(document).on("click", "#Btn_AllThursday", {btnClassName: "thursday"}, fPressAllBoxes);
+	$(document).on("click", "#Btn_AllFriday", {btnClassName: "friday"}, fPressAllBoxes);
+	$(document).on("click", "#Btn_AllSaturday", {btnClassName: "saturday"}, fPressAllBoxes);
+
+	$(document).on("click", "#Btn_SaveAvailabilitySubmit", fChangeAvailability);
+	$(document).on("click", "#Btn_SaveAvailabilityCancel", fReloadAvailability);
+	$(document).on("click", "#Btn_SaveAvailability", fConfirmSaveAvailability);
+	$(document).on("click", "#Btn_CancelAvailability", fReloadAvailability);
+
+	/* Agregar un handler de tipo click a elementos de una lista que aun no han sido agregados */
+	$(document).on("click", "ul .clickable",function(){
+		if (lastEditDeleteBtn) {
+			lastEditDeleteBtn.hide();
+		}
+		lastEditDeleteBtn = $(this).find("#Btn_Edit_Delete");
+		lastEditDeleteBtn.show();
+	});
+
+	$(document).on("click", "#Btn_Edit_User", fShowEditUser);
+	$(document).on("click", "#Btn_Delete_User", fConfirmDeleteUser);
+	$(document).on("click", "#Btn_Edit_Career", fEditCareer);
+});
 //$(document).on("click", "#Btn_Delete_Career", fConfirmDeleteCareer);
 
 /* Saber si un boton fue oprimido y optener valores del boton
