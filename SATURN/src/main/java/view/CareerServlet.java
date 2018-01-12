@@ -58,14 +58,52 @@ public class CareerServlet {
 		}
 		return Response.status(200).entity(object.toString()).build();
 	}
+        
+        @PUT
+        @Path("/{id}")
+        @Consumes(MediaType.APPLICATION_JSON)
+        public Response updateCareer(@PathParam("id") String idStr, Career career) throws SQLException, ClassNotFoundException {
+            String status;
+            JSONObject object;
+            
+            status = "WRONG";
+            object = new JSONObject();
+            try {
+                    DatabaseController d = new DatabaseController();
+                    if(d.updateCareer(career, Integer.parseInt(idStr))){ 
+                        status = "OK";
+                        
+                    }
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
+        }
 
 	@DELETE
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteCareer(@PathParam("id") String idStr) {
+	public Response deleteCareer(@PathParam("id") String idStr, Career career) throws SQLException, ClassNotFoundException {
 
-		String result = "Resultado.......";
-
-		return Response.status(200).entity(result).build();
+		String status;
+		JSONObject object;
+                
+                status = "WRONG";
+                object = new JSONObject();
+                
+                try {
+                        DatabaseController d = new DatabaseController();
+                        if(d.deleteCareer(career)){ 
+                            status = "OK";
+                        }
+                            object.put("status", status);
+                        
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
+              
 	}
+
 }

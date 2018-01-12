@@ -127,8 +127,8 @@ public class CareerConnector {
         return rs;
     }
     
-    public boolean updateCareer(Connection conn, Career c) throws ClassNotFoundException{
-        boolean state =  false;
+     /*
+    boolean state =  false;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             String sql = "UPDATE Careers SET University = ?, CareerName = ? WHERE CareerId = ?";
@@ -142,6 +142,24 @@ public class CareerConnector {
                 System.out.println("Career was updated!");
                 state = true;
             }
+
+        */
+    
+    public boolean updateCareer(Connection conn, Career c, int id) throws ClassNotFoundException{
+        boolean state =  false;
+        int cont = 1, contUni, contName, contId;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String sql = "UPDATE Careers SET";
+            if(c.getUniversity()!=null)sql.concat(" University = ?");contUni = cont++;
+            if(c.getCareerName()!=null)sql.concat(" CareerName = ?");contName = cont++;
+            sql.concat(" WHERE CareerId = ?");contId = cont++;
+            PreparedStatement statement = conn.prepareStatement(sql);
+            if(c.getUniversity()!=null)statement.setString(contUni, c.getUniversity());
+            if(c.getCareerName()!=null)statement.setString(contName, c.getCareerName());
+                statement.setInt(contId, id);
+        
+      
 
         } catch(SQLException ex) {
            ex.printStackTrace();

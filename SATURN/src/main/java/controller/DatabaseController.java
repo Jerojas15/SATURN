@@ -21,7 +21,10 @@ public class DatabaseController {
     public Connection makeConnection() throws SQLException, ClassNotFoundException{
         //manera de acceso a la base de Julio
         Class.forName("com.mysql.jdbc.Driver");
-        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin"); 
+        //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
+        
+        //manera de acceso a la base de Jose Miguel
+         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
         return conn;
     }
     
@@ -118,9 +121,10 @@ public class DatabaseController {
         return status;
     }
     
-    public boolean updateCareer(Career c, String Career, String Plan) throws ClassNotFoundException{
+    //public boolean updateCareer(Career c, String Career, String Plan) throws ClassNotFoundException{
+    public boolean updateCareer(Career c, int id) throws ClassNotFoundException{
         CareerConnector connector = new CareerConnector();
-        Boolean status = connector.updateCareer(conn, c);
+        Boolean status = connector.updateCareer(conn, c, id);
         return status;
     }
 }
