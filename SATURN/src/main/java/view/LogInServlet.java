@@ -29,7 +29,8 @@ public class LogInServlet {
 			userType = d.login(logIn);
 			if(userType != -1){
 				object.put("status", "OK");
-				object.put("usrType", userType);  //Se debe completar
+				object.put("usrType", userType);
+				object.put("userId", 0);  //Se debe completar
 			}else{
 				object.put("status", "WRONG_DATA");
 			}
