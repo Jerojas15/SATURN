@@ -23,7 +23,8 @@ public class LogInServlet {
 		JSONObject object = new JSONObject();
 		try {
 			object.put("status", "OK");
-			object.put("usrType", User.TYPE.ASSISTANT.ordinal());  //Se debe completar
+			object.put("userType", User.TYPE.TEACHER.ordinal());  //Se debe completar
+			object.put("userId", 0); //Se debe completar
 			object.put("helloMsg", "Bienvenido, Administrador"); //Se debe completar
 		} catch (JSONException e) {
 			e.printStackTrace();

@@ -19,6 +19,8 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import controller.DatabaseController;
+import model.Availability;
+import model.Career;
 import model.User;
 
 @Path("/teachers")
@@ -120,4 +122,44 @@ public class TeacherServlet {
 		return Response.status(200).entity(object.toString()).build();
 	}
 
+	@GET
+	@Path("/availabilities/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public static List<Availability> getTeacherAvailabilities(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
+		//DatabaseController d = new DatabaseController();
+		//List<Career> l = d.();
+		ArrayList<Availability> l = new ArrayList<>();
+		l.add(new Availability(0, Availability.DAY.MONDAY.ordinal(), 9, 19));
+		l.add(new Availability(0, Availability.DAY.TUESDAY.ordinal(), 7, 21));
+		l.add(new Availability(0, Availability.DAY.WEDNESDAY.ordinal(), 9, 10));
+		l.add(new Availability(0, Availability.DAY.WEDNESDAY.ordinal(), 12, 12));
+		l.add(new Availability(0, Availability.DAY.THURSDAY.ordinal(), 9, 19));
+		l.add(new Availability(0, Availability.DAY.FRIDAY.ordinal(), 9, 19));
+		l.add(new Availability(0, Availability.DAY.SATURDAY.ordinal(), 9, 19));
+		
+		return l;
+	}
+	
+	@PUT
+	@Path("/availabilities/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response updateTeacherAvailabilities(@PathParam("id") String idStr, List<Availability> l) {
+		System.out.println(idStr);
+		ArrayList<Availability> list = (ArrayList<Availability>)l;
+		for(int i = 0; i< list.size(); i++) {
+			System.out.println(list.get(i).getDay() + " " + list.get(i).getStartHour() + " " + list.get(i).getEndHour());
+		}
+		String status;
+		JSONObject object;
+		
+		status = "OK";
+		
+		object = new JSONObject();
+		try {
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
+	}
 }
