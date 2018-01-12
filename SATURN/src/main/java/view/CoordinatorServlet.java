@@ -69,20 +69,48 @@ public class CoordinatorServlet {
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateCoordinator(@PathParam("id") String idStr) {
+	public Response updateCoordinator(@PathParam("id") String idStr, User usr) throws SQLException, ClassNotFoundException {
+		//System.out.println(idStr);
 		
-		String result = "Resultado.......";
+		String status;
+		JSONObject object;
 		
-		return Response.status(200).entity(result).build();
+		//System.out.println(idStr);
+		status = "WRONG";
+		
+		object = new JSONObject();
+		try {
+                    DatabaseController d = new DatabaseController();
+                    if(d.updateUser(usr, Integer.parseInt(idStr))){
+                        status = "OK";
+                        
+                    }
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
 	}
 
 	@DELETE
         @Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteCoordinator(@PathParam("id") String idStr) {
+	public Response deleteCoordinator(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
+		String status;
+		JSONObject object;
+		status = "WRONG";
 		
-		String result = "Resultado.......";
-		
-		return Response.status(200).entity(result).build();
+		object = new JSONObject();
+		try {
+                    DatabaseController d = new DatabaseController();
+                    if(d.deleteUser(Integer.parseInt(idStr))){
+                        status = "OK";
+                        
+                    }
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
 	}
 }

@@ -26,7 +26,7 @@ public class TeacherServlet {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public static List<User> getAssistants() throws SQLException, ClassNotFoundException {
+	public static List<User> getTeachers() throws SQLException, ClassNotFoundException {
 		/*
 		DatabaseController d = new DatabaseController();
 		List<User> l = d.getUserbyType(User.TYPE.TEACHER.ordinal());
@@ -104,16 +104,18 @@ public class TeacherServlet {
 	@DELETE
     @Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteTeacher(@PathParam("id") String idStr) {
-		
+	public Response deleteTeacher(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
 		String status;
 		JSONObject object;
-		
-		System.out.println(idStr);
-		status = "OK";
+		status = "WRONG";
 		
 		object = new JSONObject();
 		try {
+                    DatabaseController d = new DatabaseController();
+                    if(d.deleteUser(Integer.parseInt(idStr))){
+                        status = "OK";
+                        
+                    }
 			object.put("status", status);
 		} catch (JSONException e) {
 			e.printStackTrace();

@@ -235,15 +235,18 @@ function fClearAddCareer() {
 
 function fAddAssistant() {
 	var userName = $("#TextBox_AddUser_UserName").val();
+	var password = $("#TextBox_AddUser_Password").val();
+	var confirmPassword = $("#TextBox_AddUser_Confirm_Password").val();
 	var name = $("#TextBox_AddUser_Name").val();
 	var lastName = $("#TextBox_AddUser_LastName").val();
-	if (userName && name && lastName) {
+        var career = $("#Select_AddUser_Career").val();
+	if (userName && name && lastName && (password === confirmPassword)) {
 		$.ajax({
 			method: 'POST',
 			url: URL_ASSISTANTS,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName, "type" : USR_TYPE_ASSISTANT}),
+			data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName, "type" : USR_TYPE_ASSISTANT, "password" : password, "careerId" : career}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
@@ -544,6 +547,17 @@ function fDeleteUser() {
 			console.log("[Login] Error: " + error);
 		}
 	});
+        switch (Number(editDeleteUserType)) {
+		case USR_TYPE_ASSISTANT:
+			$("#Assistants").show();
+			break;
+		case USR_TYPE_COORDINATOR:
+			//$("#Coordinators").hide();
+			break;
+		case USR_TYPE_TEACHER:
+			$("#Teachers").show();
+			break;
+	}
 }
 
 function fClearDeleteUser() {

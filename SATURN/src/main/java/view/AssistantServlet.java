@@ -81,20 +81,48 @@ public class AssistantServlet {
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateAssistant(@PathParam("id") String idStr) {
+	public Response updateAssistant(@PathParam("id") String idStr, User usr) throws ClassNotFoundException, SQLException {
 
-		String result = "Resultado.......";
-
-		return Response.status(200).entity(result).build();
+		//System.out.println(idStr);
+		
+		String status;
+		JSONObject object;
+		
+		//System.out.println(idStr);
+		status = "WRONG";
+		
+		object = new JSONObject();
+		try {
+                    DatabaseController d = new DatabaseController();
+                    if(d.updateUser(usr, Integer.parseInt(idStr))){
+                        status = "OK";
+                        
+                    }
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteAssistant(@PathParam("id") String idStr) {
-
-
-		String result = "Resultado.......";
-
-		return Response.status(200).entity(result).build();
+	public Response deleteAssistant(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
+                String status;
+		JSONObject object;
+		status = "WRONG";
+		
+		object = new JSONObject();
+		try {
+                    DatabaseController d = new DatabaseController();
+                    if(d.deleteUser(Integer.parseInt(idStr))){
+                        status = "OK";
+                        
+                    }
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
 	}
 }

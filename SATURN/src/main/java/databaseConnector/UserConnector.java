@@ -120,23 +120,24 @@ public class UserConnector {
     
     public Boolean updateUser(Connection conn, User u, int id) throws ClassNotFoundException{
         boolean state =  false;
-        int cont = 1, contName, contLast, contUser, contPass, contId;
-        
+        int cont = 1;
+        boolean first = true;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             String sql = "UPDATE Users SET";
-            if(u.getName()!=null)sql.concat(" Name = ?");contName = cont++;
-            if(u.getLastName()!=null)sql.concat(" LastName = ?");contLast = cont++;
-            if(u.getUserName()!=null)sql.concat(" UserName = ?");contUser = cont++;
-            if(u.getPassword()!=null)sql.concat(" Password = ?");contPass = cont++;
-            sql.concat(" WHERE UserId = ?");contId = cont++;
+            if(u.getName()!=null)sql = sql.concat(" Name = ?");first = false;
+            if(u.getLastName()!=null)if(!first)sql = sql.concat(",");else first = false; sql = sql.concat(" LastName = ?");
+            if(u.getUserName()!=null)if(!first)sql = sql.concat(",");else first = false; sql = sql.concat(" UserName = ?");
+            if(u.getPassword()!=null)if(!first)sql = sql.concat(",");else first = false; sql = sql.concat(" Password = ?");
+            sql = sql.concat(" WHERE UserId = ?");
+            
             PreparedStatement statement = conn.prepareStatement(sql);
-            if(u.getName()!=null)statement.setString(contName, u.getName());
-            if(u.getLastName()!=null)statement.setString(contLast, u.getLastName());
-            if(u.getUserName()!=null)statement.setString(contUser, u.getUserName());
-            if(u.getPassword()!=null)statement.setString(contPass, u.getPassword());
-                statement.setInt(contId, id);
-
+            if(u.getName()!=null)statement.setString(cont++, u.getName());
+            if(u.getLastName()!=null)statement.setString(cont++, u.getLastName());
+            if(u.getUserName()!=null)statement.setString(cont++, u.getUserName());
+            if(u.getPassword()!=null)statement.setString(cont++, u.getPassword());
+                statement.setInt(cont++, id);
+                System.out.println(statement.toString());
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
                     System.out.println("User was updated!");
