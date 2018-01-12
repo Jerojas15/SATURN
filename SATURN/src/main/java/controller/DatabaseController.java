@@ -8,17 +8,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Career;
+import model.LogIn;
 import model.User;
 
 public class DatabaseController {
     private Connection conn;
-    public DatabaseController() throws SQLException{
+    public DatabaseController() throws SQLException, ClassNotFoundException{
         conn = makeConnection();
+        
     }
     
-    public Connection makeConnection() throws SQLException{
+    public Connection makeConnection() throws SQLException, ClassNotFoundException{
         //manera de acceso a la base de Julio
-        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin"); 
+        Class.forName("com.mysql.jdbc.Driver");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
+        
+        //manera de acceso a la base de Jose Miguel
+        // conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
         return conn;
     }
     
@@ -28,15 +34,28 @@ public class DatabaseController {
         return status;
     }
     
+    public int login(LogIn l) throws ClassNotFoundException, SQLException{
+        int status = -1;
+        UserConnector connector = new UserConnector();
+        ResultSet list = connector.checkLogin(conn);
+        while(list.next()){
+            if(l.getEmail().equals(list.getString("UserName"))&&l.getPassword().equals(list.getString("Password"))){
+                status = Integer.parseInt(list.getString("UserType"));
+            }
+        }
+        return status;
+    }
+    
     public ArrayList<Career> getCareers() throws ClassNotFoundException, SQLException{
         CareerConnector connector = new CareerConnector();
         ArrayList<Career> list = new ArrayList<>();
         ResultSet rs = connector.getAllCareers(conn);
-        
         while(rs.next()){
             Career c = new Career();
             c.setUniversity(rs.getString("University"));
             c.setCareerName(rs.getString("CareerName"));
+            c.setPlan(connector.getPlanName(conn, c));
+            
             list.add(c); 
         }
         return list;
@@ -49,17 +68,20 @@ public class DatabaseController {
     }
     
     
-    public ArrayList<User> getUserbyType(int Type) throws SQLException, ClassNotFoundException{
+    public ArrayList<User> getUserbyType(int Type, int career) throws SQLException, ClassNotFoundException{
         UserConnector connector = new UserConnector();
         ArrayList<User> list = new ArrayList<>();
-        ResultSet rs = connector.getUserbyType(conn, Type);
+        ResultSet rs = connector.getUserbyType(conn, Type, career);
         
         while(rs.next()){
             User u = new User();
+            u.setId(rs.getInt("UserId"));
             u.setLastName(rs.getString("LastName"));
             u.setName(rs.getString("Name"));
             u.setType(rs.getInt("UserType"));
+            u.setUserName(rs.getString("UserName"));
             u.setCareerId(1);
+            
             list.add(u); 
         }
         return list;
@@ -93,39 +115,16 @@ public class DatabaseController {
         return status;
     }
     
-    public boolean updateUser(User u) throws ClassNotFoundException{
+    public boolean updateUser(User u, int id) throws ClassNotFoundException{
         UserConnector connector = new UserConnector();
-        Boolean status = connector.updateUser(conn, u);
+        Boolean status = connector.updateUser(conn, u, id);
         return status;
     }
     
-    public boolean updateCareer(Career c, String Career, String Plan) throws ClassNotFoundException{
+    //public boolean updateCareer(Career c, String Career, String Plan) throws ClassNotFoundException{
+    public boolean updateCareer(Career c, int id) throws ClassNotFoundException{
         CareerConnector connector = new CareerConnector();
-        Boolean status = connector.updateCareer(conn, c);
+        Boolean status = connector.updateCareer(conn, c, id);
         return status;
-    }
-    
-    //METODO PARA PROBAR
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        DatabaseController d = new DatabaseController();
-        /*
-        Career c = new Career();
-        c.setCareer("Carrera2");
-        c.setPlan("asd");
-        c.setUniversity("TEC");
-        Boolean status = d.updateCareer(c,"Carrera","asd");
-
-        ArrayList<Career> list = d.getCareers();
-        
-        for(int i = 0;i<list.size();i++){
-            System.out.println(list.get(i).getCareer());
-        }
-        Boolean status2 = d.deleteCareer(c);
-        ArrayList<Career> list2 = d.getCareers();
-        
-        for(int i = 0;i<list2.size();i++){
-            System.out.println(list2.get(i).getCareer());
-        }
-        */
     }
 }

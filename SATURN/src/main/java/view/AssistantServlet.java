@@ -31,7 +31,7 @@ public class AssistantServlet {
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<User> getAssistants() throws SQLException, ClassNotFoundException {
 		DatabaseController d = new DatabaseController();
-		List<User> l = d.getUserbyType(User.TYPE.ASSISTANT.ordinal());
+		List<User> l = d.getUserbyType(User.TYPE.ASSISTANT.ordinal(), 1);
 		/*
 		ArrayList<User> l = new ArrayList<>();
 		l.add(new User(0, "jyock1997@gmail.com", "Jose Paulo", "Yock Fuentes", 0));

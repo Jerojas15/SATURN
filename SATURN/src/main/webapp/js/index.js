@@ -94,6 +94,7 @@ function fShowEditUser() {
 
 	editDeleteUserId = $(this).attr("value");
 	editDeleteUserType = $(this).attr("type");
+        
 	$("#AddUser").show();
 	$("#Btn_UpdateUserSubmit").show();
 	$("#Btn_UpdateUserCancel").show();
@@ -154,18 +155,22 @@ function fLogIn() {
 					switch (userType) {
 						case USR_TYPE_MANAGER:
 						$("#ManagerMenu").show();
-						break;null
+                                                result.helloMsg = "Bienvenido, Administrador";
+						break;
 
 						case USR_TYPE_ASSISTANT:
 						$("#AssistantMenu").show();
+                                                result.helloMsg = "Bienvenido, Asistente";
 						break;
 
 						case USR_TYPE_COORDINATOR:
 						$("#CoordinatorMenu").show();
+                                                result.helloMsg = "Bienvenido, Coordinador";
 						break;
 
 						case USR_TYPE_TEACHER:
 						$("#TeacherMenu").show();
+                                                result.helloMsg = "Bienvenido, Profesor";
 						break;
 					}
 					fShowHelloMsg(result.helloMsg);
@@ -173,6 +178,7 @@ function fLogIn() {
 			},
 
 			error: function(request, status, error){
+                                alert("Usuario o contraseña incorrecto");
 				console.log("[Login] Error: " + error);
 			}
 		});
@@ -278,6 +284,7 @@ function fAddTeacher() {
 	var confirmPassword = $("#TextBox_AddUser_Confirm_Password").val();
 	var name = $("#TextBox_AddUser_Name").val();
 	var lastName = $("#TextBox_AddUser_LastName").val();
+        var career = $("#Select_AddUser_Career").val();
 	if (userName && name && lastName && password && confirmPassword) {
 		if (password === confirmPassword) {
 			$.ajax({
@@ -285,7 +292,7 @@ function fAddTeacher() {
 				url: URL_TEACHERS,
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
-				data: JSON.stringify({"userName" : userName, "password" : password, "name" : name, "lastName" : lastName, "type" : USR_TYPE_TEACHER}),
+				data: JSON.stringify({"userName" : userName, "password" : password, "name" : name, "lastName" : lastName, "type" : USR_TYPE_TEACHER, "careerId" : career}),
 
 				success: function(result){
 					console.log("[Login] Result " + JSON.stringify(result));

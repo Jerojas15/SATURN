@@ -34,14 +34,10 @@ public class TeacherServlet {
 		List<User> l = d.getUserbyType(User.TYPE.TEACHER.ordinal());
 		System.out.println(User.TYPE.TEACHER.ordinal());
 		*/
-		
-		ArrayList<User> l = new ArrayList<>();
-		l.add(new User(0, "jyock1997@gmail.com", null, "Jose Paulo", "Yock Fuentes", 0, 0));
-		l.add(new User(1, "je@hotmail.com", null, "Julio Esteban", "Rojas", 0, 1));
-		l.add(new User(2, "sjenkins@siua.ac.cr", null, "Scarlet", "Jenkins", 0, 2));
-		l.add(new User(3, "jmiguelh@gmail.com", null, "Jose Miguel", "Hernandez", 0, 3));
-		
-		
+		DatabaseController d = new DatabaseController();
+                
+		ArrayList<User> l = d.getUserbyType(3, 1);//3 profesor, 1 carrera compu
+                
 		return l;
 	}
 	
@@ -56,13 +52,13 @@ public class TeacherServlet {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createTeacher(User usr) {
-		
 		String status;
 		JSONObject object;		
 		DatabaseController d;
 		
 		
 		try {
+                    
 			d = new DatabaseController();
 			if (d.insertNewUser(usr))
 				status = "OK";
@@ -84,17 +80,22 @@ public class TeacherServlet {
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateTeacher(@PathParam("id") String idStr, User usr) {
-		System.out.println(idStr);
+	public Response updateTeacher(@PathParam("id") String idStr, User usr) throws SQLException, ClassNotFoundException {
+		//System.out.println(idStr);
 		
 		String status;
 		JSONObject object;
 		
-		System.out.println(idStr);
-		status = "OK";
+		//System.out.println(idStr);
+		status = "WRONG";
 		
 		object = new JSONObject();
 		try {
+                    DatabaseController d = new DatabaseController();
+                    if(d.updateUser(usr, Integer.parseInt(idStr))){
+                        status = "OK";
+                        
+                    }
 			object.put("status", status);
 		} catch (JSONException e) {
 			e.printStackTrace();
