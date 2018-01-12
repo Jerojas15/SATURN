@@ -22,17 +22,20 @@ public class LogInServlet {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response Login(LogIn logIn) throws SQLException, ClassNotFoundException {
 		JSONObject object = new JSONObject();
+
 		DatabaseController d = new DatabaseController();
-                int userType;
-                try {
-                        userType = d.login(logIn);
-                        if(userType != -1){
-                            object.put("status", "OK");
-                            object.put("usrType", userType);  //Se debe completar
-                        }else{
-                            object.put("status", "WRONG_DATA");
-                        }
-			
+		int userType;
+		try {
+			userType = d.login(logIn);
+			if(userType != -1){
+				object.put("status", "OK");
+				object.put("usrType", userType);
+				object.put("userId", 0);  //Se debe completar
+			}else{
+				object.put("status", "WRONG_DATA");
+			}
+
+
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

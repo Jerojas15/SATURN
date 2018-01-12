@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import model.Availability;
 import model.Career;
 
 @Path("/careers")

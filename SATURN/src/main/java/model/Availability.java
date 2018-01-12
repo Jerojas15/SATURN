@@ -1,44 +1,47 @@
 package model;
 
 public class Availability {
-        int teacher;
-        int startTime;
-        int finishTime;
-        int day;
+	
+	public static enum DAY {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY}
 
-        public Availability() {}
-        
-        public Availability(int teacher, int startTime, int finishTime, int day) {
-            this.teacher = teacher;
-            this.startTime = startTime;
-            this.finishTime = finishTime;
-            this.day = day;
-        }
-        
-        public int getTeacher() {
-            return teacher;
-        }
-        public int getStart_Time() {
-            return startTime;
-        }
-        public int getFinish_Time() {
-            return finishTime;
-        }
-        public int getDay() {
-            return day;
-        }
+	private int teacherId;
+	private int startHour;
+	private int endHour;
+	private int day;
 
-        public void setTeacher(int teacher) {
-            this.teacher = teacher;
-        }
-        public void setStart_Time(int startTime) {
-            this.startTime = startTime;
-        }
-        public void setFinish_Time(int finishTime) {
-            this.finishTime = finishTime;
-        }
-        public void setDay(int day) {
-            this.day = day;
-        }
+	public Availability() {}
+
+	public Availability(int teacherId, int day, int startHour, int endHour) {
+		this.teacherId = teacherId;
+		this.day = day;
+		this.startHour = startHour;
+		this.endHour = endHour;
+	}
+
+	public int getTeacher() {
+		return teacherId;
+	}
+	public int getStartHour() {
+		return startHour;
+	}
+	public int getEndHour() {
+		return endHour;
+	}
+	public int getDay() {
+		return day;
+	}
+
+	public void setTeacher(int teacherId) {
+		this.teacherId = teacherId;
+	}
+	public void setStartHour(int startHour) {
+		this.startHour = startHour;
+	}
+	public void setEndHour(int endHour) {
+		this.endHour = endHour;
+	}
+	public void setDay(int day) {
+		this.day = day;
+	}
 
 }

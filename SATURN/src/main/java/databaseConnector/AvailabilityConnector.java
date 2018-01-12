@@ -16,8 +16,8 @@ public class AvailabilityConnector {
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, a.getTeacher());
-        statement.setInt(2, a.getStart_Time());
-        statement.setInt(3, a.getFinish_Time());
+        statement.setInt(2, a.getStartHour());
+        statement.setInt(3, a.getEndHour());
         statement.setInt(4, a.getDay());
 
         int rowsInserted = statement.executeUpdate();
