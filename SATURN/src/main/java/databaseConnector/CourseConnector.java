@@ -32,6 +32,53 @@ public class CourseConnector {
         return state;
     }
     
+    public boolean updateCourse(Connection conn, Course c, int id) throws ClassNotFoundException{
+        boolean state =  false;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String sql = "UPDATE Courses SET CourseId = ?, CourseCode = ?, CourseName = ?, Semester = ?, CareerId = ?";
+
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
+            statement.setString(2, Integer.toString(c.getCode()));
+            statement.setString(3, c.getName());
+            statement.setInt(4, c.getSemester());
+            statement.setInt(5, c.getCareerId());
+            
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Course was updated!");
+                state = true;
+            }
+
+        } catch(SQLException ex) {
+           ex.printStackTrace();
+        }
+        return state;
+    }
+    
+    public boolean deleteCourse(Connection conn, int id) throws ClassNotFoundException{
+        boolean state = false;
+            try{
+                Class.forName("com.mysql.jdbc.Driver");
+
+                String sql = "delete FROM Course WHERE CourseId = ?";
+
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1, id);
+                
+                int rowsInserted = statement.executeUpdate();
+                if (rowsInserted > 0) {
+                    System.out.println("Course was deleted!");
+                    state = true;
+                }
+
+            } catch(SQLException ex) {
+               ex.printStackTrace();
+            }
+           return state;
+    }
+    
     public ResultSet getCoursebyCareer(Connection conn, int careerId) throws ClassNotFoundException{
         ResultSet rs = null;
         try{    
