@@ -4,7 +4,6 @@ public class User {
 
 	public static enum TYPE {MANAGER, ASSISTANT, COORDINATOR, TEACHER}
 
-	private int id;
 	private String userName;
 	private String password;
 	private String name;
@@ -14,18 +13,13 @@ public class User {
 
 	public User() {}
 
-	public User(int id, String userName, String password, String name, String lastName, int type, int careerId) {
-		this.id = id;
+	public User(String userName, String password, String name, String lastName, int type, int careerId) {
 		this.userName = userName;
 		this.password = password;
 		this.name = name;
 		this.lastName = lastName;
 		this.type = type;
 		this.careerId = careerId;
-	}
-
-	public int getId() {
-		return id;
 	}
         
 	public String getUserName() {
@@ -50,10 +44,6 @@ public class User {
 
 	public int getCareerId() {
 		return careerId;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
         
 	public void setUserName(String userName) {
