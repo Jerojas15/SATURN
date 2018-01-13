@@ -1,6 +1,7 @@
 package controller;
 
 import databaseConnector.CareerConnector;
+import databaseConnector.CourseConnector;
 import databaseConnector.UserConnector;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Career;
+import model.Course;
 import model.LogIn;
 import model.User;
 
@@ -109,7 +111,6 @@ public class DatabaseController {
 
             while(rs.next()){
                 User u = new User();
-                u.setId(rs.getInt("UserId"));
                 u.setLastName(rs.getString("LastName"));
                 u.setName(rs.getString("Name"));
                 u.setType(rs.getInt("UserType"));
@@ -140,6 +141,22 @@ public class DatabaseController {
 /*
  * FUNCIONES DE CURSO
  */
-        
+        public Boolean insertNewCourse(Course c) throws ClassNotFoundException{
+            CourseConnector connector = new CourseConnector();
+            Boolean status = connector.insertNewCourse(conn, c);
+            return status;
+        }
+
+        public boolean deleteCourse(int id) throws ClassNotFoundException{
+            CourseConnector connector = new CourseConnector();
+            Boolean status = connector.deleteCourse(conn, id);
+            return status;
+        }
+
+        public boolean updateCourse(Course c, int id) throws ClassNotFoundException{
+            CourseConnector connector = new CourseConnector();
+            Boolean status = connector.updateCourse(conn, c, id);
+            return status;
+        }
         
 }
