@@ -2,7 +2,8 @@ var URL_LOGIN = "/SATURN/rest/login";
 var URL_CAREERS = "/SATURN/rest/careers";
 var URL_ASSISTANTS = "/SATURN/rest/assistants";
 var URL_TEACHERS = "/SATURN/rest/teachers";
-
+var URL_COORDINATORS = "/SATURN/rest/coordinators";
+        
 var USR_TYPE_MANAGER = 0;
 var USR_TYPE_ASSISTANT = 1;
 var USR_TYPE_COORDINATOR = 2;
@@ -206,7 +207,7 @@ function fAddCareer() {
 			url: URL_CAREERS,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"university" : university, "career" : career, "plan" : plan}),
+			data: JSON.stringify({"university" : university, "careerName" : career, "plan" : plan}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
@@ -345,7 +346,7 @@ function fDisplayCareers() {
 			//alert(JSON.stringify(result));
 			for (i in result) {
 				$("#Careers ul").append(CAREER_LIST_TEMPLATE1 + result[i].university +
-					 					CAREER_LIST_TEMPLATE2 + result[i].career +
+					 					CAREER_LIST_TEMPLATE2 + result[i].careerName +
 										CAREER_LIST_TEMPLATE3 + result[i].plan +
 										CAREER_LIST_TEMPLATE4 + result[i].id +
 										CAREER_LIST_TEMPLATE5 + result[i].id +
@@ -409,6 +410,36 @@ function fDisplayTeachers() {
 											USER_LIST_TEMPLATE4 + USR_TYPE_TEACHER +
 											USER_LIST_TEMPLATE5 + result[i].id +
 											USER_LIST_TEMPLATE6 + USR_TYPE_TEACHER +
+											USER_LIST_TEMPLATE7);
+			}
+		},
+		error: function(request, status, error){
+			console.log("[Login] Error: " + error);
+		}
+	});
+}
+
+function fDisplayCoordinator() {
+	$("#AssistantMenu").hide();
+	$("#Coordinators").show();
+	$("#Coordinators li").each(function( index ) {
+		if(index !== 0 && index !==1){
+			$(this).remove();
+		}
+	});
+	$.ajax({
+		method: 'GET',
+		url: URL_COORDINATORS,
+
+		success: function(result){
+			//alert(JSON.stringify(result));
+			for (i in result) {
+				$("#Coordinators ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
+					 						USER_LIST_TEMPLATE2 + result[i].name + " " + result[i].lastName +
+											USER_LIST_TEMPLATE3 + result[i].id +
+											USER_LIST_TEMPLATE4 + USR_TYPE_COORDINATOR +
+											USER_LIST_TEMPLATE5 + result[i].id +
+											USER_LIST_TEMPLATE6 + USR_TYPE_COORDINATOR +
 											USER_LIST_TEMPLATE7);
 			}
 		},
@@ -603,7 +634,7 @@ $(document).ready(function(){
 	$(document).on("click", "#Btn_AddAssistant", fShowAddAssistant);
 	$(document).on("click", "#Btn_AddAssistantSubmit", fAddAssistant);
 	$(document).on("click", "#Btn_AddAssistantCancel", fClearAddAssistant);
-	//$(document).on("click", "Btn_Coordinators", );
+	$(document).on("click", "Btn_Coordinators", fDisplayCoordinator);
 	//$(document).on("click", "Btn_Groups1", );
 	$(document).on("click", "#Btn_Teachers1", fDisplayTeachers);
 	$(document).on("click", "#Btn_AddTeacher", fShowAddTeacher);

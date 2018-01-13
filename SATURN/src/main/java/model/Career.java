@@ -10,7 +10,7 @@ public class Career {
 	public Career() {}
 	
         public Career(String plan, String university, String careerName) {
-            this.id = id;
+            this.plan = plan;
             this.university = university;
             this.careerName = careerName;
         }

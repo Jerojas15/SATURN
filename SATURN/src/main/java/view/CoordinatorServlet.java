@@ -29,13 +29,9 @@ public class CoordinatorServlet {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<User> getCoordinators() throws SQLException, ClassNotFoundException {
-		//DatabaseController d = new DatabaseController();
-		//List<User> l = d.getUser();
-		ArrayList<User> l = new ArrayList<>();
-		l.add(new User(0, "jyock1997@gmail.com", null, "Jose Paulo", "Yock Fuentes", 0, 0));
-		l.add(new User(1, "je@hotmail.com", null, "Julio Esteban", "Rojas", 0, 1));
-		l.add(new User(2, "sjenkins@siua.ac.cr", null, "Scarlet", "Jenkins", 0, 2));
-		l.add(new User(3, "jmiguelh@gmail.com", null, "Jose Miguel", "Hernandez", 0, 3));
+		DatabaseController d = new DatabaseController();
+		List<User> l = d.getUserbyType(2,1);
+
 		
 		return l;
 	}
