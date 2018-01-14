@@ -48,14 +48,25 @@ public class CoordinatorServlet {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createCoordinator(User usr) {
 		
-		System.out.println(usr.getUserName());
-		System.out.println(usr.getName());
-		System.out.println(usr.getLastName());
-                System.out.println(usr.getCareerId());
+		String status;
+		JSONObject object;		
+		DatabaseController d;
 		
-		JSONObject object = new JSONObject();
+		
 		try {
-			object.put("status", "OK"); //object.put("status", "ALREADY_EXISTS");
+                    
+			d = new DatabaseController();
+			if (d.insertNewUser(usr))
+				status = "OK";
+			else
+				status = "ALREADY_EXISTS";
+		} catch (ClassNotFoundException | SQLException e1) {
+			return Response.status(500).entity(e1.toString()).build();
+		}
+		
+		object = new JSONObject();
+		try {
+			object.put("status", status);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
