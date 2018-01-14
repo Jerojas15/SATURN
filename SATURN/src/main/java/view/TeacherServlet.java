@@ -45,7 +45,7 @@ public class TeacherServlet {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static User getTeacher(@PathParam("id") String idStr) {
-		User c =  new User(0, "jyock1997@gmail.com", null, "Jose Paulo", "Yock Fuentes", 0, 0);
+		User c =  new User("jyock1997@gmail.com", null, "Jose Paulo", "Yock Fuentes", 0, 0);
 		return c;
 	}
 	
@@ -57,8 +57,7 @@ public class TeacherServlet {
 		DatabaseController d;
 		
 		
-		try {
-                    
+		try {                  
 			d = new DatabaseController();
 			if (d.insertNewUser(usr))
 				status = "OK";
@@ -104,7 +103,7 @@ public class TeacherServlet {
 	}
 
 	@DELETE
-    @Path("/{id}")
+        @Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteTeacher(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
 		String status;

@@ -118,6 +118,7 @@ public class UserConnector {
         return rs;
     }
     
+    
     public Boolean updateUser(Connection conn, User u, int id) throws ClassNotFoundException{
         boolean state =  false;
         int cont = 1;
