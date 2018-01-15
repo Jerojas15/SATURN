@@ -128,34 +128,28 @@ public class TeacherServlet {
 	@Path("/availabilities/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<Availability> getTeacherAvailabilities(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
-		//DatabaseController d = new DatabaseController();
-		//List<Career> l = d.();
-		ArrayList<Availability> l = new ArrayList<>();
-		l.add(new Availability(0, Availability.DAY.MONDAY.ordinal(), 9, 19));
-		l.add(new Availability(0, Availability.DAY.TUESDAY.ordinal(), 7, 21));
-		l.add(new Availability(0, Availability.DAY.WEDNESDAY.ordinal(), 9, 10));
-		l.add(new Availability(0, Availability.DAY.WEDNESDAY.ordinal(), 12, 12));
-		l.add(new Availability(0, Availability.DAY.THURSDAY.ordinal(), 9, 19));
-		l.add(new Availability(0, Availability.DAY.FRIDAY.ordinal(), 9, 19));
-		l.add(new Availability(0, Availability.DAY.SATURDAY.ordinal(), 9, 19));
-		
+		DatabaseController d = new DatabaseController();
+		List<Availability> l = d.getTeacherAvailability(Integer.parseInt(idStr));
+
 		return l;
 	}
 	
 	@PUT
 	@Path("/availabilities/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateTeacherAvailabilities(@PathParam("id") String idStr, List<Availability> l) {
+	public Response updateTeacherAvailabilities(@PathParam("id") String idStr, List<Availability> l) throws SQLException, ClassNotFoundException {
 		System.out.println(idStr);
-		ArrayList<Availability> list = (ArrayList<Availability>)l;
+		ArrayList<Availability> list = (ArrayList<Availability>) l;
 		for(int i = 0; i< list.size(); i++) {
-			System.out.println(list.get(i).getDay() + " " + list.get(i).getStartHour() + " " + list.get(i).getEndHour());
+                        list.get(i).setTeacher(Integer.parseInt(idStr));
+			System.out.println(list.get(i).getTeacher()+" " +list.get(i).getDay() + " " + list.get(i).getStartHour() + " " + list.get(i).getEndHour());
 		}
-		String status;
+                String status = "WRONG";
 		JSONObject object;
-		
-		status = "OK";
-		
+                DatabaseController d = new DatabaseController();
+                if(d.insertAvailability(Integer.parseInt(idStr),list)){
+                    status = "OK";
+                }
 		object = new JSONObject();
 		try {
 			object.put("status", status);

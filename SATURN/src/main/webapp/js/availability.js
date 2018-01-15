@@ -12,27 +12,27 @@ var DAY_TYPE_SATURDAY = 5;
 var DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
 var userAvailability;
-var userId;
 
 function fShowAvailability(event) {
-
-	userId = event.data.id;
+        
+	
 	console.log(userId);
+        
+        $("#TeacherMenu").hide();
+        $("#Availability").show();
+        $.ajax({
+                method: 'GET',
+                url: URL_TEACHERS_AVAILABILITIES + "/" + userId,
 
-	$("#TeacherMenu").hide();
-	$("#Availability").show();
-	$.ajax({
-		method: 'GET',
-		url: URL_TEACHERS_AVAILABILITIES + "/" + userId,
-
-		success: function(result){
-			userAvailability = result;
-			fReloadAvailability();
-		},
-		error: function(request, status, error){
-			alert("Ha ocurrido un error inesperado, porfavor recargue la página e intente de nuevo");
-		}
-	});
+                success: function(result){
+                        userAvailability = result;
+                        fReloadAvailability();
+                },
+                error: function(request, status, error){
+                        alert("Ha ocurrido un error inesperado, porfavor recargue la página e intente de nuevo");
+                }
+        });
+	
 }
 
 function fPressAllBoxes(event) {
@@ -279,7 +279,7 @@ function fReloadAvailability() {
 }
 
 function fConfirmSaveAvailability() {
-	alert("A")
+	
 	$("#Availability").hide();
 	$("#ConfirmAction").show();
 	$("#Btn_SaveAvailabilitySubmit").show();
