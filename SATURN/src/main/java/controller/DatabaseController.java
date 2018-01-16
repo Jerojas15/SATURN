@@ -36,6 +36,16 @@ public class DatabaseController {
             return conn;
         }
         
+        public int getCareerId(int id) throws ClassNotFoundException, SQLException{
+            int status = -1;
+            UserConnector connector = new UserConnector();
+            ResultSet list = connector.getCareerId(conn, id);
+            while(list.next()){
+                status = list.getInt("CareerId");
+            }
+            return status;
+        }
+        
         public int login(LogIn l) throws ClassNotFoundException, SQLException{
             int status = -1;
             UserConnector connector = new UserConnector();
@@ -78,6 +88,7 @@ public class DatabaseController {
                 Career c = new Career();
                 c.setUniversity(rs.getString("University"));
                 c.setCareerName(rs.getString("CareerName"));
+                c.setCareerId(rs.getInt("CareerId"));
                 c.setPlan(connector.getPlanName(conn, c));
 
                 list.add(c); 

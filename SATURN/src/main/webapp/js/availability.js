@@ -1,5 +1,3 @@
-var URL_TEACHERS_AVAILABILITIES = "/SATURN/rest/teachers/availabilities";
-
 var START_HOUR = 7;
 var END_HOUR = 21;
 
@@ -14,10 +12,10 @@ var DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 var userAvailability;
 
 function fShowAvailability(event) {
-        
-	
+
+
 	console.log(userId);
-        
+
         $("#TeacherMenu").hide();
         $("#Availability").show();
         $.ajax({
@@ -32,7 +30,7 @@ function fShowAvailability(event) {
                         alert("Ha ocurrido un error inesperado, porfavor recargue la página e intente de nuevo");
                 }
         });
-	
+
 }
 
 function fPressAllBoxes(event) {
@@ -279,7 +277,7 @@ function fReloadAvailability() {
 }
 
 function fConfirmSaveAvailability() {
-	
+
 	$("#Availability").hide();
 	$("#ConfirmAction").show();
 	$("#Btn_SaveAvailabilitySubmit").show();
