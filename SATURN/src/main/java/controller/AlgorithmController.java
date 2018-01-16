@@ -11,6 +11,7 @@ public class AlgorithmController {
     ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor = new ArrayList<>();//disponibilidad de profesores, (ID,(Dia,(inicio,salida)))
     
     
+    
     public static void main(String[] args) {
         AlgorithmController a = new AlgorithmController(); 
         ArrayList<Individual> generation = new ArrayList<>();
