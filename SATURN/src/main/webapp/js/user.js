@@ -18,6 +18,8 @@ var SELECT_OPTION_TEMPLATE1 = "<option value=\"";
 var SELECT_OPTION_TEMPLATE2 = "\">";
 var SELECT_OPTION_TEMPLATE3 = "</option>";
 
+var editDeleteUserId;
+var editDeleteUserType;
 
 function fDisplayAssistants() {
 	$("#ManagerMenu").hide();
@@ -186,7 +188,7 @@ function fAddCoordinator() {
 			url: URL_COORDINATORS,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName, "password" : password, "careerId" : careerId}),
+			data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName, "password" : password, "careerId" : CAREER_ID}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
@@ -323,7 +325,7 @@ function fAddTeacher() {
 				url: URL_TEACHERS,
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
-				data: JSON.stringify({"userName" : userName, "password" : password, "name" : name, "lastName" : lastName, "type" : USR_TYPE_TEACHER, "careerId" : career}),
+				data: JSON.stringify({"userName" : userName, "password" : password, "name" : name, "lastName" : lastName, "careerId" : CAREER_ID}),
 
 				success: function(result){
 					console.log("[Login] Result " + JSON.stringify(result));

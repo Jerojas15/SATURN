@@ -4,15 +4,14 @@ var URL_ASSISTANTS = "/SATURN/rest/assistants";
 var URL_COORDINATORS = "/SATURN/rest/coordinators";
 var URL_TEACHERS = "/SATURN/rest/teachers";
 var URL_TEACHERS_AVAILABILITIES = "/SATURN/rest/teachers/availabilities";
+var URL_COURSES = "/SATURN/rest/courses";
 
 
-var userId;
-var userType;
-var careerId;
+var USER_ID;
+var USER_TYPE;
+var CAREER_ID;
 
 var lastEditDeleteBtn;
-var editDeleteUserId;
-var editDeleteUserType;
 
 /*
  * Función la cual debe volver al inicio de la pagina;
@@ -66,11 +65,10 @@ function fLogIn() {
 					$("#TextBox_UserName").val(""); //Es importante limpiar los campos de texto
 					$("#TextBox_Password").val("");
 					$("#LogIn").hide();
-					userId = result.userId;
-					console.log(userId);
-					userType = result.userType;
-					careerId = result.careerId;
-					switch (userType) {
+					USER_ID = result.userId;
+					USER_TYPE = result.userType;
+					CAREER_ID = result.careerId;
+					switch (USER_TYPE) {
 						case USR_TYPE_MANAGER:
 						$("#ManagerMenu").show();
 						helloMsg = "Bienvenido, Administrador";
@@ -137,7 +135,6 @@ $(document).ready(function(){
 	$(document).on("click", "#Btn_AddCoordinatorSubmit", fAddCoordinator);
 	$(document).on("click", "#Btn_AddCoordinatorCancel", fClearAddCoordinator);
 
-	//$(document).on("click", "Btn_Groups1", );
 	$(document).on("click", "#Btn_Teachers1", fDisplayTeachers);
 	$(document).on("click", "#Btn_AddTeacher", fShowAddTeacher);
 	$(document).on("click", "#Btn_AddTeacherSubmit", fAddTeacher);
@@ -150,7 +147,18 @@ $(document).ready(function(){
 	$(document).on("click", "#Btn_EditUser", fShowEditUser);
 	$(document).on("click", "#Btn_DeleteUser", fConfirmDeleteUser);
 
-	$(document).on("click", "#Btn_Availability", {id: userId}, fShowAvailability);
+	$(document).on("click", "#Btn_Courses", fDisplayCourses);
+	$(document).on("click", "#Btn_AddCourse", fShowAddCourse);
+	$(document).on("click", "#Btn_AddCourseSubmit", fAddCourse);
+	$(document).on("click", "#Btn_AddCourseCancel", fClearCourseForm);
+	$(document).on("click", "#Btn_EditCourse", fShowEditCourse);
+	$(document).on("click", "#Btn_UpdateCourseSubmit", fEditCourse);
+	$(document).on("click", "#Btn_UpdateCourseCancel", fClearCourseForm);
+	$(document).on("click", "#Btn_DeleteCourse", fConfirmDeleteCourse);
+	$(document).on("click", "#Btn_DeleteCourseSubmit", fDeleteCourse);
+	$(document).on("click", "#Btn_DeleteCourseCancel", fClearDeleteCourse);
+
+	$(document).on("click", "#Btn_Availability", fShowAvailability); //{id: userId}
 
 	$(document).on("click", "#Availability .monday", {btnClassName: "monday", btnMarkAll: "Btn_AllMonday"}, fPressBox);
 	$(document).on("click", "#Availability .tuesday", {btnClassName: "tuesday", btnMarkAll: "Btn_AllTuesday"}, fPressBox);

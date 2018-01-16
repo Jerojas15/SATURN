@@ -99,7 +99,6 @@ function fClearCareerForm() {
 
 function fShowEditCareer() {
 
-
 	$("#Careers").hide();
 	$("#AddCareer").show();
 	$("#Btn_UpdateCareerSubmit").show();
