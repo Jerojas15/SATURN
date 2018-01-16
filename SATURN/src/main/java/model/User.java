@@ -10,7 +10,15 @@ public class User {
 	private String lastName;
 	private int type;
 	private int careerId;
+        private int userId;
 
+        public int getUserId() {
+            return userId;
+        }
+
+        public void setUserId(int userId) {
+            this.userId = userId;
+        }
 	public User() {}
 
 	public User(String userName, String password, String name, String lastName, int type, int careerId) {

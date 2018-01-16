@@ -376,9 +376,9 @@ function fDisplayAssistants() {
 			for (i in result) {
 				$("#Assistants ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
 					 						USER_LIST_TEMPLATE2 + result[i].name + " " + result[i].lastName +
-											USER_LIST_TEMPLATE3 + result[i].id +
+											USER_LIST_TEMPLATE3 + result[i].userId +
 											USER_LIST_TEMPLATE4 + USR_TYPE_ASSISTANT +
-											USER_LIST_TEMPLATE5 + result[i].id +
+											USER_LIST_TEMPLATE5 + result[i].userId +
 											USER_LIST_TEMPLATE6 + USR_TYPE_ASSISTANT +
 											USER_LIST_TEMPLATE7);
 			}
@@ -406,9 +406,9 @@ function fDisplayTeachers() {
 			for (i in result) {
 				$("#Teachers ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
 					 						USER_LIST_TEMPLATE2 + result[i].name + " " + result[i].lastName +
-											USER_LIST_TEMPLATE3 + result[i].id +
+											USER_LIST_TEMPLATE3 + result[i].userId +
 											USER_LIST_TEMPLATE4 + USR_TYPE_TEACHER +
-											USER_LIST_TEMPLATE5 + result[i].id +
+											USER_LIST_TEMPLATE5 + result[i].userId +
 											USER_LIST_TEMPLATE6 + USR_TYPE_TEACHER +
 											USER_LIST_TEMPLATE7);
 			}

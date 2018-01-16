@@ -118,7 +118,7 @@ public class DatabaseController {
                 u.setType(rs.getInt("UserType"));
                 u.setUserName(rs.getString("UserName"));
                 u.setCareerId(rs.getInt("CareerId"));
-
+                u.setUserId(rs.getInt("UserId"));
                 list.add(u); 
             }
             return list;
