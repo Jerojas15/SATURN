@@ -1,5 +1,6 @@
 package controller;
 
+import databaseConnector.AvailabilityConnector;
 import databaseConnector.CareerConnector;
 import databaseConnector.CourseConnector;
 import databaseConnector.UserConnector;
@@ -8,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import model.Availability;
 import model.Career;
 import model.Course;
 import model.LogIn;
@@ -115,7 +117,7 @@ public class DatabaseController {
                 u.setName(rs.getString("Name"));
                 u.setType(rs.getInt("UserType"));
                 u.setUserName(rs.getString("UserName"));
-                u.setCareerId(1);
+                u.setCareerId(rs.getInt("CareerId"));
 
                 list.add(u); 
             }
@@ -132,10 +134,20 @@ public class DatabaseController {
                 u.setLastName(rs.getString("LastName"));
                 u.setName(rs.getString("Name"));
                 u.setType(rs.getInt("UserType"));
-                u.setCareerId(1);
+                u.setCareerId(rs.getInt("CareerId"));
                 list.add(u); 
             }
             return list;
+        }
+        
+        public int getUserId(String userName) throws SQLException, ClassNotFoundException{
+            UserConnector connector = new UserConnector();
+            ResultSet rs = connector.getUserbyUserName(conn, userName);
+            int result = 0;
+            while(rs.next()){
+                result = rs.getInt("UserId");
+            }
+            return result;
         }
 
 /*
@@ -159,4 +171,39 @@ public class DatabaseController {
             return status;
         }
         
+/*
+ * FUNCIONES DE DISPONIBILIDAD
+ */
+        public ArrayList<Availability> getTeacherAvailability(int id) throws ClassNotFoundException, SQLException{
+            AvailabilityConnector connector = new AvailabilityConnector();
+            ResultSet rs = connector.getAvailabilitybyProfessor(conn, id);
+            ArrayList<Availability> result = new ArrayList<>();
+            while(rs.next()){
+                Availability a = new Availability();
+                a.setDay(rs.getInt("Day"));
+                a.setStartHour(rs.getInt("StartHour"));
+                a.setEndHour(rs.getInt("EndHour"));
+                result.add(a);
+            }
+            return result;
+        }
+        
+        public boolean insertAvailability(int id, ArrayList<Availability> a) throws ClassNotFoundException{
+            boolean status = false;
+            AvailabilityConnector connector = new AvailabilityConnector();
+            for(int i = 0;i<a.size();i++){
+                Availability av = new Availability();
+                av.setDay(a.get(i).getDay());
+                av.setEndHour(a.get(i).getEndHour());
+                av.setStartHour(a.get(i).getStartHour());
+                av.setTeacher(id);
+                if(connector.insertNewAvailability(conn, av)){
+                    status = true;
+                }else{
+                    return false;
+                }
+            }
+            
+            return status;
+        }
 }

@@ -12,7 +12,7 @@ public class AvailabilityConnector {
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT INTO Availabilities(ProfessorId, StartHour, EndHour, Day) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Availabilities(ProfessorId, StartHour, EndHour, Day) VALUES (?, ?, ?,?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, a.getTeacher());
