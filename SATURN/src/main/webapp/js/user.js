@@ -489,7 +489,7 @@ function fDeleteUser() {
 		method: 'DELETE',
 		url: url + "/" + editDeleteUserId,
 		success: function(result){
-			console.log("[Login] Result " + JSON.stringify(result));
+			console.log("[Login] Result " + result);
 
 			if(result.status === "OK"){
 				fClearDeleteUser();
