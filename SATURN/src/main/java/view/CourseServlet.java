@@ -24,21 +24,24 @@ import model.Course;
 
 @Path("/courses")
 public class CourseServlet {
-        @GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public static List<Course> getCourses() throws SQLException, ClassNotFoundException {
-		DatabaseController d = new DatabaseController();
-		//List<Course> l = d.getCourses();
-		List<Course> l = null;
-		return l;
-	}
+
 
 	@GET
+	@Path("/careerId/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public static List<Course> getCourses(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
+		DatabaseController d = new DatabaseController();
+		List<Course> l = d.getCourses(Integer.parseInt(idStr));
+		return l;
+	}
+        
+        @GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static Course getCourse(@PathParam("id") String idStr) {
-		Course c =  new Course("0", "Introducción a la Programación", 1, 0);
-		return c;
+	public static List<Course> getCourse(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
+		DatabaseController d = new DatabaseController();
+		List<Course> l = d.getCourse(Integer.parseInt(idStr));
+		return l;
 	}
 
 	@POST
@@ -61,20 +64,41 @@ public class CourseServlet {
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateCourse(@PathParam("id") String idStr) {
+	public Response updateCourse(@PathParam("id") String idStr, Course c) throws SQLException, ClassNotFoundException {
 
-		String result = "Resultado.......";
-
-		return Response.status(200).entity(result).build();
+		String status = "WRONG";
+		JSONObject object;
+                DatabaseController d = new DatabaseController();
+                if(d.updateCourse(c, Integer.parseInt(idStr))){
+                    status = "OK";
+                }
+		object = new JSONObject();
+		try {
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
 	}
 
 	@DELETE
 	@Path("/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteCourse(@PathParam("id") String idStr) {
-
-		String result = "Resultado.......";
-
-		return Response.status(200).entity(result).build();
+	public Response deleteCourse(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
+                String status;
+		JSONObject object;
+		status = "WRONG";
+		
+		object = new JSONObject();
+		try {
+                    DatabaseController d = new DatabaseController();
+                    if(d.deleteCourse(Integer.parseInt(idStr))){
+                        status = "OK";
+                        
+                    }
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object).build();
 	}
 }

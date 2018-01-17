@@ -189,7 +189,7 @@ public class UserConnector {
 
                 PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setInt(1, id);
-                
+                       
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
                     System.out.println("Users was deleted!");

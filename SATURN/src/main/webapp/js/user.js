@@ -14,10 +14,6 @@ var USER_LIST_TEMPLATE6 = "\" type=\"";
 var USER_LIST_TEMPLATE7 = "\" href=\"#\" class=\"s_button7 w-button\"></a></div></div></div></div></li>";
 
 
-var SELECT_OPTION_TEMPLATE1 = "<option value=\"";
-var SELECT_OPTION_TEMPLATE2 = "\">";
-var SELECT_OPTION_TEMPLATE3 = "</option>";
-
 var editDeleteUserId;
 var editDeleteUserType;
 
@@ -94,7 +90,7 @@ function fAddAssistant() {
 	name = $("#TextBox_AddUser_Name").val();
 	lastName = $("#TextBox_AddUser_LastName").val();
 	careerId = $("#Select_AddUser_Career option:selected").val();
-	if (userName && name && lastName && password && confirmPassword && (careerId !== "none") && (password === confirmPassword)) {
+	if (userName && name && lastName && password && confirmPassword && careerId && (password === confirmPassword)) {
 		$.ajax({
 			method: 'POST',
 			url: URL_ASSISTANTS,
@@ -141,7 +137,7 @@ function fDisplayCoordinator() {
 	});
 	$.ajax({
 		method: 'GET',
-		url: URL_COORDINATORS,
+		url: URL_COORDINATORS + "/?" + "careerId=" + CAREER_ID,
 
 		success: function(result){
 			//alert(JSON.stringify(result));
@@ -228,7 +224,7 @@ function fDisplayTeachers() {
 	});
 	$.ajax({
 		method: 'GET',
-		url: URL_TEACHERS,
+		url: URL_TEACHERS + "/?" + "careerId=" + CAREER_ID,
 
 		success: function(result){
 			//alert(JSON.stringify(result));
@@ -489,7 +485,7 @@ function fDeleteUser() {
 		method: 'DELETE',
 		url: url + "/" + editDeleteUserId,
 		success: function(result){
-			console.log("[Login] Result " + JSON.stringify(result));
+			console.log("[Login] Result " + result);
 
 			if(result.status === "OK"){
 				fClearDeleteUser();

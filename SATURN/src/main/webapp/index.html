@@ -22,6 +22,7 @@
   <script src="js/career.js" type="text/javascript"></script>
   <script src="js/user.js" type="text/javascript"></script>
   <script src="js/course.js" type="text/javascript"></script>
+  <script src="js/group.js" type="text/javascript"></script>
   <script src="js/index.js" type="text/javascript"></script>
 </head>
 <body class="body">
@@ -65,7 +66,7 @@
     <div class="w-row">
       <div class="w-col w-col-4"><a href="#" id="Btn_Courses" class="s_button2 w-button">Cursos</a></div>
       <div class="w-col w-col-4"><a href="#" id="Btn_Groups2" class="s_button3 w-button">Grupos</a></div>
-      <div class="w-col w-col-4"><a href="#" id="Btn_Teachers1" class="s_button4 w-button">Profesores</a></div>
+      <div class="w-col w-col-4"><a href="#" id="Btn_Teachers2" class="s_button4 w-button">Profesores</a></div>
     </div>
   </div>
   <div id="TeacherMenu" class="teachermenu" style="display: none;">
@@ -247,7 +248,7 @@
             </div>
           </div>
         </li>
-        <li class="s_listitem3"><a href="#" id="Btn_AddTeacher" class="s_button5 w-button"></a></li>
+        <li class="s_listitem3"><a href="#" id="Btn_AddGroup" class="s_button5 w-button"></a></li>
         <li class="s_listitem2">
           <div class="w-row">
             <div class="s_center w-col w-col-3">
@@ -755,7 +756,7 @@
   <div id="AddGroup" class="addgroup" style="display: none;">
     <div class="s_center">
       <div class="s_form1 w-form">
-        <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Número de Grupo:</label><input type="text" class="w-input" maxlength="5" placeholder="Número" id="TextBox_AddGroup_Number" required=""><label class="s_boldcentertext">Curso:</label><select id="TextBox_AddGroup_Course" required="" class="w-select"><option value="">Select one...</option></select><label class="s_boldcentertext">Profesor:</label><select id="TextBox_AddGroup_Teacher" required="" class="w-select"><option value="">Select one...</option></select><label class="s_boldcentertext">Capacidad:</label><input type="text" class="w-input" maxlength="5" placeholder="Número" id="TextBox_AddGroup_Capacity" required="">
+        <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Número de Grupo:</label><input type="text" class="w-input" maxlength="5" placeholder="Número" id="TextBox_AddGroup_Number" required=""><label class="s_boldcentertext">Curso:</label><select id="Select_AddGroup_Course" required="" class="w-select"><option value="">Select one...</option></select><label class="s_boldcentertext">Profesor:</label><select id="Select_AddGroup_Teacher" required="" class="w-select"><option value="">Select one...</option></select><label class="s_boldcentertext">Capacidad:</label><input type="text" class="w-input" maxlength="5" placeholder="Número" id="TextBox_AddGroup_Capacity" required="">
           <div>
 			  <a href="#" id="Btn_AddGroupSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>
 			  <a href="#" id="Btn_UpdateGroupSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>

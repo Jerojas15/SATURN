@@ -5,15 +5,24 @@ public class Course {
         String name;
         int semester;
         int careerId;
-
+        int courseId;
         public Course(){}
         
-        public Course(String code, String name, int semester, int careerId) {
+        public Course(String code, String name, int semester, int careerId, int courseId) {
             this.code = code;
             this.name = name;
             this.semester = semester;
             this.careerId = careerId;
+            this.courseId = courseId;
         }
+
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
+    }
 
         public String getCode() {
             return code;

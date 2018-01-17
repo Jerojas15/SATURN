@@ -18,17 +18,17 @@ function fDisplayCourses() {
 	});
 	$.ajax({
 		method: 'GET',
-		url: URL_COURSES,
+		url: URL_COURSES + "/careerId/" + CAREER_ID,
 
 		success: function(result){
 			//alert(JSON.stringify(result));
 			//result = result.courses; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Courses ul").append(COURSE_LIST_TEMPLATE1 + result[i].code +
-										COURSE_LIST_TEMPLATE2 + result[i].courseName +
-										COURSE_LIST_TEMPLATE3 + result[i].block +
-										COURSE_LIST_TEMPLATE4 + result[i].id +
-										COURSE_LIST_TEMPLATE5 + result[i].id +
+										COURSE_LIST_TEMPLATE2 + result[i].name +
+										COURSE_LIST_TEMPLATE3 + result[i].semester +
+										COURSE_LIST_TEMPLATE4 + result[i].courseId +
+										COURSE_LIST_TEMPLATE5 + result[i].courseId +
 										COURSE_LIST_TEMPLATE6);
 			}
 		},
@@ -111,7 +111,7 @@ function fShowEditCourse() {
 		success: function(result){
 			$("#TextBox_AddCourse_Code").attr("placeholder", result.code);
 			$("#TextBox_AddCourse_CourseName").attr("placeholder", result.courseName);
-			$("#TextBox_AddCourse_Block").attr("placeholder", result.block);
+			$("#TextBox_AddCourse_Block").attr("placeholder", result.semester);
 		},
 		error: function(request, status, error){
 			alert("Ha ocurrido un error inesperado, porfavor recargue la página e intente de nuevo");
@@ -129,39 +129,29 @@ function fEditCourse() {
 	courseName = $("#TextBox_AddCourse_CourseName").val();
 	block = $("#TextBox_AddCourse_Block").val();
 
-	jObj = {};
-	if (code || courseName || block) {
-		if (code)
-			jObj.code = code;
-		if (courseName)
-			jObj.courseName = courseName;
-		if (block)
-			jObj.block = block;
+	
+        $.ajax({
+                method: 'PUT',
+                url: URL_COURSES + "/" + courseId,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({"code" : code, "name" : courseName, "semester" : block, "careerId" : CAREER_ID}),
 
-		$.ajax({
-			method: 'PUT',
-			url: URL_COURSES + "/" + courseId,
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			data: JSON.stringify(jObj),
+                success: function(result){
+                        console.log("[Login] Result " + JSON.stringify(result));
 
-			success: function(result){
-				console.log("[Login] Result " + JSON.stringify(result));
+                        if(result.status === "OK"){
+                                courseId = null;
+                                fClearCourseForm();
+                        }
+                },
 
-				if(result.status === "OK"){
-					courseId = null;
-					fClearCourseForm();
-				}
-			},
-
-			error: function(request, status, error){
-				console.log("[Login] Error: " + error);
-				courseId = null;
-			}
-		});
-	} else {
-		alert("Se febe mostrar mensaje de que se requieren datos");
-	}
+                error: function(request, status, error){
+                        console.log("[Login] Error: " + error);
+                        courseId = null;
+                }
+        });
+	
 }
 
 function fConfirmDeleteCourse() {
