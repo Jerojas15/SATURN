@@ -5,7 +5,11 @@ var URL_COORDINATORS = "/SATURN/rest/coordinators";
 var URL_TEACHERS = "/SATURN/rest/teachers";
 var URL_TEACHERS_AVAILABILITIES = "/SATURN/rest/teachers/availabilities";
 var URL_COURSES = "/SATURN/rest/courses";
+var URL_GROUPS = "/SATURN/rest/groups";
 
+var SELECT_OPTION_TEMPLATE1 = "<option value=\"";
+var SELECT_OPTION_TEMPLATE2 = "\">";
+var SELECT_OPTION_TEMPLATE3 = "</option>";
 
 var USER_ID;
 var USER_TYPE;
@@ -157,6 +161,22 @@ $(document).ready(function(){
 	$(document).on("click", "#Btn_DeleteCourse", fConfirmDeleteCourse);
 	$(document).on("click", "#Btn_DeleteCourseSubmit", fDeleteCourse);
 	$(document).on("click", "#Btn_DeleteCourseCancel", fClearDeleteCourse);
+
+
+	$(document).on("click", "#Btn_Groups1", fDisplayGroups);
+	$(document).on("click", "#Btn_Groups2", fDisplayGroups);
+	$(document).on("click", "#Btn_AddGroup", fShowAddGroup);
+	$(document).on("click", "#Btn_AddGroupSubmit", fAddGroup);
+	$(document).on("click", "#Btn_AddGroupCancel", fClearGroupForm);
+	$(document).on("click", "#Btn_EditGroup", fShowEditGroup);
+	$(document).on("click", "#Btn_UpdateGroupSubmit", fEditGroup);
+	$(document).on("click", "#Btn_UpdateGroupCancel", fClearGroupForm);
+	$(document).on("click", "#Btn_DeleteGroup", fConfirmDeleteGroup);
+	$(document).on("click", "#Btn_DeleteGroupSubmit", fDeleteGroup);
+	$(document).on("click", "#Btn_DeleteGroupCancel", fClearDeleteGroup);
+
+
+
 
 	$(document).on("click", "#Btn_Availability", fShowAvailability); //{id: userId}
 
