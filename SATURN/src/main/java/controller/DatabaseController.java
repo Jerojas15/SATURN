@@ -3,6 +3,7 @@ package controller;
 import databaseConnector.AvailabilityConnector;
 import databaseConnector.CareerConnector;
 import databaseConnector.CourseConnector;
+import databaseConnector.PlanConnector;
 import databaseConnector.UserConnector;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -36,6 +37,17 @@ public class DatabaseController {
             return conn;
         }
         
+        public Career getCareerById(int id) throws SQLException, ClassNotFoundException{
+            CareerConnector c = new CareerConnector();
+            ResultSet rs = c.getCareerById(conn, id);
+            Career ca = new Career();
+            while(rs.next()){
+                ca.setCareerName(rs.getString("CareerName"));
+                ca.setUniversity(rs.getString("University"));
+            }
+            return ca;
+        }
+        
         public int getCareerId(int id) throws ClassNotFoundException, SQLException{
             int status = -1;
             UserConnector connector = new UserConnector();
@@ -67,9 +79,9 @@ public class DatabaseController {
             return status;
         }
 
-        public boolean deleteCareer(Career c) throws ClassNotFoundException{
+        public boolean deleteCareer(int id) throws ClassNotFoundException{
             CareerConnector connector = new CareerConnector();
-            Boolean status = connector.deleteCareer(conn, c);
+            Boolean status = connector.deleteCareer(conn, id);
             return status;
         }
         
@@ -231,4 +243,10 @@ public class DatabaseController {
             
             return status;
         }
+
+    public boolean updatePlan(String plan, int id) throws ClassNotFoundException {
+        PlanConnector c = new PlanConnector();
+        boolean result = c.updatePlan(conn, plan, id);
+        return result;
+    }
 }

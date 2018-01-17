@@ -111,6 +111,7 @@ function fShowEditCareer() {
 		url: URL_CAREERS + "/" + careerId,
 
 		success: function(result){
+                    
 			$("#TextBox_AddCareer_University").attr("placeholder", result.university);
 			$("#TextBox_AddCareer_CareerName").attr("placeholder", result.careerName);
 			$("#TextBox_AddCareer_Plan").attr("placeholder", result.plan);
@@ -125,45 +126,33 @@ function fEditCareer() {
 	var university;
 	var career;
 	var plan;
-	var jObj;
 
 	university = $("#TextBox_AddCareer_University").val();
-	careerName = $("#TextBox_AddCareer_CareerName").val();
+	career = $("#TextBox_AddCareer_CareerName").val();
 	plan = $("#TextBox_AddCareer_Plan").val();
 
-	jObj = {};
-	if (university || careerName || plan) {
-		if (university)
-			jObj.university = university;
-		if (careerName)
-			jObj.careerName = careerName;
-		if (plan)
-			jObj.plan = plan;
-                   alert(JSON.stringify(jObj));
-		$.ajax({
-			method: 'PUT',
-			url: URL_CAREERS + "/" + careerId,
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			data: JSON.stringify(jObj),
+        $.ajax({
+                method: 'PUT',
+                url: URL_CAREERS + "/" + careerId,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({"university" : university, "careerName" : career, "plan" : plan}),
+                
+                success: function(result){
+                        console.log("[Login] Result " + JSON.stringify(result));
 
-			success: function(result){
-				console.log("[Login] Result " + JSON.stringify(result));
+                        if(result.status === "OK"){
+                                careerId = null;
+                                fClearCareerForm();
+                        }
+                },
 
-				if(result.status === "OK"){
-					careerId = null;
-					fClearCareerForm();
-				}
-			},
+                error: function(request, status, error){
+                        console.log("[Login] Error: " + error);
+                        careerId = null;
+                }
+        });
 
-			error: function(request, status, error){
-				console.log("[Login] Error: " + error);
-				careerId = null;
-			}
-		});
-	} else {
-		alert("Se febe mostrar mensaje de que se requieren datos");
-	}
 }
 
 function fConfirmDeleteCareer() {
