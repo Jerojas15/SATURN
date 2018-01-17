@@ -1,25 +1,21 @@
 package model;
 
 public class Group {
-        int id;
         int capacity;
         int courseId;
         int teacher;
         int period;
         int number;
 
-        public Group(int id, int capacity, int courseId, int teacher, int period, int number) {
-            this.id = id;
+        public Group() {}
+        
+        public Group(int capacity, int courseId, int teacher, int period, int number) {
             this.capacity = capacity;
             this.courseId = courseId;
             this.teacher = teacher;
             this.period = period;
             this.number = number;
-        }
-        
-        public int getID() {
-            return id;
-        }
+        }       
         
         public int getCapacity() {
             return capacity;
@@ -39,10 +35,6 @@ public class Group {
         
         public int getNumber() {
             return number;
-        }
-
-        public void setID(int id) {
-            this.id = id;
         }
         
         public void setCapacity(int capacity) {

@@ -18,7 +18,7 @@ function fDisplayCourses() {
 	});
 	$.ajax({
 		method: 'GET',
-		url: URL_COURSES,
+		url: URL_COURSES + "/?" + "careerId=" + CAREER_ID,
 
 		success: function(result){
 			//alert(JSON.stringify(result));

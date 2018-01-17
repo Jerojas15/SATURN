@@ -3,11 +3,11 @@ package model;
 public class Classroom {
         int id;
         int capacity;
-        String type;
+        int type;
 
         public Classroom() {}
 
-        public Classroom(int id, int capacity, String type) {
+        public Classroom(int id, int capacity, int type) {
             this.id = id;
             this.capacity = capacity;
             this.type = type;
@@ -21,7 +21,7 @@ public class Classroom {
             return capacity;
         }
         
-        public String getType() {
+        public int getType() {
             return type;
         }
 
@@ -33,7 +33,7 @@ public class Classroom {
             this.capacity = capacity;
         }
         
-        public void setType(String type){
+        public void setType(int type){
             this.type = type;
         }	
 }

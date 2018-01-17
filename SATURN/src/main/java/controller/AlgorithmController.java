@@ -1,20 +1,26 @@
 package controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.util.Pair;
 
 public class AlgorithmController {
-    ArrayList<Integer> capacity = new ArrayList<>();//Capacidad de cada aula
-    ArrayList<Integer> groups = new ArrayList<>();//capacidad de los grupos a insertar
-    ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> sessions = new ArrayList<>();//sesiones de grupos, con par(ID,(duracion, (idGrupo, Profesor)))
-    ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor = new ArrayList<>();//disponibilidad de profesores, (ID,(Dia,(inicio,salida)))
+    static ArrayList<Integer> capacity = new ArrayList<>();//Capacidad de cada aula
+    static ArrayList<Integer> groups = new ArrayList<>();//capacidad de los grupos a insertar
+    static ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> sessions = new ArrayList<>();//sesiones de grupos, con par(ID,(duracion, (idGrupo, Profesor)))
+    static ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor = new ArrayList<>();//disponibilidad de profesores, (ID,(Dia,(inicio,salida)))
     
     
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         AlgorithmController a = new AlgorithmController(); 
-        ArrayList<Individual> generation = new ArrayList<>();
+        DatabaseController d = new DatabaseController();
+
+        capacity = d.getClassroomCapacity();
+        groups = d.getGroupCapacity();
+        //sessions = ?
+        //professor = ?
         
         int CLASSROOM = 19;
         
