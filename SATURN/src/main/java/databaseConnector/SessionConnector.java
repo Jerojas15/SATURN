@@ -56,4 +56,18 @@ public class SessionConnector {
         }
         return rs;
     }
+    
+    public ResultSet getSessions(Connection conn) throws ClassNotFoundException{
+        ResultSet rs = null;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Sessions");
+            rs = stmt.executeQuery();
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+    
 }
