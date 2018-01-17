@@ -27,8 +27,8 @@ function fDisplayCareers() {
 				$("#Careers ul").append(CAREER_LIST_TEMPLATE1 + result[i].university +
 					 					CAREER_LIST_TEMPLATE2 + result[i].careerName +
 										CAREER_LIST_TEMPLATE3 + result[i].plan +
-										CAREER_LIST_TEMPLATE4 + result[i].id +
-										CAREER_LIST_TEMPLATE5 + result[i].id +
+										CAREER_LIST_TEMPLATE4 + result[i].careerId +
+										CAREER_LIST_TEMPLATE5 + result[i].careerId +
 										CAREER_LIST_TEMPLATE6);
 			}
 		},
@@ -99,7 +99,6 @@ function fClearCareerForm() {
 
 function fShowEditCareer() {
 
-
 	$("#Careers").hide();
 	$("#AddCareer").show();
 	$("#Btn_UpdateCareerSubmit").show();
@@ -140,7 +139,7 @@ function fEditCareer() {
 			jObj.careerName = careerName;
 		if (plan)
 			jObj.plan = plan;
-
+                   alert(JSON.stringify(jObj));
 		$.ajax({
 			method: 'PUT',
 			url: URL_CAREERS + "/" + careerId,

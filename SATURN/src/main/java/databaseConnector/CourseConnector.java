@@ -15,7 +15,7 @@ public class CourseConnector {
         String sql = "INSERT INTO Courses(CourseCode, CourseName, Semester, CareerId) VALUES (?, ?, ?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setInt(1, c.getCode());
+        statement.setString(1, c.getCode());
         statement.setString(2, c.getName());
         statement.setInt(3, c.getSemester());
         statement.setInt(4, c.getCareerId());
@@ -40,7 +40,7 @@ public class CourseConnector {
 
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, id);
-            statement.setString(2, Integer.toString(c.getCode()));
+            statement.setString(2, c.getCode());
             statement.setString(3, c.getName());
             statement.setInt(4, c.getSemester());
             statement.setInt(5, c.getCareerId());
@@ -77,6 +77,21 @@ public class CourseConnector {
                ex.printStackTrace();
             }
            return state;
+    }
+    
+    public ResultSet getCourses(Connection conn, int careerId) throws ClassNotFoundException{
+        ResultSet rs = null;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Courses where CareerId = ?");
+            stmt.setInt(1, careerId);
+            
+            rs = stmt.executeQuery();
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rs;
     }
     
     public ResultSet getCoursebyCareer(Connection conn, int careerId) throws ClassNotFoundException{

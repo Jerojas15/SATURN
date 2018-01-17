@@ -18,6 +18,8 @@ var SELECT_OPTION_TEMPLATE1 = "<option value=\"";
 var SELECT_OPTION_TEMPLATE2 = "\">";
 var SELECT_OPTION_TEMPLATE3 = "</option>";
 
+var editDeleteUserId;
+var editDeleteUserType;
 
 function fDisplayAssistants() {
 	$("#ManagerMenu").hide();
@@ -32,7 +34,7 @@ function fDisplayAssistants() {
 		url: URL_ASSISTANTS,
 
 		success: function(result){
-			alert(JSON.stringify(result));
+			//alert(JSON.stringify(result));
 			//result = result.assistants; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Assistants ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
@@ -142,7 +144,7 @@ function fDisplayCoordinator() {
 		url: URL_COORDINATORS,
 
 		success: function(result){
-			alert(JSON.stringify(result));
+			//alert(JSON.stringify(result));
 			//result = result.coordinators; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Coordinator ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
@@ -186,10 +188,9 @@ function fAddCoordinator() {
 			url: URL_COORDINATORS,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"userName" : userName, "type":USR_TYPE_COORDINATOR, "name" : name, "lastName" : lastName, "password" : password, "careerId" : careerId}),
-                       
+			data: JSON.stringify({"userName" : userName,"type":USR_TYPE_COORDINATOR, "name" : name, "lastName" : lastName, "password" : password, "careerId" : CAREER_ID}),
+
 			success: function(result){
-                                
 				console.log("[Login] Result " + JSON.stringify(result));
 
 				if(result.status === "OK"){
@@ -219,7 +220,6 @@ function fClearAddCoordinator() {
 
 function fDisplayTeachers() {
 	$("#AssistantMenu").hide();
-        $("#CoordinatorMenu").hide();
 	$("#Teachers").show();
 	$("#Teachers li").each(function( index ) {
 		if(index !== 0 && index !==1){
@@ -325,7 +325,7 @@ function fAddTeacher() {
 				url: URL_TEACHERS,
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
-				data: JSON.stringify({"userName" : userName, "password" : password, "name" : name, "lastName" : lastName, "type" : USR_TYPE_TEACHER, "careerId" : careerId}),
+				data: JSON.stringify({"userName" : userName, "type":USR_TYPE_TEACHER, "password" : password, "name" : name, "lastName" : lastName, "careerId" : CAREER_ID}),
 
 				success: function(result){
 					console.log("[Login] Result " + JSON.stringify(result));

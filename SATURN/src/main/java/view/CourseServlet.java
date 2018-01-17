@@ -27,14 +27,9 @@ public class CourseServlet {
         @GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<Course> getCourses() throws SQLException, ClassNotFoundException {
-		//DatabaseController d = new DatabaseController();
+		DatabaseController d = new DatabaseController();
 		//List<Course> l = d.getCourses();
-		ArrayList<Course> l = new ArrayList<>();
-		l.add(new Course(0, "Introducción a la Programación", 1, 0));
-		l.add(new Course(1, "Taller de Programación", 1, 1));
-		l.add(new Course(2, "Estructuras de Datos", 2, 2));
-		l.add(new Course(3, "Programación Orientada a Objetos", 2, 3));
-		
+		List<Course> l = null;
 		return l;
 	}
 
@@ -42,24 +37,24 @@ public class CourseServlet {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static Course getCourse(@PathParam("id") String idStr) {
-		Course c =  new Course(0, "Introducción a la Programación", 1, 0);
+		Course c =  new Course("0", "Introducción a la Programación", 1, 0);
 		return c;
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createCourse(Course course) {
+	public Response createCourse(Course course) throws SQLException, ClassNotFoundException, JSONException {
 
 		System.out.println(course.getName());
                 System.out.println(course.getSemester());
 		System.out.println(course.getCareerId());
 
 		JSONObject object = new JSONObject();
-		try {
-			object.put("status", "OK"); //object.put("status", "ALREADY_EXISTS");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+                DatabaseController d = new DatabaseController();
+                if(d.insertNewCourse(course)){
+                    object.put("status", "OK"); 
+                }
+		
 		return Response.status(200).entity(object.toString()).build();
 	}
 

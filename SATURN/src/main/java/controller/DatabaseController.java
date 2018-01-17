@@ -181,6 +181,20 @@ public class DatabaseController {
             Boolean status = connector.updateCourse(conn, c, id);
             return status;
         }
+        /*
+        public ArrayList<Course> getCourses() throws ClassNotFoundException, SQLException{
+            CourseConnector connector = new CourseConnector();
+            ResultSet rs = connector.getCourses(conn);
+            ArrayList<Course> result = new ArrayList<>();
+            while(rs.next()){
+                Course a = new Course();
+                a.setCode(rs.getInt("CourseCode"));
+                a.setName(rs.getString("CourseName"));
+                a.setSemester(rs.getInt("Semester"));
+                result.add(a);
+            }
+            return result;
+        }*/
         
 /*
  * FUNCIONES DE DISPONIBILIDAD

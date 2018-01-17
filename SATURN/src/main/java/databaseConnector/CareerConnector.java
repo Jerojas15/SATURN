@@ -150,14 +150,13 @@ public class CareerConnector {
         int cont = 1, contUni, contName, contId;
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            String sql = "UPDATE Careers SET";
-            if(c.getUniversity()!=null)sql.concat(" University = ?");contUni = cont++;
-            if(c.getCareerName()!=null)sql.concat(" CareerName = ?");contName = cont++;
-            sql.concat(" WHERE CareerId = ?");contId = cont++;
+            String sql = "UPDATE Careers SET University = ? CareerName = ? WHERE CareerId = ?";
+            if(c.getUniversity()!=null)sql.concat(" ");contUni = cont++;
+            if(c.getCareerName()!=null)sql.concat(" ");contName = cont++;
             PreparedStatement statement = conn.prepareStatement(sql);
-            if(c.getUniversity()!=null)statement.setString(contUni, c.getUniversity());
-            if(c.getCareerName()!=null)statement.setString(contName, c.getCareerName());
-                statement.setInt(contId, id);
+            statement.setString(1, c.getUniversity());
+            statement.setString(2, c.getCareerName());
+            statement.setInt(3, id);
         
       
 
