@@ -30,10 +30,10 @@ public class GroupServlet {
 		//DatabaseController d = new DatabaseController();
 		//List<Course> l = d.getCourses();
 		ArrayList<Group> l = new ArrayList<>();
-		l.add(new Group(0, 20, 0, 0, 1, 90));
-		l.add(new Group(1, 20, 1, 1, 1, 90));
-		l.add(new Group(2, 20, 2, 2, 2, 90));
-		l.add(new Group(3, 20, 3, 3, 2, 90));
+		l.add(new Group(20, 0, 0, 1, 90));
+		l.add(new Group(20, 1, 1, 1, 90));
+		l.add(new Group(20, 2, 2, 2, 90));
+		l.add(new Group(20, 3, 3, 2, 90));
 		
 		return l;
 	}
@@ -42,7 +42,7 @@ public class GroupServlet {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static Group getGroup(@PathParam("id") String idStr) {
-		Group c =  new Group(0, 20, 0, 0, 1, 90);
+		Group c =  new Group(20, 0, 0, 1, 90);
 		return c;
 	}
 
