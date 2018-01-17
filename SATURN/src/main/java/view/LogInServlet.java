@@ -32,6 +32,7 @@ public class LogInServlet {
 				object.put("status", "OK");
 				object.put("userType", userType);
 				object.put("userId", d.getUserId(logIn.getEmail()));  //Se debe completar
+                                object.put("careerId", d.getCareerId(d.getUserId(logIn.getEmail())));
 			}else{
 				object.put("status", "WRONG_DATA");
 			}

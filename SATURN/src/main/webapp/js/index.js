@@ -60,7 +60,7 @@ function fLogIn() {
 			url: URL_LOGIN,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"userName" : userName, "password" : pass}),
+			data: JSON.stringify({"email" : userName, "password" : pass}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
@@ -140,7 +140,7 @@ $(document).ready(function(){
 	$(document).on("click", "#Btn_AddCoordinatorCancel", fClearAddCoordinator);
 
 	$(document).on("click", "#Btn_Teachers1", fDisplayTeachers);
-	$(document).on("click", "#Btn_AddTeacher", fShowAddTeacher);
+        $(document).on("click", "#Btn_AddTeacher", fShowAddTeacher);
 	$(document).on("click", "#Btn_AddTeacherSubmit", fAddTeacher);
 	$(document).on("click", "#Btn_AddTeacherCancel", fClearAddTeacher);
 

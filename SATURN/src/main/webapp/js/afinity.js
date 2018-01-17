@@ -27,7 +27,7 @@ function fShowAfinity() {
 
   $.ajax({
 		method: 'GET',
-		url: URL_TEACHERS_AFINITIES "/" + userId,
+		url: URL_TEACHERS_AFINITIES +"/" + userId,
 
 		success: function(result){
 			//alert(JSON.stringify(result));
@@ -36,7 +36,7 @@ function fShowAfinity() {
         level = result[i].level;
         $.ajax({
       		method: 'GET',
-      		url: URL_COURSES "/" + userId,
+      		url: URL_COURSES + "/" + userId,
 
       		success: function(result){
             $("#Afinity ul").append(  AFINITY_LIST_TEMPLATE1 + result.code +

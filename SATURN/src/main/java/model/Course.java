@@ -1,19 +1,21 @@
 package model;
 
 public class Course {
-        int code;
+        String code;
         String name;
         int semester;
         int careerId;
 
-        public Course(int code, String name, int semester, int careerId) {
+        public Course(){}
+        
+        public Course(String code, String name, int semester, int careerId) {
             this.code = code;
             this.name = name;
             this.semester = semester;
             this.careerId = careerId;
         }
 
-        public int getCode() {
+        public String getCode() {
             return code;
         }
         
@@ -29,7 +31,7 @@ public class Course {
             return careerId;
         }
 
-        public void setCode(int code){
+        public void setCode(String code){
             this.code = code;
         }
         

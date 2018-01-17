@@ -22,7 +22,7 @@ function fDisplayCourses() {
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			result = result.courses; //Quitar cuando se pase a java
+			//result = result.courses; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Courses ul").append(COURSE_LIST_TEMPLATE1 + result[i].code +
 										COURSE_LIST_TEMPLATE2 + result[i].courseName +
@@ -60,7 +60,7 @@ function fAddCourse() {
 			url: URL_COURSES,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"code" : code, "courseName" : courseName, "block" : block, "careerId" : CAREER_ID}),
+			data: JSON.stringify({"code" : code, "name" : courseName, "semester" : block, "careerId" : CAREER_ID}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));

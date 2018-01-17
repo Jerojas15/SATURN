@@ -2,7 +2,10 @@ package controller;
 
 import databaseConnector.AvailabilityConnector;
 import databaseConnector.CareerConnector;
+import databaseConnector.ClassRoomConnector;
 import databaseConnector.CourseConnector;
+import databaseConnector.GroupConnector;
+import databaseConnector.SessionConnector;
 import databaseConnector.UserConnector;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,8 +14,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Availability;
 import model.Career;
+import model.Classroom;
 import model.Course;
+import model.Group;
 import model.LogIn;
+import model.Session;
 import model.User;
 
 public class DatabaseController {
@@ -34,6 +40,16 @@ public class DatabaseController {
             //manera de acceso a la base de Jose Miguel
             // conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
             return conn;
+        }
+        
+        public int getCareerId(int id) throws ClassNotFoundException, SQLException{
+            int status = -1;
+            UserConnector connector = new UserConnector();
+            ResultSet list = connector.getCareerId(conn, id);
+            while(list.next()){
+                status = list.getInt("CareerId");
+            }
+            return status;
         }
         
         public int login(LogIn l) throws ClassNotFoundException, SQLException{
@@ -78,6 +94,7 @@ public class DatabaseController {
                 Career c = new Career();
                 c.setUniversity(rs.getString("University"));
                 c.setCareerName(rs.getString("CareerName"));
+                c.setCareerId(rs.getInt("CareerId"));
                 c.setPlan(connector.getPlanName(conn, c));
 
                 list.add(c); 
@@ -118,7 +135,7 @@ public class DatabaseController {
                 u.setType(rs.getInt("UserType"));
                 u.setUserName(rs.getString("UserName"));
                 u.setCareerId(rs.getInt("CareerId"));
-
+                u.setUserId(rs.getInt("UserId"));
                 list.add(u); 
             }
             return list;
@@ -170,6 +187,20 @@ public class DatabaseController {
             Boolean status = connector.updateCourse(conn, c, id);
             return status;
         }
+        /*
+        public ArrayList<Course> getCourses() throws ClassNotFoundException, SQLException{
+            CourseConnector connector = new CourseConnector();
+            ResultSet rs = connector.getCourses(conn);
+            ArrayList<Course> result = new ArrayList<>();
+            while(rs.next()){
+                Course a = new Course();
+                a.setCode(rs.getInt("CourseCode"));
+                a.setName(rs.getString("CourseName"));
+                a.setSemester(rs.getInt("Semester"));
+                result.add(a);
+            }
+            return result;
+        }*/
         
 /*
  * FUNCIONES DE DISPONIBILIDAD
@@ -205,5 +236,47 @@ public class DatabaseController {
             }
             
             return status;
+        }
+/*
+ * FUNCIONES DE AULA
+ */
+        public ArrayList<Integer> getClassroomCapacity() throws ClassNotFoundException, SQLException{
+            ClassRoomConnector connector = new ClassRoomConnector();
+            ResultSet rs = connector.getClassroomCapacity(conn);
+            ArrayList<Integer> result = new ArrayList<>();
+            while(rs.next()){
+                result.add(new Integer(rs.getInt("Capacity")));
+            }
+            return result;
+        }
+        
+/*
+ * FUNCIONES DE GRUPO
+ */
+        public ArrayList<Integer> getGroupCapacity() throws ClassNotFoundException, SQLException{
+            GroupConnector connector = new GroupConnector();
+            ResultSet rs = connector.getGroupCapacity(conn);
+            ArrayList<Integer> result = new ArrayList<>();
+            while(rs.next()){
+                result.add(new Integer(rs.getInt("Capacity")));
+            }
+            return result;
+        }
+        
+/*
+ * FUNCIONES DE SESIÓN
+ */
+        public ArrayList<Session> getSessions() throws ClassNotFoundException, SQLException{
+            SessionConnector connector = new SessionConnector();
+            ResultSet rs = connector.getSessions(conn);
+            ArrayList<Session> result = new ArrayList<>();
+            while(rs.next()){
+                Session a = new Session();
+                a.setGroup_ID(rs.getInt("GroupId"));
+                a.setHours(rs.getInt("Hour"));
+                a.setClassroom_Type(rs.getString("Type"));
+                result.add(a);
+            }
+            return result;
         }
 }

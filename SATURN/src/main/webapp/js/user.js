@@ -31,13 +31,13 @@ function fDisplayAssistants() {
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			result = result.assistants; //Quitar cuando se pase a java
+			//result = result.assistants; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Assistants ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
 					 						USER_LIST_TEMPLATE2 + result[i].name + " " + result[i].lastName +
-											USER_LIST_TEMPLATE3 + result[i].id +
+											USER_LIST_TEMPLATE3 + result[i].userId +
 											USER_LIST_TEMPLATE4 + USR_TYPE_ASSISTANT +
-											USER_LIST_TEMPLATE5 + result[i].id +
+											USER_LIST_TEMPLATE5 + result[i].userId +
 											USER_LIST_TEMPLATE6 + USR_TYPE_ASSISTANT +
 											USER_LIST_TEMPLATE7);
 			}
@@ -61,9 +61,9 @@ function fShowAddAssistant() {
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			result = result.careers; //Quitar cuando se pase a java
+			//result = result.careers; //Quitar cuando se pase a java
 			for (i in result) {
-				$("#Select_AddUser_Career").append(	SELECT_OPTION_TEMPLATE1 + result[i].id +
+				$("#Select_AddUser_Career").append(	SELECT_OPTION_TEMPLATE1 + result[i].careerId +
 													SELECT_OPTION_TEMPLATE2 + result[i].university + " | " + result[i].careerName +
 													SELECT_OPTION_TEMPLATE3);
 			}
@@ -96,7 +96,7 @@ function fAddAssistant() {
 			url: URL_ASSISTANTS,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName, "password" : password, "careerId" : careerId}),
+			data: JSON.stringify({"userName" : userName, "type" : USR_TYPE_ASSISTANT, "name" : name, "lastName" : lastName, "password" : password, "careerId" : careerId}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
@@ -141,13 +141,13 @@ function fDisplayCoordinator() {
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			result = result.coordinators; //Quitar cuando se pase a java
+			//result = result.coordinators; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Coordinator ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
 					 							USER_LIST_TEMPLATE2 + result[i].name + " " + result[i].lastName +
-												USER_LIST_TEMPLATE3 + result[i].id +
+												USER_LIST_TEMPLATE3 + result[i].userId +
 												USER_LIST_TEMPLATE4 + USR_TYPE_COORDINATOR +
-												USER_LIST_TEMPLATE5 + result[i].id +
+												USER_LIST_TEMPLATE5 + result[i].userId +
 												USER_LIST_TEMPLATE6 + USR_TYPE_COORDINATOR +
 												USER_LIST_TEMPLATE7);
 			}
@@ -184,7 +184,7 @@ function fAddCoordinator() {
 			url: URL_COORDINATORS,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName, "password" : password, "careerId" : CAREER_ID}),
+			data: JSON.stringify({"userName" : userName,"type":USR_TYPE_COORDINATOR, "name" : name, "lastName" : lastName, "password" : password, "careerId" : CAREER_ID}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
@@ -228,13 +228,13 @@ function fDisplayTeachers() {
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			result = result.teachers; //Quitar cuando se pase a java
+			//result = result.teachers; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Teachers ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
 					 						USER_LIST_TEMPLATE2 + result[i].name + " " + result[i].lastName +
-											USER_LIST_TEMPLATE3 + result[i].id +
+											USER_LIST_TEMPLATE3 + result[i].userId +
 											USER_LIST_TEMPLATE4 + USR_TYPE_TEACHER +
-											USER_LIST_TEMPLATE5 + result[i].id +
+											USER_LIST_TEMPLATE5 + result[i].userId +
 											USER_LIST_TEMPLATE6 + USR_TYPE_TEACHER +
 											USER_LIST_TEMPLATE7);
 			}
@@ -321,7 +321,7 @@ function fAddTeacher() {
 				url: URL_TEACHERS,
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
-				data: JSON.stringify({"userName" : userName, "password" : password, "name" : name, "lastName" : lastName, "careerId" : CAREER_ID}),
+				data: JSON.stringify({"userName" : userName, "type":USR_TYPE_TEACHER, "password" : password, "name" : name, "lastName" : lastName, "careerId" : CAREER_ID}),
 
 				success: function(result){
 					console.log("[Login] Result " + JSON.stringify(result));

@@ -4,11 +4,27 @@ import model.User;
 import java.sql.*;
 
 public class UserConnector {
+    
+    public ResultSet getCareerId(Connection conn, int id) throws ClassNotFoundException{
+        ResultSet rs = null;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT CareerId FROM Users where UserId = ?");
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+    
     public ResultSet checkLogin(Connection conn) throws ClassNotFoundException{
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
             PreparedStatement stmt = conn.prepareStatement("SELECT UserName, Password, UserType FROM Users");
+            
             rs = stmt.executeQuery();
             
         } catch (SQLException e){
