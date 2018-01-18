@@ -90,9 +90,11 @@ CREATE TABLE Classrooms (
 );
 
 CREATE TABLE Sessions (
+	SessionId	int			auto_increment NOT NULL,
     GroupId     int         NOT NULL,
     Hour        int         NOT NULL,
     Type        char(255)   NOT NULL,
+    PRIMARY KEY(SessionId),
     FOREIGN KEY (GroupId)
         REFERENCES Groups(GroupId)
 );
