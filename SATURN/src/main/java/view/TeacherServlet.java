@@ -42,11 +42,12 @@ public class TeacherServlet {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("/careerId/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static User getTeacher(@PathParam("id") String idStr) {
-		User c =  new User("jyock1997@gmail.com", null, "Jose Paulo", "Yock Fuentes", 0, 0);
-		return c;
+	public static List<User> getProfessor(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
+		DatabaseController d = new DatabaseController();
+		List<User> l = d.getUserbyType(3, Integer.parseInt(idStr));
+		return l;
 	}
 	
 	@POST
