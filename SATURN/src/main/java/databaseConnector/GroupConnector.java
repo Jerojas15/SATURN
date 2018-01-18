@@ -52,7 +52,7 @@ public class GroupConnector {
             ResultSet rs = null;
             try{    
                 Class.forName("com.mysql.jdbc.Driver");
-                PreparedStatement stmt = conn.prepareStatement("SELECT Capacity FROM Groups");
+                PreparedStatement stmt = conn.prepareStatement("SELECT Capacity, GroupId FROM Groups");
                 rs = stmt.executeQuery();
 
             } catch (SQLException e){

@@ -7,7 +7,7 @@ import javafx.util.Pair;
 
 public class AlgorithmController {
     static ArrayList<Integer> capacity = new ArrayList<>();//Capacidad de cada aula
-    static ArrayList<Integer> groups = new ArrayList<>();//capacidad de los grupos a insertar
+    static ArrayList<Pair<Integer, Integer>> groups = new ArrayList<>();//capacidad de los grupos a insertar
     static ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> sessions = new ArrayList<>();//sesiones de grupos, con par(ID,(duracion, (idGrupo, Profesor)))
     static ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor = new ArrayList<>();//disponibilidad de profesores, (ID,(Dia,(inicio,salida)))
     
@@ -17,16 +17,32 @@ public class AlgorithmController {
         AlgorithmController a = new AlgorithmController(); 
         DatabaseController d = new DatabaseController();
 
-        capacity = d.getClassroomCapacity();
-        groups = d.getGroupCapacity();
-        //sessions = ?
-        //professor = ?
+        a.capacity = d.getClassroomCapacity();
+        a.groups = d.getGroupCapacity();
+        a.sessions = d.getSessionData();
+        a.professor = d.getProfessorData();
+        
+        for(int i = 0;i<a.capacity.size();i++){
+            System.out.println(a.capacity.get(i));
+        }
+        System.out.println();
+        for(int i = 0;i<a.groups.size();i++){
+            System.out.println(a.groups.get(i));
+        }
+        System.out.println();
+        for(int i = 0;i<a.sessions.size();i++){
+            System.out.println(a.sessions.get(i));
+        }
+        System.out.println();
+        for(int i = 0;i<a.professor.size();i++){
+            System.out.println(a.professor.get(i));
+        }
         
         int CLASSROOM = 19;
         
         Random rand = new Random();
         
-        
+        /*
         for(int i = 0;i<CLASSROOM;i++){//llena temporal la capacidad de las aulas con random de 10-25
             a.capacity.add(rand.nextInt(16)+20);
         }
@@ -54,7 +70,7 @@ public class AlgorithmController {
         }
         
         
-        
+        */
         GeneticAlgorithm solve = new GeneticAlgorithm(a.capacity, a.groups, a.sessions, a.professor);
         ArrayList<Individual> solution = solve.StartAlgorithm(10, 5);
         
@@ -62,6 +78,5 @@ public class AlgorithmController {
             solution.get(i).show_ind();
             System.out.println();
         }
-       
     }
 }

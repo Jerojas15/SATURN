@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.util.Pair;
 import model.Availability;
 import model.Career;
 import model.Classroom;
@@ -288,12 +289,12 @@ public class DatabaseController {
 /*
  * FUNCIONES DE GRUPO
  */
-        public ArrayList<Integer> getGroupCapacity() throws ClassNotFoundException, SQLException{
+        public ArrayList<Pair<Integer,Integer>> getGroupCapacity() throws ClassNotFoundException, SQLException{
             GroupConnector connector = new GroupConnector();
             ResultSet rs = connector.getGroupCapacity(conn);
-            ArrayList<Integer> result = new ArrayList<>();
+            ArrayList<Pair<Integer,Integer>> result = new ArrayList<>();
             while(rs.next()){
-                result.add(new Integer(rs.getInt("Capacity")));
+                result.add(new Pair(new Integer(rs.getInt("Capacity")),rs.getInt("GroupId")));
             }
             return result;
         }
@@ -313,5 +314,26 @@ public class DatabaseController {
                 result.add(a);
             }
             return result;
+        }
+
+        ArrayList<Pair<Integer, Pair<Integer, Pair<Integer, Integer>>>> getSessionData() throws ClassNotFoundException, SQLException {
+            ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> sessions = new ArrayList<>();
+            SessionConnector connector = new SessionConnector();
+            UserConnector userConnector = new UserConnector();
+            ResultSet result = connector.getSessions(conn);
+            while(result.next()){
+                sessions.add(new Pair(result.getInt("SessionId"), new Pair(result.getInt("Hour"), new Pair(result.getInt("GroupId"), userConnector.getUserByGroup(conn, result.getInt("GroupId"))))));
+            }
+            return sessions;
+        }
+
+        ArrayList<Pair<Integer, Pair<Integer, Pair<Integer, Integer>>>> getProfessorData() throws ClassNotFoundException, SQLException {
+            ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor = new ArrayList<>();
+            AvailabilityConnector connector = new AvailabilityConnector();
+            ResultSet rs = connector.getAvailability(conn);
+            while(rs.next()){
+                professor.add(new Pair(rs.getInt("ProfessorId"),new Pair(rs.getInt("Day"),new Pair((rs.getInt("StartHour")-7)*2, (rs.getInt("EndHour")-7)*2))));
+            }
+            return professor;
         }
 }

@@ -5,16 +5,16 @@ import java.util.Random;
 import javafx.util.Pair;
 
 public class GeneticAlgorithm {
-    private final static int CLASSROOM =19;//Aulas disponibles
+    private final static int CLASSROOM =5;//Aulas disponibles
     private final static int PERIODS = 30;//Periodos de media hora disponibles
     private final static int DAYS = 6;//Dias de la semana disponibles
     
     ArrayList<Integer> capacity = new ArrayList<>();//Capacidad de cada aula
-    ArrayList<Integer> groups = new ArrayList<>();//capacidad de los grupos a insertar
+    ArrayList<Pair<Integer,Integer>> groups = new ArrayList<>();//capacidad de los grupos a insertar
     ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> sessions = new ArrayList<>();//sesiones de grupos, con par(ID,(duracion, (idGrupo, Profesor)))
     ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor = new ArrayList<>();//disponibilidad de profesores, (ID,(Dia,(inicio,salida)))
     
-    public GeneticAlgorithm(ArrayList<Integer> capacity, ArrayList<Integer> groups, 
+    public GeneticAlgorithm(ArrayList<Integer> capacity, ArrayList<Pair<Integer,Integer>>groups, 
                             ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> sessions, 
                             ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor){
         this.capacity = capacity;
