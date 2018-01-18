@@ -81,6 +81,8 @@ public class CourseConnector {
     }
     
     public ResultSet getCourses(Connection conn, int careerId) throws ClassNotFoundException{
+        System.out.println("------2");
+        System.out.println(careerId);
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
@@ -92,6 +94,7 @@ public class CourseConnector {
         } catch (SQLException e){
             e.printStackTrace();
         }
+        System.out.println(rs);
         return rs;
     }
     

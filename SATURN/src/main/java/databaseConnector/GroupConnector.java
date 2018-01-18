@@ -46,6 +46,27 @@ public class GroupConnector {
         }
         return rs;
     }
+    public boolean deleteGroup(Connection conn, int id) throws ClassNotFoundException{
+        boolean state = false;
+            try{
+                Class.forName("com.mysql.jdbc.Driver");
+
+                String sql = "delete From Groups WHERE UserId = ?";
+
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1, id);
+                       
+                int rowsInserted = statement.executeUpdate();
+                if (rowsInserted > 0) {
+                    System.out.println("Users was deleted!");
+                    state = true;
+                }
+
+            } catch(SQLException ex) {
+               ex.printStackTrace();
+            }
+           return state;
+    }
     
     
         public ResultSet getGroupCapacity(Connection conn) throws ClassNotFoundException{

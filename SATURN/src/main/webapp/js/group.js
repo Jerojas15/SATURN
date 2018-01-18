@@ -102,7 +102,7 @@ function fAddGroup() {
 			url: URL_GROUPS,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"code" : code, "courseId" : courseId, "userId" : userId, "capacity" : capacity, "careerId" : CAREER_ID}),
+			data: JSON.stringify({"number" : code, "courseId" : courseId, "teacher" : userId, "capacity" : capacity}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
@@ -111,6 +111,7 @@ function fAddGroup() {
 					fClearGroupForm();
 				}
 				else if(result.status === "ALREADY_EXISTS"){
+                                    alert("Se febe mostrar mensaje de que ya existe");
 
 				}
 			},
@@ -275,7 +276,7 @@ function fDeleteGroup() {
 		method: 'DELETE',
 		url: URL_GROUPS + "/" + userId,
 		success: function(result){
-			console.log("[Login] Result " + JSON.stringify(result));
+			console.log("[Login] Result " + result);
 
 			if(result.status === "OK"){
 				fClearDeleteGroup();

@@ -204,6 +204,7 @@ public class DatabaseController {
         }
         
         public ArrayList<Course> getCourses(int id) throws ClassNotFoundException, SQLException{
+            System.out.println("-------1");
             CourseConnector connector = new CourseConnector();
             ResultSet rs = connector.getCourses(conn, id);
             ArrayList<Course> result = new ArrayList<>();
@@ -299,6 +300,17 @@ public class DatabaseController {
                 result.add(new Pair(new Integer(rs.getInt("Capacity")),rs.getInt("GroupId")));
             }
             return result;
+        }
+        
+        public Boolean insertNewGroup(Group g) throws ClassNotFoundException{
+            GroupConnector connector = new GroupConnector();
+            Boolean status = connector.insertNewGroup(conn, g);
+            return status;
+        }
+        public boolean deleteGroup(int id) throws ClassNotFoundException{
+            GroupConnector connector = new GroupConnector();
+            Boolean status = connector.deleteGroup(conn, id);
+            return status;
         }
         
 /*

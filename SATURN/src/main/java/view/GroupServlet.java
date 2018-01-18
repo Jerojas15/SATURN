@@ -45,20 +45,57 @@ public class GroupServlet {
 		Group c =  new Group(20, 0, 0, 1, 90);
 		return c;
 	}
+        /*
+        @POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response createAssistant(User usr) {
+
+		String status;
+		JSONObject object;		
+		DatabaseController d;
+
+		try {
+			d = new DatabaseController();
+			if (d.insertNewUser(usr))
+				status = "OK";
+			else
+				status = "ALREADY_EXISTS";
+		} catch (ClassNotFoundException | SQLException e1) {
+			return Response.status(500).entity(e1.toString()).build();
+		}
+
+		object = new JSONObject();
+		try {
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
+	}
+        */
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createGroup(Group group) {
 
-		System.out.println(group.getCapacity());
-                System.out.println(group.getCourseId());
-		System.out.println(group.getTeacher());
-		System.out.println(group.getPeriod());
-                System.out.println(group.getNumber());
+	
+                String status;
+		JSONObject object;		
+		DatabaseController d;
+                
+                try {
+			d = new DatabaseController();
+			if (d.insertNewGroup(group))
+				status = "OK";
+			else
+				status = "ALREADY_EXISTS";
+		} catch (ClassNotFoundException | SQLException e1) {
+			return Response.status(500).entity(e1.toString()).build();
+		}
 
-		JSONObject object = new JSONObject();
+		object = new JSONObject();
 		try {
-			object.put("status", "OK"); //object.put("status", "ALREADY_EXISTS");
+			object.put("status", status); //object.put("status", "ALREADY_EXISTS");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -78,10 +115,25 @@ public class GroupServlet {
 	@DELETE
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteGroup(@PathParam("id") String idStr) {
+	public Response deleteGroup(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
 
-		String result = "Resultado.......";
+		String status;
+		JSONObject object;
+		status = "WRONG";
+		
+		object = new JSONObject();
+                
+                try {
+                    DatabaseController d = new DatabaseController();
+                    if(d.deleteGroup(Integer.parseInt(idStr))){
+                        status = "OK";
+                        
+                    }
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 
-		return Response.status(200).entity(result).build();
+		return Response.status(200).entity(object).build();
 	}
 }
