@@ -18,7 +18,7 @@ import databaseConnector.CareerConnector;
 
 public class CareerTest {
     DatabaseController d;
-    Career c;
+    Career c,f;
     static Boolean ready = false;
     public CareerTest(){
     }
@@ -40,6 +40,11 @@ public class CareerTest {
             c.setUniversity("TEC");
             c.setPlan("C-410");
             d.insertNewCareer(c);
+            f = new Career();
+            f.setCareerName("Computacion");
+            f.setUniversity("TEC");
+            f.setPlan("C-411");
+            d.insertNewCareer(f);
 
             
             ready = true;
@@ -69,37 +74,30 @@ public class CareerTest {
     @Test
     public void deleteCareer() throws ClassNotFoundException, SQLException{
         d = new DatabaseController();
-        c = new Career();
-        //assertTrue(d.deleteCareer(c));
+        assertTrue(d.deleteCareer(2));
     }
     @Test
     public void UpdateCareerName() throws ClassNotFoundException, SQLException{
         d = new DatabaseController();
         c = new Career();
-        int id;
-            c.setCareerName("Electrica");
             c.setUniversity("TEC");
-            c.setPlan("C-418");
-            d.insertNewCareer(c);
-            id = c.getCareerId();
+            c.setPlan("C-417");
             c.setCareerName("Electrica Modificada");
-        assertTrue(d.updateCareer(c,id));
+        assertTrue(d.updateCareer(c,3));
 
     }
+
     @Test
     public void UpdateCareerUniversity() throws ClassNotFoundException, SQLException{
         d = new DatabaseController();
         c = new Career();
-        int id;
-            c.setCareerName("Electrica");
-            c.setUniversity("TEC");
-            c.setPlan("C-419");
-            d.insertNewCareer(c);
-            id = c.getCareerId();
+        c.setCareerName("Electrica");
+            c.setPlan("C-417");
             c.setUniversity("UNA");
-        assertTrue(d.updateCareer(c,id));
+        assertTrue(d.updateCareer(c,1));
 
     }
+
     @Test
     public void getCareerList() throws ClassNotFoundException, SQLException{
         d = new DatabaseController();
