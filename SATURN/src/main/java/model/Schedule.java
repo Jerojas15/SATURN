@@ -6,16 +6,42 @@ public class Schedule {
         int finishTime;
         int group;
         int classroom;
-
+        int version;
+        
         public Schedule() {}
         
-        public Schedule(int day, int startTime, int finishTime, int group, int classroom) {
+        public Schedule(int day, int startTime, int finishTime, int group, int classroom, int version) {
             this.day = day;
             this.startTime = startTime;
             this.finishTime = finishTime;
             this.group = group;
             this.classroom = classroom;
+            this.version = version;
         }
+
+    public int getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
+    }
+
+    public int getFinishTime() {
+        return finishTime;
+    }
+
+    public void setFinishTime(int finishTime) {
+        this.finishTime = finishTime;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
         
         public int getDay() {
                 return day;

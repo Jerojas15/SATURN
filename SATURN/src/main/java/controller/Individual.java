@@ -77,7 +77,6 @@ public class Individual {
                 for (int j= 0; j<CLASSROOM;j++){//AULAS
                     for (int k=0; k<PERIODS;k++){//PERIODOS - llena los individuos
                         if(ind[i][j][k]==0){//si no le ha asignado valor
-                            System.out.println(sessions.get(actual_session).getValue().getValue().getKey());
                             if(getGroupCapacity(actual_session)<=capacity.get(j)){//si cabe en el aula
                                 remaining_time = sessions.get(actual_session).getValue().getKey() * 2;
                                 if(canBeSet(i,j,k, remaining_time)){//si queda campo durante el dia

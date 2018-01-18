@@ -124,7 +124,7 @@ public class GeneticAlgorithm {
         for(int  i = 0;i<size;i++){//crea la primera poblacion
             generation.add(new Individual(professor, capacity, groups, new ArrayList<>(sessions)));
         }
-        System.out.println(generation.size());
+        
         for(int i = 0;i<2;i++){
               newGeneration = cross(generation);
               generation = newGeneration;

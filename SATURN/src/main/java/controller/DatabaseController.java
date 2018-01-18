@@ -6,6 +6,7 @@ import databaseConnector.ClassRoomConnector;
 import databaseConnector.CourseConnector;
 import databaseConnector.GroupConnector;
 import databaseConnector.PlanConnector;
+import databaseConnector.ScheduleConnector;
 import databaseConnector.SessionConnector;
 import databaseConnector.UserConnector;
 import java.sql.Connection;
@@ -20,6 +21,7 @@ import model.Classroom;
 import model.Course;
 import model.Group;
 import model.LogIn;
+import model.Schedule;
 import model.Session;
 import model.User;
 
@@ -37,10 +39,10 @@ public class DatabaseController {
         public Connection makeConnection() throws SQLException, ClassNotFoundException{
             //manera de acceso a la base de Julio
             Class.forName("com.mysql.jdbc.Driver");
-            //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
 
             //manera de acceso a la base de Jose Miguel
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
+            //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
             return conn;
         }
         
@@ -336,4 +338,42 @@ public class DatabaseController {
             }
             return professor;
         }
+
+    void insertAlgorithmResult(ArrayList<Individual> solution) throws ClassNotFoundException {
+        ScheduleConnector connector = new ScheduleConnector();
+        SessionConnector sessionConnector = new SessionConnector();
+        int version = -1;
+        version = connector.getVersion(conn);
+        if(version == -1)version = 1;
+        for(int i = 0;i<solution.size();i++){
+            int start = 0;
+            int end;
+            int activeSession = 0;
+            boolean active = false;
+            int[][][] individual = solution.get(i).getIndividual();
+            for(int j = 0;j<individual.length;j++){
+                for(int k = 0;k<individual[j].length;k++){
+                    for(int l = 0;l<individual[j][k].length;l++){//recorre el individuo
+                        
+                        while(l<individual[j][k].length && active){//si ya encontro una sesion
+                            if(individual[j][k][l] != activeSession){//si la sesion cambia
+                                active = false;
+                                end = l;
+                                Schedule s = new Schedule(j,(start/2)+7,(end/2)+7,sessionConnector.getGroupBySession(conn, activeSession),k+1, version);
+                                connector.insertNewSchedule(conn, s);
+                            }else{
+                                l++;
+                            } 
+                        }
+                        if(individual[j][k][l]!=0 && !active){
+                            start = l;
+                            active = true;
+                            activeSession = individual[j][k][l];
+                        }
+                    }
+                }
+            }
+            version++;
+        }
+    }
 }
