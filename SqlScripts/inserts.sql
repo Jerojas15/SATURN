@@ -1,4 +1,4 @@
-Plans (PlanName) VALUES ("410");
+INSERT INTO Plans (PlanName) VALUES ("410");
 INSERT INTO Plans (PlanName) VALUES ("420");
 INSERT INTO Plans (PlanName) VALUES ("430");
 INSERT INTO Plans (PlanName) VALUES ("440");
