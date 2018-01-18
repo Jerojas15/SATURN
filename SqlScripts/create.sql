@@ -105,8 +105,10 @@ CREATE TABLE Timetables (
     EndHour     tinyint     NOT NULL,
     GroupId     int         NOT NULL,
     ClassroomId int         NOT NULL,
+    TableVersion int		NOT NULL,
     FOREIGN KEY (GroupId)
         REFERENCES Groups(GroupId),
     FOREIGN KEY (ClassroomId)
         REFERENCES Classrooms(ClassroomId)
 );
+
