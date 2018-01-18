@@ -20,11 +20,11 @@ function fDisplayGroups() {
 	});
 	$.ajax({
 		method: 'GET',
-		url: URL_GROUPS + "/?" + "careerId=" + CAREER_ID,
+		url: URL_GROUPS + "/careerId/" + CAREER_ID,
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			result = result.groups; //Quitar cuando se pase a java
+			//result = result.groups; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Groups ul").append(	GROUP_LIST_TEMPLATE1 + result[i].code +
 										GROUP_LIST_TEMPLATE2 + result[i].courseName +
@@ -173,7 +173,7 @@ function fShowEditGroup() {
 
 				success: function(result){
 					//alert(JSON.stringify(result));
-					result = result.courses; //Quitar cuando se pase a java
+					//result = result.courses; //Quitar cuando se pase a java
 					for (i in result) {
 						$("#Select_AddGroup_Course").append(SELECT_OPTION_TEMPLATE1 + result[i].id +
 															SELECT_OPTION_TEMPLATE2 + result[i].courseName +
@@ -188,11 +188,11 @@ function fShowEditGroup() {
 			});
 			$.ajax({
 				method: 'GET',
-				url: URL_TEACHERS + "/?" + "careerId=" + CAREER_ID,
+				url: URL_TEACHERS + "/careerId/" + CAREER_ID,
 
 				success: function(result){
 					//alert(JSON.stringify(result));
-					result = result.teachers; //Quitar cuando se pase a java
+					//result = result.teachers; //Quitar cuando se pase a java
 					for (i in result) {
 						$("#Select_AddGroup_Teacher").append(	SELECT_OPTION_TEMPLATE1 + result[i].id +
 																SELECT_OPTION_TEMPLATE2 + result[i].userName + " " + result[i].lastName +
