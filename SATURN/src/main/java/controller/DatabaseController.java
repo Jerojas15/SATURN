@@ -346,6 +346,7 @@ public class DatabaseController {
         version = connector.getVersion(conn);
         if(version == -1)version = 1;
         for(int i = 0;i<solution.size();i++){
+            version++;
             int start = 0;
             int end;
             int activeSession = 0;
@@ -373,7 +374,7 @@ public class DatabaseController {
                     }
                 }
             }
-            version++;
+            
         }
     }
 }
