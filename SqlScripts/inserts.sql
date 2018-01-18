@@ -1,4 +1,4 @@
-INSERT INTO Plans (PlanName) VALUES ("410");
+Plans (PlanName) VALUES ("410");
 INSERT INTO Plans (PlanName) VALUES ("420");
 INSERT INTO Plans (PlanName) VALUES ("430");
 INSERT INTO Plans (PlanName) VALUES ("440");
@@ -38,16 +38,16 @@ INSERT INTO Groups (Capacity, CourseId, ProfessorId, Period, GroupNumber) VALUES
 INSERT INTO Groups (Capacity, CourseId, ProfessorId, Period, GroupNumber) VALUES (30, 4, 4, 1, 20);
 INSERT INTO Groups (Capacity, CourseId, ProfessorId, Period, GroupNumber) VALUES (20, 5, 5, 1, 20);
 
-INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (1, 9, 6, 0);
-INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (1, 9, 6, 1);
+INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (1, 9, 18, 0);
+INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (1, 9, 18, 1);
 INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (2, 7, 12, 2);
 INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (2, 7, 12, 3);
-INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (3, 1, 8, 4);
-INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (3, 1, 8, 5);
-INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (4, 2, 5, 6);
-INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (4, 2, 5, 0);
-INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (5, 8, 5, 1);
-INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (5, 8, 5, 2);
+INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (3, 13, 20, 4);
+INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (3, 13, 20, 5);
+INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (4, 14, 17, 6);
+INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (4, 14, 17, 0);
+INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (5, 8, 17, 1);
+INSERT INTO Availabilities (ProfessorId, StartHour, EndHour, Day) VALUES (5, 8, 17, 2);
 
 INSERT INTO Afinities (ProfessorId, CourseId, Level) VALUES (1, 1, 1);
 INSERT INTO Afinities (ProfessorId, CourseId, Level) VALUES (1, 2, 5);
@@ -66,18 +66,17 @@ INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (03, 20, 1)
 INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (04, 35, 2);
 INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (05, 25, 1);
 
-INSERT INTO Sessions (GroupId, Hour, Type) VALUES ();
-INSERT INTO Sessions (GroupId, Hour, Type) VALUES ();
-INSERT INTO Sessions (GroupId, Hour, Type) VALUES ();
-INSERT INTO Sessions (GroupId, Hour, Type) VALUES ();
-INSERT INTO Sessions (GroupId, Hour, Type) VALUES ();
-INSERT INTO Sessions (GroupId, Hour, Type) VALUES ();
-INSERT INTO Sessions (GroupId, Hour, Type) VALUES ();
-INSERT INTO Sessions (GroupId, Hour, Type) VALUES ();
-INSERT INTO Sessions (GroupId, Hour, Type) VALUES ();
-INSERT INTO Sessions (GroupId, Hour, Type) VALUES ();
+INSERT INTO Sessions (GroupId, Hour, Type) VALUES (1,2,1);
+INSERT INTO Sessions (GroupId, Hour, Type) VALUES (1,3,1);
+INSERT INTO Sessions (GroupId, Hour, Type) VALUES (2,2,1);
+INSERT INTO Sessions (GroupId, Hour, Type) VALUES (2,2,1);
+INSERT INTO Sessions (GroupId, Hour, Type) VALUES (3,1,1);
+INSERT INTO Sessions (GroupId, Hour, Type) VALUES (3,4,1);
+INSERT INTO Sessions (GroupId, Hour, Type) VALUES (4,5,1);
+INSERT INTO Sessions (GroupId, Hour, Type) VALUES (5,3,1);
+INSERT INTO Sessions (GroupId, Hour, Type) VALUES (5,2,1);
 
-INSERT INTO Timetables (Day, StartHour, EndHour, GroupId, ClassroomId) VALUES ();
+#INSERT INTO Timetables (Day, StartHour, EndHour, GroupId, ClassroomId) VALUES ();
 
 SELECT * FROM Plans;
 SELECT * FROM Careers;
