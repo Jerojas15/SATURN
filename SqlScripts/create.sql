@@ -108,3 +108,4 @@ CREATE TABLE Timetables (
     FOREIGN KEY (ClassroomId)
         REFERENCES Classrooms(ClassroomId)
 );
+
