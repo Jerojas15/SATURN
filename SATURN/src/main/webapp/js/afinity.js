@@ -4,15 +4,10 @@ $(".star").click(function(){
       $(this).parent().children(".star").slice(0,n).addClass("highlight");
 });
 */
-var URL_TEACHERS_AFINITIES = "/SATURN/rest/teachers/afinities";
-var URL_COURSES = "/SATURN/rest/courses";
-
 var AFINITY_LIST_TEMPLATE1 = "<li class=\"s_listitem2\"><div class=\"w-row\"><div class=\"s_center w-col w-col-3\"><div class=\"s_text1\">";
 var AFINITY_LIST_TEMPLATE2 = "</div></div><div class=\"s_center w-col w-col-6\"><div class=\"s_text1\">";
 var AFINITY_LIST_TEMPLATE3 = "</div></div><div class=\"s_center w-col w-col-3\"><div star=\"0\" course=\"";
 var AFINITY_LIST_TEMPLATE4 = "\" class=\"s_div2\"><a href=\"#\" class=\"s_button9 star w-button\" value=\"1\"  style=\"background-image: none;\"></a><a href=\"#\" class=\"s_button9 star w-button\" value=\"2\"  style=\"background-image: none;\"></a><a href=\"#\" class=\"s_button9 star w-button\" value=\"3\"  style=\"background-image: none;\"></a><a href=\"#\" class=\"s_button9 star w-button\" value=\"4\"  style=\"background-image: none;\"></a><a href=\"#\" class=\"s_button9 star w-button\" value=\"5\"  style=\"background-image: none;\"></a></div></div></div></li>";
-
-
 
 var userAfinity;
 
@@ -27,7 +22,7 @@ function fShowAfinity() {
 
   $.ajax({
 		method: 'GET',
-		url: URL_TEACHERS_AFINITIES + "/" + userId,
+		url: URL_TEACHERS_AFINITIES + "/" + USER_ID,
 
 		success: function(result){
 			//alert(JSON.stringify(result));

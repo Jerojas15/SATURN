@@ -265,7 +265,8 @@
 }
 
 .s_navlink2 {
-  margin-top: 11px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   padding: 9px 15px;
   border-style: solid;
   border-width: 1px;
@@ -472,7 +473,7 @@
   background-color: #0097fd;
 }
 
-.div-block-3 {
+.s_div3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -503,7 +504,7 @@
 
 .s_button10 {
   display: inline-block;
-  margin-top: 100px;
+  margin-top: 150px;
   padding: 25px;
   background-color: transparent;
   background-image: url('../images/arrow.png');
@@ -512,11 +513,65 @@
 }
 
 .s_button11 {
-  margin-top: 100px;
+  margin-top: 150px;
   padding: 25px;
   background-color: transparent;
   background-image: url('../images/arrow_left.png');
   background-position: 0px 0px;
   background-size: cover;
+}
+
+.s_div4 {
+  margin-bottom: 50px;
+}
+
+.field-label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.text-field {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+
+.form-block {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.button {
+  display: block;
+}
+
+.form-2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.s_formblock2 {
+  display: inline-block;
+}
+
+.div-block-3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.s_textfield1 {
+  margin-top: 20px;
 }
 

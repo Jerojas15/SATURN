@@ -43,13 +43,14 @@ function fDisplaySchedule() {
 		url: URL_CLASSROOMS_LENGTH + "/" + classroomId,
 
 		success: function(result){
-
+			alert(result.len);
 			for (i = 0; i < 15; i++) {
 				row = "<tr>";
-				row += "<th>" + getHour(i) + "<th>";
+				row += "<th>" + getHour(i) + "</th>";
 
-				for (j = 0; j < result.length; j++) {
-					row += "<th><th>";
+				for (j = 0; j < result.len; j++) {
+					console.log(j);
+					row += "<th></th>";
 				}
 				row += "</tr>";
 				$("#Tab_Schedule_Monday table").append(row);

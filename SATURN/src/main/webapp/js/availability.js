@@ -13,14 +13,11 @@ var userAvailability;
 
 function fShowAvailability(event) {
 
-
-	console.log(userId);
-
         $("#TeacherMenu").hide();
         $("#Availability").show();
         $.ajax({
                 method: 'GET',
-                url: URL_TEACHERS_AVAILABILITIES + "/" + userId,
+                url: URL_TEACHERS_AVAILABILITIES + "/" + USER_ID,
 
                 success: function(result){
                         userAvailability = result;
@@ -173,11 +170,9 @@ function fChangeAvailability() {
 	fGetAvailability(jObj, "friday", "Btn_AllFriday");
 	fGetAvailability(jObj, "saturday", "Btn_AllSaturday");
 
-	console.log(URL_TEACHERS_AVAILABILITIES + "/" + userId);
-	console.log(jObj);
 	$.ajax({
 		method: 'PUT',
-		url: URL_TEACHERS_AVAILABILITIES + "/" + userId,
+		url: URL_TEACHERS_AVAILABILITIES + "/" + USER_ID,
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		data: JSON.stringify(jObj),
