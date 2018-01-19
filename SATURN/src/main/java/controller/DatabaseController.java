@@ -39,10 +39,10 @@ public class DatabaseController {
         public Connection makeConnection() throws SQLException, ClassNotFoundException{
             //manera de acceso a la base de Julio
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
+            //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
 
             //manera de acceso a la base de Jose Miguel
-            //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
             return conn;
         }
         
@@ -204,7 +204,6 @@ public class DatabaseController {
         }
         
         public ArrayList<Course> getCourses(int id) throws ClassNotFoundException, SQLException{
-            System.out.println("-------1");
             CourseConnector connector = new CourseConnector();
             ResultSet rs = connector.getCourses(conn, id);
             ArrayList<Course> result = new ArrayList<>();
@@ -247,6 +246,7 @@ public class DatabaseController {
                 a.setStartHour(rs.getInt("StartHour"));
                 a.setEndHour(rs.getInt("EndHour"));
                 result.add(a);
+                
             }
             return result;
         }
@@ -305,12 +305,34 @@ public class DatabaseController {
         public Boolean insertNewGroup(Group g) throws ClassNotFoundException{
             GroupConnector connector = new GroupConnector();
             Boolean status = connector.insertNewGroup(conn, g);
-            return status;
+            return status; //a.setClassroom_Type(rs.getString("Type"));
         }
         public boolean deleteGroup(int id) throws ClassNotFoundException{
             GroupConnector connector = new GroupConnector();
+            SessionConnector con = new SessionConnector();
+            con.deleteSession(conn, id);
             Boolean status = connector.deleteGroup(conn, id);
             return status;
+        }
+        public boolean updateGroup(Group g, int id) throws ClassNotFoundException{
+            GroupConnector connector = new GroupConnector();
+            Boolean status = connector.updateGroup(conn, g, id);
+            return status;
+        }
+        public ArrayList<Group> getGroups() throws ClassNotFoundException, SQLException{
+            GroupConnector connector = new GroupConnector();
+            ResultSet rs = connector.getGroups(conn);
+            ArrayList<Group> result = new ArrayList<>();
+            while(rs.next()){
+                Group a = new Group();
+                a.setCapacity(rs.getInt("Capacity"));
+                a.setCourseId(rs.getInt("CourseId"));
+                a.setTeacher(rs.getInt("ProfessorId"));
+                a.setPeriod(rs.getInt("Period"));
+                a.setNumber(rs.getInt("GroupNumber"));
+                result.add(a);
+            }
+            return result;
         }
         
 /*

@@ -31,7 +31,6 @@ public class CourseServlet {
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<Course> getCourses(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
 		DatabaseController d = new DatabaseController();
-                System.out.println("HOLAAAAAAAA");
 		List<Course> l = d.getCourses(Integer.parseInt(idStr));
 		return l;
 	}

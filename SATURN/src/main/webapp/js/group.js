@@ -111,7 +111,7 @@ function fAddGroup() {
 					fClearGroupForm();
 				}
 				else if(result.status === "ALREADY_EXISTS"){
-                                    alert("Se febe mostrar mensaje de que ya existe");
+                                    alert("Se debe mostrar mensaje de que ya existe");
 
 				}
 			},

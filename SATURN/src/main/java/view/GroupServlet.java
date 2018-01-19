@@ -27,13 +27,9 @@ public class GroupServlet {
         @GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<Group> getGroups() throws SQLException, ClassNotFoundException {
-		//DatabaseController d = new DatabaseController();
-		//List<Course> l = d.getCourses();
-		ArrayList<Group> l = new ArrayList<>();
-		l.add(new Group(20, 0, 0, 1, 90));
-		l.add(new Group(20, 1, 1, 1, 90));
-		l.add(new Group(20, 2, 2, 2, 90));
-		l.add(new Group(20, 3, 3, 2, 90));
+		DatabaseController d = new DatabaseController();
+		List<Group> l = d.getGroups();
+		
 		
 		return l;
 	}
@@ -45,34 +41,7 @@ public class GroupServlet {
 		Group c =  new Group(20, 0, 0, 1, 90);
 		return c;
 	}
-        /*
-        @POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createAssistant(User usr) {
-
-		String status;
-		JSONObject object;		
-		DatabaseController d;
-
-		try {
-			d = new DatabaseController();
-			if (d.insertNewUser(usr))
-				status = "OK";
-			else
-				status = "ALREADY_EXISTS";
-		} catch (ClassNotFoundException | SQLException e1) {
-			return Response.status(500).entity(e1.toString()).build();
-		}
-
-		object = new JSONObject();
-		try {
-			object.put("status", status);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return Response.status(200).entity(object.toString()).build();
-	}
-        */
+ 
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -101,15 +70,54 @@ public class GroupServlet {
 		}
 		return Response.status(200).entity(object.toString()).build();
 	}
+        /*
+        @PUT
+	@Path("/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response updateAssistant(@PathParam("id") String idStr, User usr) throws ClassNotFoundException, SQLException {
+
+		String status;
+		JSONObject object;
+
+		status = "WRONG";
+		
+		object = new JSONObject();
+		try {
+                    DatabaseController d = new DatabaseController();
+                    if(d.updateUser(usr, Integer.parseInt(idStr))){
+                        status = "OK";
+                        
+                    }
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
+	}
+        */
 
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateGroup(@PathParam("id") String idStr) {
+	public Response updateGroup(@PathParam("id") String idStr, Group group) throws SQLException, ClassNotFoundException {
 
-		String result = "Resultado.......";
+		String status;
+		JSONObject object;
 
-		return Response.status(200).entity(result).build();
+		status = "WRONG";
+
+		object = new JSONObject();
+		try {
+                    DatabaseController d = new DatabaseController();
+                    if(d.updateGroup(group, Integer.parseInt(idStr))){
+                        status = "OK";
+                        
+                    }
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
 	}
 
 	@DELETE
