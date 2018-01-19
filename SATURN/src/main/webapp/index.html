@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com  -->
-<!--  Last Published: Fri Jan 19 2018 00:58:21 GMT+0000 (UTC)  -->
+<!--  Last Published: Fri Jan 19 2018 17:11:24 GMT+0000 (UTC)  -->
 <html data-wf-page="5a3dda643472ef0001454691" data-wf-site="5a3dda643472ef0001454690">
 <head>
   <meta charset="utf-8">
@@ -10,6 +10,7 @@
   <link href="css/normalize.css" rel="stylesheet" type="text/css">
   <link href="css/webflow.css" rel="stylesheet" type="text/css">
   <link href="css/saturn-v-1-0.webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/schedule.css" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js" type="text/javascript"></script>
   <script type="text/javascript">WebFont.load({  google: {    families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic"]  }});</script>
   <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
@@ -44,7 +45,7 @@
       </div>
     </div>
   </div>
-  <div id="HelloMsg" class="hellomsg" style="display: none;" style="display: none;">
+  <div id="HelloMsg" class="hellomsg" style="display: none;">
     <h1 id="Text_Hello" class="s_heading1">Bienvenido, Urs</h1>
   </div>
   <div id="ManagerMenu" class="managermenu" style="display: none;">
@@ -185,7 +186,22 @@
     </div>
   </div>
   <div id="Schedules" class="schedules" style="display: none;">
+    <div class="s_div4">
+      <h1 class="s_heading1">Generar nuevos horarios</h1>
+      <div class="s_formblock2 w-form">
+        <form id="email-form-2" name="email-form-2" data-name="Email Form 2"><label class="s_text3">Número de horarios a generar:</label>
+          <div class="s_div3"><input type="text" class="s_textfield1 w-input" maxlength="256" placeholder="Número" id="TextBox_GenSchedule_Number" required=""><a href="#" id="Btn_GenSchedule_Submit" class="s_button1 w-button">Generar</a></div>
+        </form>
+        <div class="w-form-done">
+          <div>Thank you! Your submission has been received!</div>
+        </div>
+        <div class="w-form-fail">
+          <div>Oops! Something went wrong while submitting the form.</div>
+        </div>
+      </div>
+    </div>
     <div>
+      <h1 class="s_heading1">Horarios</h1>
       <div class="s_formblock1 w-form">
         <form id="email-form" name="email-form" data-name="Email Form" class="form"><label class="s_text3">Tipo de Clase:</label><select id="Select_Schedule_Classroom" class="w-select"></select></form>
         <div class="w-form-done">
@@ -196,7 +212,7 @@
         </div>
       </div>
     </div>
-    <div class="div-block-3">
+    <div class="s_div3">
       <div><a href="#" id="Btn_Previous_Schedule" class="s_button11 w-button"></a></div>
       <div>
         <div data-duration-in="300" data-duration-out="100" class="w-tabs">
@@ -804,9 +820,7 @@
     <div class="s_center">
       <div class="s_form1 w-form">
         <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Número de Grupo:</label><input type="text" class="w-input" maxlength="5" placeholder="Número" id="TextBox_AddGroup_Number" required=""><label class="s_boldcentertext">Curso:</label><select id="Select_AddGroup_Course" required="" class="w-select"><option value="">------</option></select><label class="s_boldcentertext">Profesor:</label><select id="Select_AddGroup_Teacher" required="" class="w-select"><option value="">------</option></select><label class="s_boldcentertext">Capacidad:</label><input type="text" class="w-input" maxlength="5" placeholder="Número" id="TextBox_AddGroup_Capacity" required=""><label class="s_boldcentertext">Sesiones:</label><select id="Select_AddGroup_Sessions" required="" class="w-select"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select><label class="s_boldcentertext">Horas por sesión:</label>
-          <div id="AddGroup_Sessions">
-			  <input type="text" class="w-input" maxlength="2" placeholder="Número" id="TextBox_AddGroup_SessionHour" required="">
-		  </div>
+          <div id="AddGroup_Sessions"><input type="text" class="w-input" maxlength="2" placeholder="Número" id="TextBox_AddGroup_SessionHour" required=""></div>
           <div>
 			  <a href="#" id="Btn_AddGroupSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>
 			  <a href="#" id="Btn_UpdateGroupSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>

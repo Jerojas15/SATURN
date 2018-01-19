@@ -4,6 +4,7 @@ var URL_ASSISTANTS = "/SATURN/rest/assistants";
 var URL_COORDINATORS = "/SATURN/rest/coordinators";
 var URL_TEACHERS = "/SATURN/rest/teachers";
 var URL_TEACHERS_AVAILABILITIES = "/SATURN/rest/teachers/availabilities";
+var URL_TEACHERS_AFINITIES = "/SATURN/rest/teachers/afinities";
 var URL_COURSES = "/SATURN/rest/courses";
 var URL_GROUPS = "/SATURN/rest/groups";
 var URL_GROUPS_SESSIONS = "/SATURN/rest/groups/sessions";
