@@ -150,14 +150,16 @@ public class CareerConnector {
         int cont = 1, contUni, contName, contId;
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            String sql = "UPDATE Careers SET University = ? CareerName = ? WHERE CareerId = ?";
-            if(c.getUniversity()!=null)sql.concat(" ");contUni = cont++;
-            if(c.getCareerName()!=null)sql.concat(" ");contName = cont++;
+            String sql = "UPDATE Careers SET University = ?, CareerName = ? WHERE CareerId = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, c.getUniversity());
             statement.setString(2, c.getCareerName());
             statement.setInt(3, id);
-        
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Career was updated!");
+                state = true;
+            }
       
 
         } catch(SQLException ex) {
@@ -166,17 +168,35 @@ public class CareerConnector {
         return state;
     }
     
-    public boolean deleteCareer(Connection conn, Career c) throws ClassNotFoundException{
+    public boolean deleteCareer(Connection conn, int id) throws ClassNotFoundException{
         boolean state = false;
             try{
                 Class.forName("com.mysql.jdbc.Driver");
-
+                //el plan a borrar
+                String aux = "select PlanId from CareersPlans where CareerId = ?";
+                PreparedStatement stmt = conn.prepareStatement(aux);
+                stmt.setInt(1, id);
+                ResultSet planId = stmt.executeQuery();
+                
+                //borra el plan enlazado
+                String preSql = "delete from CareersPlans where PlanId = ?";
+                PreparedStatement stmt2 = conn.prepareStatement(preSql);
+                planId.next();
+                stmt2.setInt(1, planId.getInt("PlanId"));
+                
+                //borra el plan
+                int rowsInserted = stmt2.executeUpdate();
+                String preSql2 = "delete from Plans where PlanId = ?";
+                PreparedStatement stmt3 = conn.prepareStatement(preSql2);
+                stmt3.setInt(1, planId.getInt("PlanId"));
+                
+                //borra la carrera
                 String sql = "delete FROM Careers WHERE CareerId = ?";
 
                 PreparedStatement statement = conn.prepareStatement(sql);
-                statement.setInt(1, c.getCareerId());
+                statement.setInt(1, id);
                 
-                int rowsInserted = statement.executeUpdate();
+                rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
                     System.out.println("Career was deleted!");
                     state = true;
@@ -186,5 +206,19 @@ public class CareerConnector {
                ex.printStackTrace();
             }
            return state;
+    }
+
+    public ResultSet getCareerById(Connection conn, int id) throws ClassNotFoundException {
+        ResultSet rs = null;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Careers where CareerId = ?");
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rs;
     }
 }

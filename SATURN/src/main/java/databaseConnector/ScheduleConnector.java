@@ -12,7 +12,7 @@ public class ScheduleConnector {
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT INTO Timetables(Day, StartHour, EndHour, GroupId, ClassroomId) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Timetables(Day, StartHour, EndHour, GroupId, ClassroomId, TableVersion) VALUES (?, ?, ?, ?, ?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, s.getDay());
@@ -20,7 +20,7 @@ public class ScheduleConnector {
         statement.setInt(3, s.getFinish_Time());
         statement.setInt(4, s.getGroup());
         statement.setInt(5, s.getClassroom());
-
+        statement.setInt(6, s.getVersion());
         int rowsInserted = statement.executeUpdate();
         if (rowsInserted > 0) {
             System.out.println("A new Schedule was inserted successfully!");
@@ -45,5 +45,22 @@ public class ScheduleConnector {
         }
         return rs;
     }
+
+    public int getVersion(Connection conn) throws ClassNotFoundException {
+         ResultSet rs = null;
+         int version = -1;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT TableVersion FROM Timetables");
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                version = rs.getInt("TableVersion");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return version;
+    }
+
     
 }

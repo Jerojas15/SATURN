@@ -408,7 +408,18 @@ function fEditUser() {
 					console.log("[Login] Result " + JSON.stringify(result));
 
 					if(result.status === "OK"){
-						fCancelEditUser();
+						switch (Number(editDeleteUserType)) {
+							case USR_TYPE_ASSISTANT:
+								fDisplayAssistants();
+								break;
+							case USR_TYPE_COORDINATOR:
+								fDisplayCoordinator();
+								break;
+							case USR_TYPE_TEACHER:
+								fDisplayTeachers();
+								break;
+						}
+						fClearEditUser();
 					}
 				},
 

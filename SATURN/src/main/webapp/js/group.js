@@ -311,7 +311,8 @@ function fEditGroup() {
 
 				if(result.status === "OK"){
 					groupId = null;
-					fCancelAddEditGroup();
+					fClearGroupForm();
+					fDisplayGroups();
 				}
 			},
 

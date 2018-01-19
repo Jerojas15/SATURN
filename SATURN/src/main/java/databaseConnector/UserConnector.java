@@ -189,7 +189,7 @@ public class UserConnector {
 
                 PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setInt(1, id);
-                
+                       
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
                     System.out.println("Users was deleted!");
@@ -201,5 +201,23 @@ public class UserConnector {
             }
            return state;
     }
+
+    public int getUserByGroup(Connection conn, int id) throws ClassNotFoundException {
+        ResultSet rs = null;
+        int result = 0;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT ProfessorId from Groups where GroupId = ?");
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                result = rs.getInt("ProfessorId");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }
   

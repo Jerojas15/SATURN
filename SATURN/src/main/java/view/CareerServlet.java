@@ -39,10 +39,11 @@ public class CareerServlet {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static Career getCareer(@PathParam("id") String idStr) {
-		//Career c =  new Career(0, "TEC", "Ing. Computación");
-		//return c;
-                return null;
+	public static Career getCareer(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
+                DatabaseController d = new DatabaseController();
+		Career c =  d.getCareerById(Integer.parseInt(idStr));
+		return c;
+                
 	}
 
 	@POST
@@ -57,7 +58,7 @@ public class CareerServlet {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return Response.status(200).entity(object.toString()).build();
+		return Response.status(200).entity(object).build();
 	}
         
         @PUT
@@ -71,7 +72,7 @@ public class CareerServlet {
             object = new JSONObject();
             try {
                     DatabaseController d = new DatabaseController();
-                    if(d.updateCareer(career, Integer.parseInt(idStr))){ 
+                    if(d.updateCareer(career, Integer.parseInt(idStr))&&d.updatePlan(career.getPlan(), Integer.parseInt(idStr))){ 
                         status = "OK";
                         
                     }
@@ -79,13 +80,13 @@ public class CareerServlet {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return Response.status(200).entity(object.toString()).build();
+		return Response.status(200).entity(object).build();
         }
 
 	@DELETE
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteCareer(@PathParam("id") String idStr, Career career) throws SQLException, ClassNotFoundException {
+	public Response deleteCareer(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
 
 		String status;
 		JSONObject object;
@@ -95,7 +96,7 @@ public class CareerServlet {
                 
                 try {
                         DatabaseController d = new DatabaseController();
-                        if(d.deleteCareer(career)){ 
+                        if(d.deleteCareer(Integer.parseInt(idStr))){ 
                             status = "OK";
                         }
                             object.put("status", status);
@@ -103,7 +104,7 @@ public class CareerServlet {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return Response.status(200).entity(object.toString()).build();
+		return Response.status(200).entity(object).build();
               
 	}
 

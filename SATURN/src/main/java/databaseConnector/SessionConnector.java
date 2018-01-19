@@ -69,5 +69,43 @@ public class SessionConnector {
         }
         return rs;
     }
+
+    public int getGroupBySession(Connection conn, int activeSession) throws ClassNotFoundException {
+        ResultSet rs = null;
+        int group = 0;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT GroupId FROM Sessions where SessionId = ?");
+            stmt.setInt(1, activeSession);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                group = rs.getInt("GroupId");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return group;
+    }
+    public boolean deleteSession(Connection conn, int id) throws ClassNotFoundException{
+        boolean state = false;
+            try{
+                Class.forName("com.mysql.jdbc.Driver");
+
+                String sql = "delete From Sessions WHERE GroupId = ?";
+
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1, id);
+                       
+                int rowsInserted = statement.executeUpdate();
+                if (rowsInserted > 0) {
+                    System.out.println("Session was deleted!");
+                    state = true;
+                }
+
+            } catch(SQLException ex) {
+               ex.printStackTrace();
+            }
+           return state;
+    }
     
 }

@@ -116,6 +116,6 @@ public class AssistantServlet {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return Response.status(200).entity(object.toString()).build();
+		return Response.status(200).entity(object).build();
 	}
 }

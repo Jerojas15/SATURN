@@ -44,15 +44,15 @@ public class PlanConnector {
         return rs;
     }
     
-    public boolean updatePlan(Connection conn, Plan p) throws ClassNotFoundException{
+    public boolean updatePlan(Connection conn, String p, int id) throws ClassNotFoundException{
         boolean state =  false;
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            String sql = "UPDATE Plans SET PlanId = ?, PlanName = ?";
+            String sql = "UPDATE Plans SET PlanName = ? where PlanId = (select PlanId from CareersPlans where CareerId = ?)";
 
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, p.getPlanId());
-            statement.setString(2, p.getPlanName());
+            statement.setString(1, p);
+            statement.setInt(2, id);
             
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {

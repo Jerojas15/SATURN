@@ -45,4 +45,17 @@ public class AvailabilityConnector {
         }
         return rs;
     }
+
+    public ResultSet getAvailability(Connection conn) throws ClassNotFoundException {
+        ResultSet rs = null;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Availabilities");
+            rs = stmt.executeQuery();
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
 }

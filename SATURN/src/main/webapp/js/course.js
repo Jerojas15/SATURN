@@ -153,7 +153,8 @@ function fEditCourse() {
 
 				if(result.status === "OK"){
 					courseId = null;
-					fCancelAddEditCourse();
+					fClearCourseForm();
+					fDisplayCourses();
 				}
 			},
 

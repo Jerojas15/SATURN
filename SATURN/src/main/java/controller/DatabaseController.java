@@ -5,6 +5,8 @@ import databaseConnector.CareerConnector;
 import databaseConnector.ClassRoomConnector;
 import databaseConnector.CourseConnector;
 import databaseConnector.GroupConnector;
+import databaseConnector.PlanConnector;
+import databaseConnector.ScheduleConnector;
 import databaseConnector.SessionConnector;
 import databaseConnector.UserConnector;
 import java.sql.Connection;
@@ -12,12 +14,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.util.Pair;
 import model.Availability;
 import model.Career;
 import model.Classroom;
 import model.Course;
 import model.Group;
 import model.LogIn;
+import model.Schedule;
 import model.Session;
 import model.User;
 
@@ -35,11 +39,22 @@ public class DatabaseController {
         public Connection makeConnection() throws SQLException, ClassNotFoundException{
             //manera de acceso a la base de Julio
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
+            //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
 
             //manera de acceso a la base de Jose Miguel
-            // conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
             return conn;
+        }
+        
+        public Career getCareerById(int id) throws SQLException, ClassNotFoundException{
+            CareerConnector c = new CareerConnector();
+            ResultSet rs = c.getCareerById(conn, id);
+            Career ca = new Career();
+            while(rs.next()){
+                ca.setCareerName(rs.getString("CareerName"));
+                ca.setUniversity(rs.getString("University"));
+            }
+            return ca;
         }
         
         public int getCareerId(int id) throws ClassNotFoundException, SQLException{
@@ -73,9 +88,9 @@ public class DatabaseController {
             return status;
         }
 
-        public boolean deleteCareer(Career c) throws ClassNotFoundException{
+        public boolean deleteCareer(int id) throws ClassNotFoundException{
             CareerConnector connector = new CareerConnector();
-            Boolean status = connector.deleteCareer(conn, c);
+            Boolean status = connector.deleteCareer(conn, id);
             return status;
         }
         
@@ -187,20 +202,36 @@ public class DatabaseController {
             Boolean status = connector.updateCourse(conn, c, id);
             return status;
         }
-        /*
-        public ArrayList<Course> getCourses() throws ClassNotFoundException, SQLException{
+        
+        public ArrayList<Course> getCourses(int id) throws ClassNotFoundException, SQLException{
             CourseConnector connector = new CourseConnector();
-            ResultSet rs = connector.getCourses(conn);
+            ResultSet rs = connector.getCourses(conn, id);
             ArrayList<Course> result = new ArrayList<>();
             while(rs.next()){
                 Course a = new Course();
-                a.setCode(rs.getInt("CourseCode"));
+                a.setCode(rs.getString("CourseCode"));
                 a.setName(rs.getString("CourseName"));
                 a.setSemester(rs.getInt("Semester"));
+                a.setCourseId(rs.getInt("CourseId"));
                 result.add(a);
             }
             return result;
-        }*/
+        }
+        
+        public ArrayList<Course> getCourse(int id) throws ClassNotFoundException, SQLException{
+            CourseConnector connector = new CourseConnector();
+            ResultSet rs = connector.getCoursebyId(conn, id);
+            ArrayList<Course> result = new ArrayList<>();
+            while(rs.next()){
+                Course a = new Course();
+                a.setCode(rs.getString("CourseCode"));
+                a.setName(rs.getString("CourseName"));
+                a.setSemester(rs.getInt("Semester"));
+                a.setCourseId(rs.getInt("CourseId"));
+                result.add(a);
+            }
+            return result;
+        }
         
 /*
  * FUNCIONES DE DISPONIBILIDAD
@@ -215,6 +246,7 @@ public class DatabaseController {
                 a.setStartHour(rs.getInt("StartHour"));
                 a.setEndHour(rs.getInt("EndHour"));
                 result.add(a);
+                
             }
             return result;
         }
@@ -237,6 +269,13 @@ public class DatabaseController {
             
             return status;
         }
+
+    public boolean updatePlan(String plan, int id) throws ClassNotFoundException {
+        PlanConnector c = new PlanConnector();
+        boolean result = c.updatePlan(conn, plan, id);
+        return result;
+    }
+
 /*
  * FUNCIONES DE AULA
  */
@@ -253,12 +292,45 @@ public class DatabaseController {
 /*
  * FUNCIONES DE GRUPO
  */
-        public ArrayList<Integer> getGroupCapacity() throws ClassNotFoundException, SQLException{
+        public ArrayList<Pair<Integer,Integer>> getGroupCapacity() throws ClassNotFoundException, SQLException{
             GroupConnector connector = new GroupConnector();
             ResultSet rs = connector.getGroupCapacity(conn);
-            ArrayList<Integer> result = new ArrayList<>();
+            ArrayList<Pair<Integer,Integer>> result = new ArrayList<>();
             while(rs.next()){
-                result.add(new Integer(rs.getInt("Capacity")));
+                result.add(new Pair(new Integer(rs.getInt("Capacity")),rs.getInt("GroupId")));
+            }
+            return result;
+        }
+        
+        public Boolean insertNewGroup(Group g) throws ClassNotFoundException{
+            GroupConnector connector = new GroupConnector();
+            Boolean status = connector.insertNewGroup(conn, g);
+            return status; //a.setClassroom_Type(rs.getString("Type"));
+        }
+        public boolean deleteGroup(int id) throws ClassNotFoundException{
+            GroupConnector connector = new GroupConnector();
+            SessionConnector con = new SessionConnector();
+            con.deleteSession(conn, id);
+            Boolean status = connector.deleteGroup(conn, id);
+            return status;
+        }
+        public boolean updateGroup(Group g, int id) throws ClassNotFoundException{
+            GroupConnector connector = new GroupConnector();
+            Boolean status = connector.updateGroup(conn, g, id);
+            return status;
+        }
+        public ArrayList<Group> getGroups() throws ClassNotFoundException, SQLException{
+            GroupConnector connector = new GroupConnector();
+            ResultSet rs = connector.getGroups(conn);
+            ArrayList<Group> result = new ArrayList<>();
+            while(rs.next()){
+                Group a = new Group();
+                a.setCapacity(rs.getInt("Capacity"));
+                a.setCourseId(rs.getInt("CourseId"));
+                a.setTeacher(rs.getInt("ProfessorId"));
+                a.setPeriod(rs.getInt("Period"));
+                a.setNumber(rs.getInt("GroupNumber"));
+                result.add(a);
             }
             return result;
         }
@@ -279,4 +351,64 @@ public class DatabaseController {
             }
             return result;
         }
+
+        ArrayList<Pair<Integer, Pair<Integer, Pair<Integer, Integer>>>> getSessionData() throws ClassNotFoundException, SQLException {
+            ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> sessions = new ArrayList<>();
+            SessionConnector connector = new SessionConnector();
+            UserConnector userConnector = new UserConnector();
+            ResultSet result = connector.getSessions(conn);
+            while(result.next()){
+                sessions.add(new Pair(result.getInt("SessionId"), new Pair(result.getInt("Hour"), new Pair(result.getInt("GroupId"), userConnector.getUserByGroup(conn, result.getInt("GroupId"))))));
+            }
+            return sessions;
+        }
+
+        ArrayList<Pair<Integer, Pair<Integer, Pair<Integer, Integer>>>> getProfessorData() throws ClassNotFoundException, SQLException {
+            ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor = new ArrayList<>();
+            AvailabilityConnector connector = new AvailabilityConnector();
+            ResultSet rs = connector.getAvailability(conn);
+            while(rs.next()){
+                professor.add(new Pair(rs.getInt("ProfessorId"),new Pair(rs.getInt("Day"),new Pair((rs.getInt("StartHour")-7)*2, (rs.getInt("EndHour")-7)*2))));
+            }
+            return professor;
+        }
+
+    void insertAlgorithmResult(ArrayList<Individual> solution) throws ClassNotFoundException {
+        ScheduleConnector connector = new ScheduleConnector();
+        SessionConnector sessionConnector = new SessionConnector();
+        int version = -1;
+        version = connector.getVersion(conn);
+        if(version == -1)version = 1;
+        for(int i = 0;i<solution.size();i++){
+            version++;
+            int start = 0;
+            int end;
+            int activeSession = 0;
+            boolean active = false;
+            int[][][] individual = solution.get(i).getIndividual();
+            for(int j = 0;j<individual.length;j++){
+                for(int k = 0;k<individual[j].length;k++){
+                    for(int l = 0;l<individual[j][k].length;l++){//recorre el individuo
+                        
+                        while(l<individual[j][k].length && active){//si ya encontro una sesion
+                            if(individual[j][k][l] != activeSession){//si la sesion cambia
+                                active = false;
+                                end = l;
+                                Schedule s = new Schedule(j,(start/2)+7,(end/2)+7,sessionConnector.getGroupBySession(conn, activeSession),k+1, version);
+                                connector.insertNewSchedule(conn, s);
+                            }else{
+                                l++;
+                            } 
+                        }
+                        if(individual[j][k][l]!=0 && !active){
+                            start = l;
+                            active = true;
+                            activeSession = individual[j][k][l];
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
 }
