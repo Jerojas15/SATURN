@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com  -->
-<!--  Last Published: Tue Jan 16 2018 17:48:50 GMT+0000 (UTC)  -->
+<!--  Last Published: Fri Jan 19 2018 00:58:21 GMT+0000 (UTC)  -->
 <html data-wf-page="5a3dda643472ef0001454691" data-wf-site="5a3dda643472ef0001454690">
 <head>
   <meta charset="utf-8">
@@ -23,14 +23,13 @@
   <script src="js/user.js" type="text/javascript"></script>
   <script src="js/course.js" type="text/javascript"></script>
   <script src="js/group.js" type="text/javascript"></script>
+  <script src="js/schedule.js" type="text/javascript"></script>
   <script src="js/index.js" type="text/javascript"></script>
 </head>
 <body class="body">
   <div data-collapse="medium" data-animation="default" data-duration="400" class="navbar w-nav">
     <div class="w-container"><a href="#" id="Btn_Start" class="s_brand w-nav-brand"><img src="images/logo.png"></a>
       <nav role="navigation" class="w-nav-menu">
-		  <a href="#" class="s_navlink1 w-nav-link">ACERCA DE</a>
-		  <a href="#" class="s_navlink1 w-nav-link">SERVICIOS</a>
 		  <a href="#" id="Btn_LogIn1" class="s_navlink2 w-nav-link">Iniciar Sesión</a>
 		  <a href="#" id="Btn_LogOut" class="s_navlink2 w-nav-link" style="display: none;">Cerrar Sesión</a>
 	  </nav>
@@ -45,7 +44,7 @@
       </div>
     </div>
   </div>
-  <div id="HelloMsg" class="hellomsg" style="display: none;">
+  <div id="HelloMsg" class="hellomsg" style="display: none;" style="display: none;">
     <h1 id="Text_Hello" class="s_heading1">Bienvenido, Urs</h1>
   </div>
   <div id="ManagerMenu" class="managermenu" style="display: none;">
@@ -66,7 +65,7 @@
     <div class="w-row">
       <div class="w-col w-col-4"><a href="#" id="Btn_Courses" class="s_button2 w-button">Cursos</a></div>
       <div class="w-col w-col-4"><a href="#" id="Btn_Groups2" class="s_button3 w-button">Grupos</a></div>
-      <div class="w-col w-col-4"><a href="#" id="Btn_Teachers1" class="s_button4 w-button">Profesores</a></div>
+      <div class="w-col w-col-4"><a href="#" id="Btn_Teachers2" class="s_button4 w-button">Profesores</a></div>
     </div>
   </div>
   <div id="TeacherMenu" class="teachermenu" style="display: none;">
@@ -185,7 +184,55 @@
       </ul>
     </div>
   </div>
-  <div class="schedules"></div>
+  <div id="Schedules" class="schedules" style="display: none;">
+    <div>
+      <div class="s_formblock1 w-form">
+        <form id="email-form" name="email-form" data-name="Email Form" class="form"><label class="s_text3">Tipo de Clase:</label><select id="Select_Schedule_Classroom" class="w-select"></select></form>
+        <div class="w-form-done">
+          <div>Thank you! Your submission has been received!</div>
+        </div>
+        <div class="w-form-fail">
+          <div>Oops! Something went wrong while submitting the form.</div>
+        </div>
+      </div>
+    </div>
+    <div class="div-block-3">
+      <div><a href="#" id="Btn_Previous_Schedule" class="s_button11 w-button"></a></div>
+      <div>
+        <div data-duration-in="300" data-duration-out="100" class="w-tabs">
+          <div class="w-tab-menu">
+            <a data-w-tab="Monday" class="s_tablink w-inline-block w-tab-link w--current">
+              <div>Lunes</div>
+            </a>
+            <a data-w-tab="Tuesday" class="s_tablink w-inline-block w-tab-link">
+              <div>Martes</div>
+            </a>
+            <a data-w-tab="Wednesday" class="s_tablink w-inline-block w-tab-link">
+              <div>Miercoles</div>
+            </a>
+            <a data-w-tab="Thursday" class="s_tablink w-inline-block w-tab-link">
+              <div>Jueves</div>
+            </a>
+            <a data-w-tab="Friday" class="s_tablink w-inline-block w-tab-link">
+              <div>Viernes</div>
+            </a>
+            <a data-w-tab="Saturday" class="s_tablink w-inline-block w-tab-link">
+              <div>Sabado</div>
+            </a>
+          </div>
+          <div class="w-tab-content">
+            <div data-w-tab="Monday" id="Tab_Schedule_Monday" class="w-tab-pane w--tab-active"><div  id="Table_Schedule"><table border="1"></table></div></div>
+            <div data-w-tab="Tuesday" id="Tab_Schedule_Tuesday" class="w-tab-pane"><div  id="Table_Schedule"><table border="1"></table></div></div>
+            <div data-w-tab="Wednesday" id="Tab_Schedule_Wednesday" class="w-tab-pane"><div  id="Table_Schedule"><table border="1"></table></div></div>
+            <div data-w-tab="Thursday" id="Tab_Schedule_Thursday" class="w-tab-pane"><div  id="Table_Schedule"><table border="1"></table></div></div>
+            <div data-w-tab="Friday" id="Tab_Schedule_Friday" class="w-tab-pane"><div  id="Table_Schedule"><table border="1"></table></div></div>
+            <div data-w-tab="Saturday" id="Tab_Schedule_Saturday" class="w-tab-pane"><div  id="Table_Schedule"><table border="1"></table></div></div>
+          </div>
+        </div>
+      </div>
+      <div><a href="#" id="Btn_Next_Schedule" class="s_button10 w-button"></a></div>
+    </div>
+  </div>
   <div id="Coordinator" class="coordinator" style="display: none;">
     <div class="s_center">
       <ul class="s_unorderedlist1 w-list-unstyled">
@@ -326,7 +373,7 @@
               <div class="s_text2">Nombre  </div>
             </div>
             <div class="w-col w-col-3">
-              <div class="s_text2">Semestre</div>
+              <div class="s_text2">Bloque</div>
             </div>
           </div>
         </li>
@@ -732,7 +779,7 @@
     <div class="s_center">
       <div class="s_form1 w-form">
         <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Nombre Usuario:</label><input type="text" maxlength="256" required="" id="TextBox_AddUser_UserName" class="w-input"><label class="s_boldcentertext">Contraseña:</label><input type="password" maxlength="256" required="" id="TextBox_AddUser_Password" class="w-input"><label class="s_boldcentertext">Confirmar Contraseña:</label><input type="password" maxlength="256" required="" id="TextBox_AddUser_Confirm_Password" class="w-input">
-          <div id="Form_CareerSelector" style="display: none;"><label class="s_boldcentertext">Carrera:</label><select required="" id="Select_AddUser_Career" class="w-select"><option value="none">------</option></select></div><label class="s_boldcentertext">Nombre:</label><input type="text" maxlength="256" id="TextBox_AddUser_Name" required="" class="w-input"><label class="s_boldcentertext">Apellidos:</label><input type="text" id="TextBox_AddUser_LastName" maxlength="256" class="w-input">
+          <div id="Form_CareerSelector" style="display: none;"><label class="s_boldcentertext">Carrera:</label><select required="" id="Select_AddUser_Career" class="w-select"><option value="">------</option></select></div><label class="s_boldcentertext">Nombre:</label><input type="text" maxlength="256" id="TextBox_AddUser_Name" required="" class="w-input"><label class="s_boldcentertext">Apellidos:</label><input type="text" id="TextBox_AddUser_LastName" maxlength="256" class="w-input">
           <div>
 			  <a href="#" id="Btn_AddAssistantSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>
 			  <a href="#" id="Btn_AddCoordinatorSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>
@@ -756,7 +803,10 @@
   <div id="AddGroup" class="addgroup" style="display: none;">
     <div class="s_center">
       <div class="s_form1 w-form">
-        <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Número de Grupo:</label><input type="text" class="w-input" maxlength="5" placeholder="Número" id="TextBox_AddGroup_Number" required=""><label class="s_boldcentertext">Curso:</label><select id="Select_AddGroup_Course" required="" class="w-select"><option value="">Select one...</option></select><label class="s_boldcentertext">Profesor:</label><select id="Select_AddGroup_Teacher" required="" class="w-select"><option value="">Select one...</option></select><label class="s_boldcentertext">Capacidad:</label><input type="text" class="w-input" maxlength="5" placeholder="Número" id="TextBox_AddGroup_Capacity" required="">
+        <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Número de Grupo:</label><input type="text" class="w-input" maxlength="5" placeholder="Número" id="TextBox_AddGroup_Number" required=""><label class="s_boldcentertext">Curso:</label><select id="Select_AddGroup_Course" required="" class="w-select"><option value="">------</option></select><label class="s_boldcentertext">Profesor:</label><select id="Select_AddGroup_Teacher" required="" class="w-select"><option value="">------</option></select><label class="s_boldcentertext">Capacidad:</label><input type="text" class="w-input" maxlength="5" placeholder="Número" id="TextBox_AddGroup_Capacity" required=""><label class="s_boldcentertext">Sesiones:</label><select id="Select_AddGroup_Sessions" required="" class="w-select"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select><label class="s_boldcentertext">Horas por sesión:</label>
+          <div id="AddGroup_Sessions">
+			  <input type="text" class="w-input" maxlength="2" placeholder="Número" id="TextBox_AddGroup_SessionHour" required="">
+		  </div>
           <div>
 			  <a href="#" id="Btn_AddGroupSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>
 			  <a href="#" id="Btn_UpdateGroupSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>
@@ -776,7 +826,7 @@
   <div id="AddCourse" class="addcourse" style="display: none;">
     <div class="s_center">
       <div class="s_form1 w-form">
-        <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Código del Curso:</label><input type="text" class="w-input" maxlength="5" placeholder="Número" id="TextBox_AddCourse_Code" required=""><label class="s_boldcentertext">Nombre:</label><input type="text" required="" id="TextBox_AddCourse_CourseName" class="w-input"><label class="s_boldcentertext">Semestre:</label><input type="text" class="w-input" maxlength="5" placeholder="Número" id="TextBox_AddCourse_Block" required="">
+        <form data-name="Email Form 2" name="email-form-2"><label class="s_boldcentertext">Código del Curso:</label><input type="text" class="w-input" maxlength="5" placeholder="Número" id="TextBox_AddCourse_Code" required=""><label class="s_boldcentertext">Nombre:</label><input type="text" required="" id="TextBox_AddCourse_CourseName" class="w-input"><label class="s_boldcentertext">Bloque(Semestre):</label><input type="text" class="w-input" maxlength="5" placeholder="Número" id="TextBox_AddCourse_Block" required="">
           <div>
 			  <a href="#" id="Btn_AddCourseSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>
 			  <a href="#" id="Btn_UpdateCourseSubmit" class="s_button1 w-button" style="display: none;">Aceptar</a>
@@ -792,9 +842,6 @@
         </div>
       </div>
     </div>
-  </div>
-  <div id="AddCoordinator" class="addcoordinator" style="display: none;">
-    <div class="s_center"></div>
   </div>
   <div id="ConfirmAction" class="confirmaction" style="display: none;">
     <div class="s_center">

@@ -31,13 +31,13 @@ function fDisplayAssistants() {
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			//result = result.assistants; //Quitar cuando se pase a java
+			result = result.assistants; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Assistants ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
 					 						USER_LIST_TEMPLATE2 + result[i].name + " " + result[i].lastName +
-											USER_LIST_TEMPLATE3 + result[i].userId +
+											USER_LIST_TEMPLATE3 + result[i].id +
 											USER_LIST_TEMPLATE4 + USR_TYPE_ASSISTANT +
-											USER_LIST_TEMPLATE5 + result[i].userId +
+											USER_LIST_TEMPLATE5 + result[i].id +
 											USER_LIST_TEMPLATE6 + USR_TYPE_ASSISTANT +
 											USER_LIST_TEMPLATE7);
 			}
@@ -61,9 +61,9 @@ function fShowAddAssistant() {
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			//result = result.careers; //Quitar cuando se pase a java
+			result = result.careers; //Quitar cuando se pase a java
 			for (i in result) {
-				$("#Select_AddUser_Career").append(	SELECT_OPTION_TEMPLATE1 + result[i].careerId +
+				$("#Select_AddUser_Career").append(	SELECT_OPTION_TEMPLATE1 + result[i].id +
 													SELECT_OPTION_TEMPLATE2 + result[i].university + " | " + result[i].careerName +
 													SELECT_OPTION_TEMPLATE3);
 			}
@@ -96,13 +96,13 @@ function fAddAssistant() {
 			url: URL_ASSISTANTS,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"userName" : userName, "type" : USR_TYPE_ASSISTANT, "name" : name, "lastName" : lastName, "password" : password, "careerId" : careerId}),
+			data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName, "password" : password, "careerId" : careerId}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
 
 				if(result.status === "OK"){
-					fClearAddAssistant();
+					fCancelAddAssistant();
 				}
 				else if(result.status === "ALREADY_EXISTS"){
 					alert("Se febe mostrar mensaje de que ya existe");
@@ -118,13 +118,17 @@ function fAddAssistant() {
 	}
 }
 
+function fCancelAddAssistant() {
+	fClearAddAssistant();
+	fDisplayAssistants();
+}
+
 function fClearAddAssistant() {
 	fClearUserForm();
 	$("#Form_CareerSelector").hide();
 	$("#Btn_AddAssistantSubmit").hide();
 	$("#Btn_AddAssistantCancel").hide();
 	$("#AddUser").hide();
-	fDisplayAssistants();
 }
 
 function fDisplayCoordinator() {
@@ -141,13 +145,13 @@ function fDisplayCoordinator() {
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			//result = result.coordinators; //Quitar cuando se pase a java
+			result = result.coordinators; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Coordinator ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
 					 							USER_LIST_TEMPLATE2 + result[i].name + " " + result[i].lastName +
-												USER_LIST_TEMPLATE3 + result[i].userId +
+												USER_LIST_TEMPLATE3 + result[i].id +
 												USER_LIST_TEMPLATE4 + USR_TYPE_COORDINATOR +
-												USER_LIST_TEMPLATE5 + result[i].userId +
+												USER_LIST_TEMPLATE5 + result[i].id +
 												USER_LIST_TEMPLATE6 + USR_TYPE_COORDINATOR +
 												USER_LIST_TEMPLATE7);
 			}
@@ -184,13 +188,13 @@ function fAddCoordinator() {
 			url: URL_COORDINATORS,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"userName" : userName,"type":USR_TYPE_COORDINATOR, "name" : name, "lastName" : lastName, "password" : password, "careerId" : CAREER_ID}),
+			data: JSON.stringify({"userName" : userName, "name" : name, "lastName" : lastName, "password" : password, "careerId" : CAREER_ID}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
 
 				if(result.status === "OK"){
-					fClearAddCoordinator();
+					fCancelAddCoordinator();
 				}
 				else if(result.status === "ALREADY_EXISTS"){
 					alert("Se febe mostrar mensaje de que ya existe");
@@ -206,12 +210,16 @@ function fAddCoordinator() {
 	}
 }
 
+function fCancelAddCoordinator() {
+	fClearAddCoordinator();
+	fDisplayCoordinator();
+}
+
 function fClearAddCoordinator() {
 	fClearUserForm();
 	$("#Btn_AddCoordinatorSubmit").hide();
 	$("#Btn_AddCoordinatorCancel").hide();
 	$("#AddUser").hide();
-	fDisplayCoordinator();
 }
 
 function fDisplayTeachers() {
@@ -228,13 +236,13 @@ function fDisplayTeachers() {
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			//result = result.teachers; //Quitar cuando se pase a java
+			result = result.teachers; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Teachers ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
 					 						USER_LIST_TEMPLATE2 + result[i].name + " " + result[i].lastName +
-											USER_LIST_TEMPLATE3 + result[i].userId +
+											USER_LIST_TEMPLATE3 + result[i].id +
 											USER_LIST_TEMPLATE4 + USR_TYPE_TEACHER +
-											USER_LIST_TEMPLATE5 + result[i].userId +
+											USER_LIST_TEMPLATE5 + result[i].id +
 											USER_LIST_TEMPLATE6 + USR_TYPE_TEACHER +
 											USER_LIST_TEMPLATE7);
 			}
@@ -321,13 +329,13 @@ function fAddTeacher() {
 				url: URL_TEACHERS,
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
-				data: JSON.stringify({"userName" : userName, "type":USR_TYPE_TEACHER, "password" : password, "name" : name, "lastName" : lastName, "careerId" : CAREER_ID}),
+				data: JSON.stringify({"userName" : userName, "password" : password, "name" : name, "lastName" : lastName, "careerId" : CAREER_ID}),
 
 				success: function(result){
 					console.log("[Login] Result " + JSON.stringify(result));
 
 					if(result.status === "OK"){
-						fClearAddTeacher();
+						fCancelAddTeacher();
 					}
 					else if(result.status === "ALREADY_EXISTS"){
 						alert("Se febe mostrar mensaje de que ya existe el profesor");
@@ -346,16 +354,17 @@ function fAddTeacher() {
 	}
 }
 
+function fCancelAddTeacher() {
+	fClearAddTeacher();
+	fDisplayTeachers();
+}
+
 function fClearAddTeacher() {
 	fClearUserForm();
 	$("#Btn_AddTeacherSubmit").hide();
 	$("#Btn_AddTeacherCancel").hide();
 	$("#AddUser").hide();
-	fDisplayTeachers();
 }
-
-
-
 
 function fEditUser() {
 	var url;
@@ -399,7 +408,7 @@ function fEditUser() {
 					console.log("[Login] Result " + JSON.stringify(result));
 
 					if(result.status === "OK"){
-						fClearEditUser();
+						fCancelEditUser();
 					}
 				},
 
@@ -416,6 +425,21 @@ function fEditUser() {
 	}
 }
 
+function fCancelEditUser() {
+	switch (Number(editDeleteUserType)) {
+		case USR_TYPE_ASSISTANT:
+			fDisplayAssistants();
+			break;
+		case USR_TYPE_COORDINATOR:
+			fDisplayCoordinator();
+			break;
+		case USR_TYPE_TEACHER:
+			fDisplayTeachers();
+			break;
+	}
+	fClearEditUser();
+}
+
 function fClearEditUser() {
 	$("#TextBox_AddUser_UserName").val("");
 	$("#TextBox_AddUser_Password").val("");
@@ -430,18 +454,6 @@ function fClearEditUser() {
 	$("#Btn_UpdateUserSubmit").hide();
 	$("#Btn_UpdateUserCancel").hide();
 	$("#AddUser").hide();
-
-	switch (Number(editDeleteUserType)) {
-		case USR_TYPE_ASSISTANT:
-			fDisplayAssistants();
-			break;
-		case USR_TYPE_COORDINATOR:
-			fDisplayCoordinator();
-			break;
-		case USR_TYPE_TEACHER:
-			fDisplayTeachers();
-			break;
-	}
 	editDeleteUserId = null;
 	editDeleteUserType = null;
 }
@@ -488,7 +500,7 @@ function fDeleteUser() {
 			console.log("[Login] Result " + JSON.stringify(result));
 
 			if(result.status === "OK"){
-				fClearDeleteUser();
+				fCancelDeleteUser();
 			}
 		},
 
@@ -497,12 +509,7 @@ function fDeleteUser() {
 		}
 	});
 }
-
-function fClearDeleteUser() {
-	$("#Btn_DeleteUserSubmit").hide();
-	$("#Btn_DeleteUserCancel").hide();
-	$("#ConfirmAction").hide();
-
+function fCancelDeleteUser() {
 	switch (Number(editDeleteUserType)) {
 		case USR_TYPE_ASSISTANT:
 			fDisplayAssistants();
@@ -514,6 +521,13 @@ function fClearDeleteUser() {
 			fDisplayTeachers();
 			break;
 	}
+	fClearDeleteUser();
+}
+
+function fClearDeleteUser() {
+	$("#Btn_DeleteUserSubmit").hide();
+	$("#Btn_DeleteUserCancel").hide();
+	$("#ConfirmAction").hide();
 	editDeleteUserId = null;
 	editDeleteUserType = null;
 }

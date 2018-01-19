@@ -22,13 +22,13 @@ function fDisplayCareers() {
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			//result = result.careers; //Quitar cuando se pase a java
+			result = result.careers; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Careers ul").append(CAREER_LIST_TEMPLATE1 + result[i].university +
 					 					CAREER_LIST_TEMPLATE2 + result[i].careerName +
 										CAREER_LIST_TEMPLATE3 + result[i].plan +
-										CAREER_LIST_TEMPLATE4 + result[i].careerId +
-										CAREER_LIST_TEMPLATE5 + result[i].careerId +
+										CAREER_LIST_TEMPLATE4 + result[i].id +
+										CAREER_LIST_TEMPLATE5 + result[i].id +
 										CAREER_LIST_TEMPLATE6);
 			}
 		},
@@ -66,7 +66,7 @@ function fAddCareer() {
 				console.log("[Login] Result " + JSON.stringify(result));
 
 				if(result.status === "OK"){
-					fClearCareerForm();
+					fCancelAddEditCareer();
 				}
 				else if(result.status === "ALREADY_EXISTS"){
 
@@ -82,6 +82,11 @@ function fAddCareer() {
 	}
 }
 
+function fCancelAddEditCareer() {
+	fClearCareerForm();
+	fDisplayCareers();
+}
+
 function fClearCareerForm() {
 	$("#TextBox_AddCareer_University").val("");
 	$("#TextBox_AddCareer_CareerName").val("");
@@ -94,7 +99,6 @@ function fClearCareerForm() {
 	$("#Btn_UpdateCareerSubmit").hide();
 	$("#Btn_UpdateCareerCancel").hide();
 	$("#AddCareer").hide();
-	fDisplayCareers();
 }
 
 function fShowEditCareer() {
@@ -139,7 +143,7 @@ function fEditCareer() {
 			jObj.careerName = careerName;
 		if (plan)
 			jObj.plan = plan;
-                   alert(JSON.stringify(jObj));
+
 		$.ajax({
 			method: 'PUT',
 			url: URL_CAREERS + "/" + careerId,
@@ -153,6 +157,7 @@ function fEditCareer() {
 				if(result.status === "OK"){
 					careerId = null;
 					fClearCareerForm();
+					fDisplayCareers();
 				}
 			},
 
@@ -184,7 +189,7 @@ function fDeleteCareer() {
 			console.log("[Login] Result " + JSON.stringify(result));
 
 			if(result.status === "OK"){
-				fClearDeleteCareer();
+				fCancelDeleteCareer();
 			}
 		},
 
@@ -195,12 +200,15 @@ function fDeleteCareer() {
 	});
 }
 
+function fCancelDeleteCareer() {
+	fClearDeleteCareer();
+	fDisplayCareers();
+}
+
 function fClearDeleteCareer() {
 	careerId = null;
 
 	$("#Btn_DeleteCareerSubmit").hide();
 	$("#Btn_DeleteCareerCancel").hide();
 	$("#ConfirmAction").hide();
-
-	fDisplayCareers();
 }

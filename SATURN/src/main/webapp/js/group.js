@@ -7,7 +7,19 @@ var GROUP_LIST_TEMPLATE5 = "</div><div id=\"Btn_Edit_Delete\" class=\"s_flex2\" 
 var GROUP_LIST_TEMPLATE6 = "\" href=\"#\" class=\"s_button6 w-button\"></a><a  id=\"Btn_DeleteGroup\" value=\"";
 var GROUP_LIST_TEMPLATE7 = "\" href=\"#\" class=\"s_button7 w-button\"></a></div></div></div></div></li>";
 
+var ADD_GROUP_SESSION_TEMPLATE1 = "<input type=\"text\" class=\"w-input\" maxlength=\"2\" placeholder=\"";
+var ADD_GROUP_SESSION_TEMPLATE2 = "\" required=\"\">";
+
 var groupId;
+var sessions = 1;
+
+function checkHours(arr) {
+	for (i in arr) {
+		if(!arr[i].hours)
+			return false;
+	}
+	return true;
+}
 
 function fDisplayGroups() {
 	$("#AssistantMenu").hide();
@@ -89,26 +101,32 @@ function fAddGroup() {
 	var courseId;
 	var userId;
 	var capacity;
+	var arr;
 
 	code = $("#TextBox_AddGroup_Number").val();
 	courseId = $("#Select_AddGroup_Course option:selected").val();
 	userId = $("#Select_AddGroup_Teacher option:selected").val();
 	capacity = $("#TextBox_AddGroup_Capacity").val();
+	arr = [];
+	$("#AddGroup_Sessions input").each(function () {
+		hours = $(this).val();
+		arr.push({"hours" : hours});
+	});
 
 
-	if (code && courseId && userId && capacity) {
+	if (code && courseId && userId && capacity && checkHours(arr)) {
 		$.ajax({
 			method: 'POST',
 			url: URL_GROUPS,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"code" : code, "courseId" : courseId, "userId" : userId, "capacity" : capacity, "careerId" : CAREER_ID}),
+			data: JSON.stringify({"code" : code, "courseId" : courseId, "userId" : userId, "capacity" : capacity, "sessions" : arr, "careerId" : CAREER_ID}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
 
 				if(result.status === "OK"){
-					fClearGroupForm();
+					fCancelAddEditGroup();
 				}
 				else if(result.status === "ALREADY_EXISTS"){
 
@@ -124,6 +142,11 @@ function fAddGroup() {
 	}
 }
 
+function fCancelAddEditGroup() {
+	fClearGroupForm();
+	fDisplayGroups();
+}
+
 function fClearGroupForm() {
 	$("#TextBox_AddGroup_Number").val("");
 	$("#TextBox_AddGroup_Capacity").val("");
@@ -137,19 +160,30 @@ function fClearGroupForm() {
 		if (index !== 0)
 			$(this).remove();
 	});
+	$("#Select_AddGroup_Sessions").val(1);
+	$("#AddGroup_Sessions input").each(function (index) {
+		if (index !== 0) {
+			$(this).remove();
+
+		} else {
+			$(this).val("");
+			$(this).attr("placeholder", "Número");
+		}
+	});
+	sessions = 1;
 
 	$("#Btn_AddGroupSubmit").hide();
 	$("#Btn_AddGroupCancel").hide();
 	$("#Btn_UpdateGroupSubmit").hide();
 	$("#Btn_UpdateGroupCancel").hide();
 	$("#AddGroup").hide();
-	fDisplayGroups();
 }
 
 function fShowEditGroup() {
 
 	var courseId;
 	var userId;
+	var n;
 
 	$("#Groups").hide();
 	$("#AddGroup").show();
@@ -205,6 +239,27 @@ function fShowEditGroup() {
 					console.log("[Login] Error: " + error);
 				}
 			});
+			$.ajax({
+				method: 'GET',
+				url: URL_GROUPS_SESSIONS + "/" + groupId,
+
+				success: function(result){
+					//alert(JSON.stringify(result));
+					result = result.sessions; //Quitar cuando se pase a java
+					n = result.length;
+
+					$("#Select_AddGroup_Sessions").val(n);
+					$("#AddGroup_Sessions").empty();
+					for (i in result) {
+						$("#AddGroup_Sessions").append(	ADD_GROUP_SESSION_TEMPLATE1 + result[i].hours +
+														ADD_GROUP_SESSION_TEMPLATE2)
+					}
+					sessions = n;
+				},
+				error: function(request, status, error){
+					console.log("[Login] Error: " + error);
+				}
+			});
 		},
 		error: function(request, status, error){
 			alert("Ha ocurrido un error inesperado, porfavor recargue la página e intente de nuevo");
@@ -217,14 +272,21 @@ function fEditGroup() {
 	var courseId;
 	var userId;
 	var capacity;
+	var jObj;
+	var arr;
 
 	code = $("#TextBox_AddGroup_Number").val();
 	courseId = $("#Select_AddGroup_Course option:selected").val();
 	userId = $("#Select_AddGroup_Teacher option:selected").val();
 	capacity = $("#TextBox_AddGroup_Capacity").val();
+	arr = [];
+	$("#AddGroup_Sessions input").each(function () {
+		hours = $(this).val();
+		arr.push({"hours" : hours});
+	});
 
 	jObj = {};
-	if (code || courseId || userId || capacity) {
+	if (code || courseId || userId || capacity || checkHours(jObj)) {
 		if (code)
 			jObj.code = code;
 		if (courseId)
@@ -233,6 +295,9 @@ function fEditGroup() {
 			jObj.userId = userId;
 		if (capacity)
 			jObj.capacity = capacity;
+		if (arr.length > 0){
+			jObj.sessions = arr;
+		}
 
 		$.ajax({
 			method: 'PUT',
@@ -246,7 +311,7 @@ function fEditGroup() {
 
 				if(result.status === "OK"){
 					groupId = null;
-					fClearGroupForm();
+					fCancelAddEditGroup();
 				}
 			},
 
@@ -259,6 +324,8 @@ function fEditGroup() {
 		alert("Se febe mostrar mensaje de que se requieren datos");
 	}
 }
+
+
 
 function fConfirmDeleteGroup() {
 	userId = $(this).attr("value");
@@ -278,23 +345,44 @@ function fDeleteGroup() {
 			console.log("[Login] Result " + JSON.stringify(result));
 
 			if(result.status === "OK"){
-				fClearDeleteGroup();
+				fCancelDeleteGroup();
 			}
 		},
 
 		error: function(request, status, error){
 			console.log("[Login] Error: " + error);
-			userId = null;
+			groupId = null;
 		}
 	});
 }
 
+function fCancelDeleteGroup() {
+	fClearDeleteGroup();
+	fDisplayGroups();
+}
+
 function fClearDeleteGroup() {
-	userId = null;
+	groupId = null;
 
 	$("#Btn_DeleteGroupSubmit").hide();
 	$("#Btn_DeleteGroupCancel").hide();
 	$("#ConfirmAction").hide();
+}
 
-	fDisplayGroups();
+function fDisplaySessions() {
+	var n;
+
+    n = Number($("#Select_AddGroup_Sessions option:selected").val());
+    if(n > sessions){
+        x = n - sessions;
+        while(x--){
+            $("#AddGroup_Sessions").append(	ADD_GROUP_SESSION_TEMPLATE1 + "Número" +
+											ADD_GROUP_SESSION_TEMPLATE2);
+        }
+        sessions = n;
+    }
+    if(n < sessions){
+        $("#AddGroup_Sessions input").slice(n,sessions).remove();
+        sessions = n;
+    }
 }

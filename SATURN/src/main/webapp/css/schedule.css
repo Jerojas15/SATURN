@@ -1,0 +1,27 @@
+#Table_Schedule {
+	/*
+	heigth:50%;
+	overflow-y:scroll;*/
+	overflow:auto;
+	width: 1000px;
+	height: 400px;
+	display:block;
+}
+
+table {
+	background-color: white;
+	border-collapse: collapse;
+	border-spacing: 1;
+	width: 100%;
+	border: 2px solid black;
+}
+
+th, td {
+	text-align: left;
+	min-width: 50px;
+	min-height: 50px;
+	/*padding: 100px;*/
+
+}
+
+/*tr, td, th { box-sizing: border-box; }*/

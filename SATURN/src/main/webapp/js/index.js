@@ -6,6 +6,10 @@ var URL_TEACHERS = "/SATURN/rest/teachers";
 var URL_TEACHERS_AVAILABILITIES = "/SATURN/rest/teachers/availabilities";
 var URL_COURSES = "/SATURN/rest/courses";
 var URL_GROUPS = "/SATURN/rest/groups";
+var URL_GROUPS_SESSIONS = "/SATURN/rest/groups/sessions";
+var URL_CLASSROOMS = "/SATURN/rest/classrooms";
+var URL_CLASSROOMS_LENGTH = "/SATURN/rest/classrooms/length";
+
 
 var SELECT_OPTION_TEMPLATE1 = "<option value=\"";
 var SELECT_OPTION_TEMPLATE2 = "\">";
@@ -23,7 +27,42 @@ var lastEditDeleteBtn;
  * menú principal del usuario especifico
  */
 function fReload() { //Sin terminar
-	location.reload();
+	switch (USER_TYPE) {
+		case USR_TYPE_MANAGER:
+			fClearCareerForm();
+			fClearDeleteCareer();
+			fClearAddAssistant();
+			fClearDeleteUser();
+			//ocultar y limpiar horarios(scheduleMenu)
+			$("#Careers").hide();
+			$("#Assistants").hide();
+			$("#ManagerMenu").show();
+			break;
+		case USR_TYPE_ASSISTANT:
+			fClearAddCoordinator();
+			fClearDeleteUser();
+			fClearGroupForm();
+			fClearDeleteGroup();
+			fClearAddTeacher();
+			$("#Coordinator").hide();
+			$("#Groups").hide();
+			$("#Teachers").hide();
+			$("#AssistantMenu").show();
+			break;
+		case USR_TYPE_COORDINATOR:
+			fClearCourseForm();
+			fClearDeleteCourse();
+			fClearGroupForm();
+			fClearDeleteGroup();
+			//ocultar y limpiar muestra de afinidad de profesores
+			$("#Courses").hide();
+			$("#Groups").hide();
+			$("#CoordinatorMenu").show();
+			break;
+		case USR_TYPE_TEACHER:
+			$("#TeacherMenu").show();
+			break;
+	}
 }
 
 /*
@@ -60,7 +99,7 @@ function fLogIn() {
 			url: URL_LOGIN,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"email" : userName, "password" : pass}),
+			data: JSON.stringify({"userName" : userName, "password" : pass}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
@@ -69,6 +108,8 @@ function fLogIn() {
 					$("#TextBox_UserName").val(""); //Es importante limpiar los campos de texto
 					$("#TextBox_Password").val("");
 					$("#LogIn").hide();
+					$("#Btn_LogOut").show();
+
 					USER_ID = result.userId;
 					USER_TYPE = result.userType;
 					CAREER_ID = result.careerId;
@@ -108,6 +149,10 @@ function fLogIn() {
 	}
 }
 
+function fLogOut() {
+	location.reload();
+}
+
 $(document).ready(function(){
 	$(document).on("click", "#Btn_Start", fReload);
 
@@ -115,66 +160,71 @@ $(document).ready(function(){
 	$(document).on("click", "#Btn_LogIn1", fShowLogIn);
 	$(document).on("click", "#Btn_LogIn2", fShowLogIn);
 	$(document).on("click", "#Btn_LogInSubmit", fLogIn);
+	$(document).on("click", "#Btn_LogOut", fLogOut);
 	//$(document).on("click", "#Btn_Schedules", );
 
 	/*Handler para las carreras*/
 	$(document).on("click", "#Btn_Careers", fDisplayCareers);
 	$(document).on("click", "#Btn_AddCareer", fShowAddCareer);
 	$(document).on("click", "#Btn_AddCareerSubmit", fAddCareer);
-	$(document).on("click", "#Btn_AddCareerCancel", fClearCareerForm);
+	$(document).on("click", "#Btn_AddCareerCancel", fCancelAddEditCareer);
 	$(document).on("click", "#Btn_EditCareer", fShowEditCareer);
 	$(document).on("click", "#Btn_UpdateCareerSubmit", fEditCareer);
-	$(document).on("click", "#Btn_UpdateCareerCancel", fClearCareerForm);
+	$(document).on("click", "#Btn_UpdateCareerCancel", fCancelAddEditCareer);
 	$(document).on("click", "#Btn_DeleteCareer", fConfirmDeleteCareer);
 	$(document).on("click", "#Btn_DeleteCareerSubmit", fDeleteCareer);
-	$(document).on("click", "#Btn_DeleteCareerCancel", fClearDeleteCareer);
+	$(document).on("click", "#Btn_DeleteCareerCancel", fCancelDeleteCareer);
 
 	$(document).on("click", "#Btn_Assistants", fDisplayAssistants);
 	$(document).on("click", "#Btn_AddAssistant", fShowAddAssistant);
 	$(document).on("click", "#Btn_AddAssistantSubmit", fAddAssistant);
-	$(document).on("click", "#Btn_AddAssistantCancel", fClearAddAssistant);
+	$(document).on("click", "#Btn_AddAssistantCancel", fCancelAddAssistant);
 
 	$(document).on("click", "#Btn_Coordinators", fDisplayCoordinator);
 	$(document).on("click", "#Btn_AddCoordinator", fShowAddCoordinator);
 	$(document).on("click", "#Btn_AddCoordinatorSubmit", fAddCoordinator);
-	$(document).on("click", "#Btn_AddCoordinatorCancel", fClearAddCoordinator);
+	$(document).on("click", "#Btn_AddCoordinatorCancel", fCancelAddCoordinator);
 
 	$(document).on("click", "#Btn_Teachers1", fDisplayTeachers);
-        $(document).on("click", "#Btn_AddTeacher", fShowAddTeacher);
+	$(document).on("click", "#Btn_AddTeacher", fShowAddTeacher);
 	$(document).on("click", "#Btn_AddTeacherSubmit", fAddTeacher);
-	$(document).on("click", "#Btn_AddTeacherCancel", fClearAddTeacher);
+	$(document).on("click", "#Btn_AddTeacherCancel", fCancelAddTeacher);
 
 	$(document).on("click", "#Btn_UpdateUserSubmit", fEditUser);
-	$(document).on("click", "#Btn_UpdateUserCancel", fClearEditUser);
+	$(document).on("click", "#Btn_UpdateUserCancel", fCancelEditUser);
 	$(document).on("click", "#Btn_DeleteUserSubmit", fDeleteUser);
-	$(document).on("click", "#Btn_DeleteUserCancel", fClearDeleteUser);
+	$(document).on("click", "#Btn_DeleteUserCancel", fCancelDeleteUser);
 	$(document).on("click", "#Btn_EditUser", fShowEditUser);
 	$(document).on("click", "#Btn_DeleteUser", fConfirmDeleteUser);
 
 	$(document).on("click", "#Btn_Courses", fDisplayCourses);
 	$(document).on("click", "#Btn_AddCourse", fShowAddCourse);
 	$(document).on("click", "#Btn_AddCourseSubmit", fAddCourse);
-	$(document).on("click", "#Btn_AddCourseCancel", fClearCourseForm);
+	$(document).on("click", "#Btn_AddCourseCancel", fCancelAddEditCourse);
 	$(document).on("click", "#Btn_EditCourse", fShowEditCourse);
 	$(document).on("click", "#Btn_UpdateCourseSubmit", fEditCourse);
-	$(document).on("click", "#Btn_UpdateCourseCancel", fClearCourseForm);
+	$(document).on("click", "#Btn_UpdateCourseCancel", fCancelAddEditCourse);
 	$(document).on("click", "#Btn_DeleteCourse", fConfirmDeleteCourse);
 	$(document).on("click", "#Btn_DeleteCourseSubmit", fDeleteCourse);
-	$(document).on("click", "#Btn_DeleteCourseCancel", fClearDeleteCourse);
+	$(document).on("click", "#Btn_DeleteCourseCancel", fCancelDeleteCourse);
 
 
 	$(document).on("click", "#Btn_Groups1", fDisplayGroups);
 	$(document).on("click", "#Btn_Groups2", fDisplayGroups);
 	$(document).on("click", "#Btn_AddGroup", fShowAddGroup);
 	$(document).on("click", "#Btn_AddGroupSubmit", fAddGroup);
-	$(document).on("click", "#Btn_AddGroupCancel", fClearGroupForm);
+	$(document).on("click", "#Btn_AddGroupCancel", fCancelAddEditGroup);
 	$(document).on("click", "#Btn_EditGroup", fShowEditGroup);
 	$(document).on("click", "#Btn_UpdateGroupSubmit", fEditGroup);
-	$(document).on("click", "#Btn_UpdateGroupCancel", fClearGroupForm);
+	$(document).on("click", "#Btn_UpdateGroupCancel", fCancelAddEditGroup);
 	$(document).on("click", "#Btn_DeleteGroup", fConfirmDeleteGroup);
 	$(document).on("click", "#Btn_DeleteGroupSubmit", fDeleteGroup);
-	$(document).on("click", "#Btn_DeleteGroupCancel", fClearDeleteGroup);
+	$(document).on("click", "#Btn_DeleteGroupCancel", fCancelDeleteGroup);
+	$(document).on("change", "#Select_AddGroup_Sessions", fDisplaySessions);
 
+
+
+	$(document).on("click", "#Btn_Schedules", fDisplaySchedule);
 
 
 

@@ -22,7 +22,7 @@ function fDisplayCourses() {
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			//result = result.courses; //Quitar cuando se pase a java
+			result = result.courses; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Courses ul").append(COURSE_LIST_TEMPLATE1 + result[i].code +
 										COURSE_LIST_TEMPLATE2 + result[i].courseName +
@@ -60,13 +60,13 @@ function fAddCourse() {
 			url: URL_COURSES,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"code" : code, "name" : courseName, "semester" : block, "careerId" : CAREER_ID}),
+			data: JSON.stringify({"code" : code, "courseName" : courseName, "block" : block, "careerId" : CAREER_ID}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
 
 				if(result.status === "OK"){
-					fClearCourseForm();
+					fCancelAddEditCourse();
 				}
 				else if(result.status === "ALREADY_EXISTS"){
 
@@ -82,6 +82,8 @@ function fAddCourse() {
 	}
 }
 
+
+
 function fClearCourseForm() {
 	$("#TextBox_AddCourse_Code").val("");
 	$("#TextBox_AddCourse_CourseName").val("");
@@ -91,9 +93,10 @@ function fClearCourseForm() {
 	$("#TextBox_AddCourse_Block").attr("placeholder", "Número");
 	$("#Btn_AddCourseSubmit").hide()
 	$("#Btn_AddCourseCancel").hide()
+	$("#Btn_UpdateCourseSubmit").hide()
+	$("#Btn_UpdateCourseCancel").hide()
 
 	$("#AddCourse").hide();
-	fDisplayCourses();
 }
 
 function fShowEditCourse() {
@@ -150,7 +153,7 @@ function fEditCourse() {
 
 				if(result.status === "OK"){
 					courseId = null;
-					fClearCourseForm();
+					fCancelAddEditCourse();
 				}
 			},
 
@@ -162,6 +165,11 @@ function fEditCourse() {
 	} else {
 		alert("Se febe mostrar mensaje de que se requieren datos");
 	}
+}
+
+function fCancelAddEditCourse() {
+	fClearCourseForm();
+	fDisplayCourses();
 }
 
 function fConfirmDeleteCourse() {
@@ -182,7 +190,7 @@ function fDeleteCourse() {
 			console.log("[Login] Result " + JSON.stringify(result));
 
 			if(result.status === "OK"){
-				fClearDeleteCourse();
+				fCancelDeleteCourse();
 			}
 		},
 
@@ -193,12 +201,15 @@ function fDeleteCourse() {
 	});
 }
 
+function fCancelDeleteCourse() {
+	fClearDeleteCourse();
+	fDisplayCourses();
+}
+
 function fClearDeleteCourse() {
 	courseId = null;
 
 	$("#Btn_DeleteCourseSubmit").hide();
 	$("#Btn_DeleteCourseCancel").hide();
 	$("#ConfirmAction").hide();
-
-	fDisplayCourses();
 }

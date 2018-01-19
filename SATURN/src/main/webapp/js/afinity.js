@@ -27,7 +27,7 @@ function fShowAfinity() {
 
   $.ajax({
 		method: 'GET',
-		url: URL_TEACHERS_AFINITIES +"/" + userId,
+		url: URL_TEACHERS_AFINITIES + "/" + userId,
 
 		success: function(result){
 			//alert(JSON.stringify(result));
