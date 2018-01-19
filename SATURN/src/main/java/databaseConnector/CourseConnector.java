@@ -140,4 +140,22 @@ public class CourseConnector {
         }
         return rs;
     }
+
+    public String getCourseName(Connection conn, int courseId) throws ClassNotFoundException {
+        ResultSet rs = null;
+        String result = null;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT CourseName FROM Courses where CourseId = ?");
+            stmt.setInt(1, courseId);
+            
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                result = rs.getString("CourseName");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

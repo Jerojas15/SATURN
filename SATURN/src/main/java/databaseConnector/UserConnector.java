@@ -219,5 +219,23 @@ public class UserConnector {
         return result;
     }
 
+    public String getUserName(Connection conn, int teacher) throws ClassNotFoundException {
+        ResultSet rs = null;
+        String result = "";
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT Name, LastName FROM Users Where UserId = ?");
+            stmt.setInt(1, teacher);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                result = result.concat(rs.getString("Name"));
+                result = result.concat(rs.getString("LastName"));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }
   

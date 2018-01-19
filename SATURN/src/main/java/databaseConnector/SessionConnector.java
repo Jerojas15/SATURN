@@ -107,5 +107,18 @@ public class SessionConnector {
             }
            return state;
     }
+
+    public ResultSet getSessionbyId(Connection conn, int id) throws ClassNotFoundException {
+        ResultSet rs = null;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Sessions where GroupId = ?");
+            stmt.setInt(1,id);
+            rs = stmt.executeQuery();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
     
 }
