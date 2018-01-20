@@ -107,7 +107,7 @@ function fLogIn() {
 			url: URL_LOGIN,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"userName" : userName, "password" : pass}),
+			data: JSON.stringify({"email" : userName, "password" : pass}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));

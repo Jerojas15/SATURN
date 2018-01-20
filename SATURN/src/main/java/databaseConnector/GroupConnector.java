@@ -7,6 +7,19 @@ import java.sql.SQLException;
 import model.Group;
 
 public class GroupConnector {
+    public int getGroupId(Connection conn) throws SQLException, ClassNotFoundException{
+        Class.forName("com.mysql.jdbc.Driver");
+        ResultSet rs;
+        String sql2 = "SELECT GroupId from Groups ORDER BY GroupId DESC LIMIT 1";
+        PreparedStatement stmt = conn.prepareStatement(sql2);
+        rs = stmt.executeQuery();
+        int id = 0;
+        while(rs.next()){
+            id = rs.getInt("GroupId");
+        }
+        return id;
+    }
+    
     public Boolean insertNewGroup(Connection conn, Group g) throws ClassNotFoundException{
         boolean state = false;
         try{
@@ -24,9 +37,11 @@ public class GroupConnector {
         int rowsInserted = statement.executeUpdate();
         if (rowsInserted > 0) {
             System.out.println("A new Group was inserted successfully!");
+            
+            
             state = true;
         }
-
+        
         } catch(SQLException ex) {
          ex.printStackTrace();
         }
@@ -114,6 +129,19 @@ public class GroupConnector {
             try{    
                 Class.forName("com.mysql.jdbc.Driver");
                 PreparedStatement stmt = conn.prepareStatement("SELECT Capacity, GroupId FROM Groups");
+                rs = stmt.executeQuery();
+
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+            return rs;
+        }
+        public ResultSet getGroups(Connection conn, int id) throws ClassNotFoundException {
+            ResultSet rs = null;
+            try{    
+                Class.forName("com.mysql.jdbc.Driver");
+                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Groups inner join Courses using (CourseId) where CareerId = ?");
+                stmt.setInt(1,id);
                 rs = stmt.executeQuery();
 
             } catch (SQLException e){

@@ -32,18 +32,18 @@ function fDisplayGroups() {
 	});
 	$.ajax({
 		method: 'GET',
-		url: URL_GROUPS + "/?" + "careerId=" + CAREER_ID,
+		url: URL_GROUPS + "/careerId/" + CAREER_ID,
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			result = result.groups; //Quitar cuando se pase a java
+			//result = result.groups; //Quitar cuando se pase a java
 			for (i in result) {
-				$("#Groups ul").append(	GROUP_LIST_TEMPLATE1 + result[i].code +
+				$("#Groups ul").append(	GROUP_LIST_TEMPLATE1 + result[i].number +
 										GROUP_LIST_TEMPLATE2 + result[i].courseName +
-										GROUP_LIST_TEMPLATE3 + result[i].userName +
+										GROUP_LIST_TEMPLATE3 + result[i].teacherName +
 										GROUP_LIST_TEMPLATE4 + result[i].capacity +
-										GROUP_LIST_TEMPLATE5 + result[i].id +
-										GROUP_LIST_TEMPLATE6 + result[i].id +
+										GROUP_LIST_TEMPLATE5 + result[i].groupId +
+										GROUP_LIST_TEMPLATE6 + result[i].groupId +
 										GROUP_LIST_TEMPLATE7);
 			}
 		},
@@ -61,14 +61,14 @@ function fShowAddGroup() {
 
 	$.ajax({
 		method: 'GET',
-		url: URL_COURSES + "/?" + "careerId=" + CAREER_ID,
+		url: URL_COURSES + "/careerId/" + CAREER_ID,
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			result = result.courses; //Quitar cuando se pase a java
+			//result = result.courses; //Quitar cuando se pase a java
 			for (i in result) {
-				$("#Select_AddGroup_Course").append(SELECT_OPTION_TEMPLATE1 + result[i].id +
-													SELECT_OPTION_TEMPLATE2 + result[i].courseName +
+				$("#Select_AddGroup_Course").append(SELECT_OPTION_TEMPLATE1 + result[i].courseId +
+													SELECT_OPTION_TEMPLATE2 + result[i].name +
 													SELECT_OPTION_TEMPLATE3);
 			}
 		},
@@ -78,14 +78,14 @@ function fShowAddGroup() {
 	});
 	$.ajax({
 		method: 'GET',
-		url: URL_TEACHERS + "/?" + "careerId=" + CAREER_ID,
+		url: URL_TEACHERS + "/careerId/" + CAREER_ID,
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			result = result.teachers; //Quitar cuando se pase a java
+			//result = result.teachers; //Quitar cuando se pase a java
 			for (i in result) {
-				$("#Select_AddGroup_Teacher").append(	SELECT_OPTION_TEMPLATE1 + result[i].id +
-														SELECT_OPTION_TEMPLATE2 + result[i].userName + " " + result[i].lastName +
+				$("#Select_AddGroup_Teacher").append(	SELECT_OPTION_TEMPLATE1 + result[i].userId +
+														SELECT_OPTION_TEMPLATE2 + result[i].name + " " + result[i].lastName +
 														SELECT_OPTION_TEMPLATE3);
 			}
 		},
@@ -115,14 +115,17 @@ function fAddGroup() {
 
 
 	if (code && courseId && userId && capacity && checkHours(arr)) {
-		$.ajax({
+                var obj = JSON.stringify({"number" : code, "courseId" : courseId, "teacher" : userId, "capacity" : capacity, "sessions" : arr});
+                alert(obj);
+            $.ajax({
 			method: 'POST',
 			url: URL_GROUPS,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"code" : code, "courseId" : courseId, "userId" : userId, "capacity" : capacity, "sessions" : arr, "careerId" : CAREER_ID}),
+			data: obj,
 
 			success: function(result){
+                            
 				console.log("[Login] Result " + JSON.stringify(result));
 
 				if(result.status === "OK"){
@@ -199,20 +202,20 @@ function fShowEditGroup() {
 		success: function(result){
 			courseId = result.courseId;
 			userId = result.userId;
-			$("#TextBox_AddGroup_Number").attr("placeholder", result.code);
+			$("#TextBox_AddGroup_Number").attr("placeholder", result.number);
 			$("#TextBox_AddGroup_Capacity").attr("placeholder", result.capacity);
 			$.ajax({
 				method: 'GET',
-				url: URL_COURSES + "/?" + "careerId=" + CAREER_ID,
+				url: URL_COURSES + "/careerId/" + CAREER_ID,
 
 				success: function(result){
 					//alert(JSON.stringify(result));
-					result = result.courses; //Quitar cuando se pase a java
+					//result = result.courses; //Quitar cuando se pase a java
 					for (i in result) {
-						$("#Select_AddGroup_Course").append(SELECT_OPTION_TEMPLATE1 + result[i].id +
-															SELECT_OPTION_TEMPLATE2 + result[i].courseName +
+						$("#Select_AddGroup_Course").append(SELECT_OPTION_TEMPLATE1 + result[i].courseId +
+															SELECT_OPTION_TEMPLATE2 + result[i].name +
 															SELECT_OPTION_TEMPLATE3);
-						if (Number(courseId) === result[i].id)
+						if (Number(courseId) === result[i].courseId)
 							$("#Select_AddGroup_Course").val(i);
 					}
 				},
@@ -222,16 +225,16 @@ function fShowEditGroup() {
 			});
 			$.ajax({
 				method: 'GET',
-				url: URL_TEACHERS + "/?" + "careerId=" + CAREER_ID,
+				url: URL_TEACHERS + "/careerId/" + CAREER_ID,
 
 				success: function(result){
 					//alert(JSON.stringify(result));
-					result = result.teachers; //Quitar cuando se pase a java
+					//result = result.teachers; //Quitar cuando se pase a java
 					for (i in result) {
-						$("#Select_AddGroup_Teacher").append(	SELECT_OPTION_TEMPLATE1 + result[i].id +
-																SELECT_OPTION_TEMPLATE2 + result[i].userName + " " + result[i].lastName +
+						$("#Select_AddGroup_Teacher").append(	SELECT_OPTION_TEMPLATE1 + result[i].userId +
+																SELECT_OPTION_TEMPLATE2 + result[i].name + " " + result[i].lastName +
 																SELECT_OPTION_TEMPLATE3);
-						if (Number(userId) === result[i].id)
+						if (Number(userId) === result[i].userId)
 							$("#Select_AddGroup_Teacher").val(i);
 					}
 				},
@@ -245,7 +248,7 @@ function fShowEditGroup() {
 
 				success: function(result){
 					//alert(JSON.stringify(result));
-					result = result.sessions; //Quitar cuando se pase a java
+					//result = result.sessions; //Quitar cuando se pase a java
 					n = result.length;
 
 					$("#Select_AddGroup_Sessions").val(n);
@@ -288,11 +291,11 @@ function fEditGroup() {
 	jObj = {};
 	if (code || courseId || userId || capacity || checkHours(jObj)) {
 		if (code)
-			jObj.code = code;
+			jObj.number = code;
 		if (courseId)
 			jObj.courseId = courseId;
 		if (userId)
-			jObj.userId = userId;
+			jObj.teacher = userId;
 		if (capacity)
 			jObj.capacity = capacity;
 		if (arr.length > 0){

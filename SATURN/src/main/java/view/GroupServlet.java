@@ -21,27 +21,27 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import model.Group;
+import model.Session;
 
 @Path("/groups")
 public class GroupServlet {
         @GET
+        @Path("/careerId/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static List<Group> getGroups() throws SQLException, ClassNotFoundException {
+	public static List<Group> getGroups(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
 		DatabaseController d = new DatabaseController();
-		List<Group> l = d.getGroups();
-		
-		
+		List<Group> l = d.getGroupsByCareerId(Integer.parseInt(idStr));
 		return l;
 	}
-
-	@GET
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public static Group getGroup(@PathParam("id") String idStr) {
-		Group c =  new Group(20, 0, 0, 1, 90);
-		return c;
-	}
  
+        @GET
+        @Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public static List<Group> getGroup(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
+		DatabaseController d = new DatabaseController();
+		List<Group> l = d.getGroupsById(Integer.parseInt(idStr));
+		return l;
+	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -51,7 +51,6 @@ public class GroupServlet {
                 String status;
 		JSONObject object;		
 		DatabaseController d;
-                
                 try {
 			d = new DatabaseController();
 			if (d.insertNewGroup(group))
@@ -143,5 +142,13 @@ public class GroupServlet {
 		}
 
 		return Response.status(200).entity(object).build();
+	}
+        @GET
+        @Path("/sessions/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public static List<Session> getSessionsGroups(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
+		DatabaseController d = new DatabaseController();
+		List<Session> l = d.getSessions(Integer.parseInt(idStr));
+		return l;
 	}
 }
