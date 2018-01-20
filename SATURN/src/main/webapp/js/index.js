@@ -8,8 +8,8 @@ var URL_TEACHERS_AFINITIES = "/SATURN/rest/teachers/afinities";
 var URL_COURSES = "/SATURN/rest/courses";
 var URL_GROUPS = "/SATURN/rest/groups";
 var URL_GROUPS_SESSIONS = "/SATURN/rest/groups/sessions";
-var URL_CLASSROOMS = "/SATURN/rest/classrooms";
-var URL_CLASSROOMS_LENGTH = "/SATURN/rest/classrooms/length";
+var URL_CLASSROOMS = "/SATURN/rest/schedules";
+var URL_CLASSROOMS_LENGTH = "/SATURN/rest/schedules/length";
 
 
 var SELECT_OPTION_TEMPLATE1 = "<option value=\"";
@@ -37,6 +37,7 @@ function fReload() { //Sin terminar
 			//ocultar y limpiar horarios(scheduleMenu)
 			$("#Careers").hide();
 			$("#Assistants").hide();
+                        $("#Schedules").hide();
 			$("#ManagerMenu").show();
 			break;
 		case USR_TYPE_ASSISTANT:
@@ -55,12 +56,19 @@ function fReload() { //Sin terminar
 			fClearDeleteCourse();
 			fClearGroupForm();
 			fClearDeleteGroup();
-			//ocultar y limpiar muestra de afinidad de profesores
+			$("#TeachersAfinity").hide();
+			$("#TeachersAfinityCourses").hide();
 			$("#Courses").hide();
 			$("#Groups").hide();
 			$("#CoordinatorMenu").show();
 			break;
 		case USR_TYPE_TEACHER:
+			$("#Availability").hide();
+			$("#Btn_SaveAvailability").hide();
+			$("#Btn_CancelAvailability").hide();
+			$("#Afinity").hide();
+			$("#Btn_SaveAfinity").hide();
+			$("#Btn_CancelAfinity").hide();
 			$("#TeacherMenu").show();
 			break;
 	}
@@ -131,7 +139,9 @@ function fLogIn() {
 						break;
 
 						case USR_TYPE_TEACHER:
+                                                
 						$("#TeacherMenu").show();
+                                                $("#Availability").hide();
 						helloMsg = "Bienvenido, Profesor";
 						break;
 					}
@@ -224,11 +234,13 @@ $(document).ready(function(){
 	$(document).on("change", "#Select_AddGroup_Sessions", fDisplaySessions);
 
 
-
 	$(document).on("click", "#Btn_Schedules", fDisplaySchedule);
-
-
-
+        $(document).on("click", "#Btn_GenSchedule_Submit", fCallAlgorithm);
+        $(document).on("click", "#Btn_Previous_Schedule", previousNumber);
+        $(document).on("click", "#Btn_Previous_Schedule", fDisplaySchedule); 
+        $(document).on("click", "#Btn_Next_Schedule", nextNumber);
+        $(document).on("click", "#Btn_Next_Schedule", fDisplaySchedule);
+        
 	$(document).on("click", "#Btn_Availability", fShowAvailability); //{id: userId}
 
 	$(document).on("click", "#Availability .monday", {btnClassName: "monday", btnMarkAll: "Btn_AllMonday"}, fPressBox);
@@ -250,6 +262,17 @@ $(document).ready(function(){
 	$(document).on("click", "#Btn_SaveAvailability", fConfirmSaveAvailability);
 	$(document).on("click", "#Btn_CancelAvailability", fReloadAvailability);
 
+	$(document).on("click", "#Btn_Afinity", fDisplayAfinity);
+	$(document).on("click", "#Btn_SaveAfinity", fChangeAfinity);
+	$(document).on("click", "#Btn_CancelAfinity", fReloadAfinity);
+	$(document).on("click", ".star", fMarkStar);
+
+	$(document).on("click", "#Btn_Teachers2", fShowTeachers);
+
+	$(document).on("click", ".userAfinity", fShowTeacherAfinities);
+
+
+
 	/* Agregar un handler de tipo click a elementos de una lista que aun no han sido agregados */
 	$(document).on("click", "ul .clickable",function(){
 		if (lastEditDeleteBtn) {
@@ -259,9 +282,3 @@ $(document).ready(function(){
 		lastEditDeleteBtn.show();
 	});
 });
-
-/* Saber si un boton fue oprimido y optener valores del boton
-$(document).on('click','#list #Btn1',function(){
-    alert($(this).attr("value"));
-});
-*/

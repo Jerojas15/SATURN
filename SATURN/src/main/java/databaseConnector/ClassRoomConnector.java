@@ -31,12 +31,12 @@ public class ClassRoomConnector {
             return state;
         }
 
-        public ResultSet getClassroombyType(Connection conn, String Type) throws ClassNotFoundException{
+        public ResultSet getClassroombyType(Connection conn, int Type) throws ClassNotFoundException{
             ResultSet rs = null;
             try{    
                 Class.forName("com.mysql.jdbc.Driver");
                 PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Classrooms where Type = ?");
-                stmt.setString(1, Type);
+                stmt.setInt(1, Type);
                 rs = stmt.executeQuery();
 
             } catch (SQLException e){
@@ -57,4 +57,17 @@ public class ClassRoomConnector {
             }
             return rs;
         }
+
+    public ResultSet getClassroomsType(Connection conn) throws ClassNotFoundException {
+        ResultSet rs = null;
+            try{    
+                Class.forName("com.mysql.jdbc.Driver");
+                PreparedStatement stmt = conn.prepareStatement("SELECT DISTINCT ClassroomType FROM Classrooms");
+                rs = stmt.executeQuery();
+
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+            return rs;
+    }
 }

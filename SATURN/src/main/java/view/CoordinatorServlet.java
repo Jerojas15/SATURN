@@ -27,22 +27,14 @@ public class CoordinatorServlet {
         
 
 	@GET
+        @Path("/careerId/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static List<User> getCoordinators() throws SQLException, ClassNotFoundException {
+	public static List<User> getCoordinators(@PathParam("id") Integer idStr) throws SQLException, ClassNotFoundException {
 		DatabaseController d = new DatabaseController();
-		List<User> l = d.getUserbyType(2,1);
-
-		
+		List<User> l = d.getUserbyType(2,idStr);
 		return l;
 	}
-	
-	@GET
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public static User getCoordinator(@PathParam("id") String idStr) {
-		User c =  new User();
-		return c;
-	}
+
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -52,7 +44,7 @@ public class CoordinatorServlet {
 		JSONObject object;		
 		DatabaseController d;
 		
-		
+		usr.setType(2);
 		try {
                     
 			d = new DatabaseController();

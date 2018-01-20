@@ -36,15 +36,14 @@ public class CourseConnector {
         boolean state =  false;
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            String sql = "UPDATE Courses SET CourseCode = ?, CourseName = ?, Semester = ?, CareerId = ? where CourseId = ?";
+            String sql = "UPDATE Courses SET CourseCode = ?, CourseName = ?, Semester = ? where CourseId = ?";
 
             PreparedStatement statement = conn.prepareStatement(sql);
             
             statement.setString(1, c.getCode());
             statement.setString(2, c.getName());
             statement.setInt(3, c.getSemester());
-            statement.setInt(4, c.getCareerId());
-            statement.setInt(5, id);
+            statement.setInt(4, id);
             
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {

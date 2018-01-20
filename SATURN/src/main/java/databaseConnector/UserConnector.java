@@ -77,7 +77,7 @@ public class UserConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT UserName,Name,UserType,LastName FROM Users Where UserId = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,UserName,Name,UserType,LastName, CareerId FROM Users Where UserId = ?");
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
             
@@ -107,6 +107,20 @@ public class UserConnector {
             PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName,UserName, CareerId FROM Users Where UserType = ? and CareerId = ?");
             stmt.setInt(1, Type);
             stmt.setInt(2,career);
+            rs = stmt.executeQuery();
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+    
+    public ResultSet getUserbyType(Connection conn, int Type) throws ClassNotFoundException{
+        ResultSet rs = null;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT UserId,Name,UserType,LastName,UserName, CareerId FROM Users Where UserType = ?");
+            stmt.setInt(1, Type);
             rs = stmt.executeQuery();
             
         } catch (SQLException e){
@@ -235,6 +249,20 @@ public class UserConnector {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public ResultSet getClassroomQuantity(Connection conn, int id) throws ClassNotFoundException {
+        ResultSet rs = null;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT count(*) from Classrooms where ClassroomType = ?");
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rs;
     }
 
 }

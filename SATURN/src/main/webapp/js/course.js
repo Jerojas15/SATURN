@@ -18,17 +18,17 @@ function fDisplayCourses() {
 	});
 	$.ajax({
 		method: 'GET',
-		url: URL_COURSES + "/?" + "careerId=" + CAREER_ID,
+		url: URL_COURSES + "/careerId/" + CAREER_ID,
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			result = result.courses; //Quitar cuando se pase a java
+			//result = result.courses; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Courses ul").append(COURSE_LIST_TEMPLATE1 + result[i].code +
-										COURSE_LIST_TEMPLATE2 + result[i].courseName +
-										COURSE_LIST_TEMPLATE3 + result[i].block +
-										COURSE_LIST_TEMPLATE4 + result[i].id +
-										COURSE_LIST_TEMPLATE5 + result[i].id +
+										COURSE_LIST_TEMPLATE2 + result[i].name +
+										COURSE_LIST_TEMPLATE3 + result[i].semester +
+										COURSE_LIST_TEMPLATE4 + result[i].courseId +
+										COURSE_LIST_TEMPLATE5 + result[i].courseId +
 										COURSE_LIST_TEMPLATE6);
 			}
 		},
@@ -60,7 +60,7 @@ function fAddCourse() {
 			url: URL_COURSES,
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
-			data: JSON.stringify({"code" : code, "courseName" : courseName, "block" : block, "careerId" : CAREER_ID}),
+			data: JSON.stringify({"code" : code, "name" : courseName, "semester" : block, "careerId" : CAREER_ID}),
 
 			success: function(result){
 				console.log("[Login] Result " + JSON.stringify(result));
@@ -112,9 +112,9 @@ function fShowEditCourse() {
 		url: URL_COURSES + "/" + courseId,
 
 		success: function(result){
-			$("#TextBox_AddCourse_Code").attr("placeholder", result.code);
+			$("#TextBox_AddCourse_Code").attr("placeholder", result.number);
 			$("#TextBox_AddCourse_CourseName").attr("placeholder", result.courseName);
-			$("#TextBox_AddCourse_Block").attr("placeholder", result.block);
+			$("#TextBox_AddCourse_Block").attr("placeholder", result.semester);
 		},
 		error: function(request, status, error){
 			alert("Ha ocurrido un error inesperado, porfavor recargue la página e intente de nuevo");
@@ -137,10 +137,10 @@ function fEditCourse() {
 		if (code)
 			jObj.code = code;
 		if (courseName)
-			jObj.courseName = courseName;
+			jObj.name = courseName;
 		if (block)
-			jObj.block = block;
-
+			jObj.semester = block;
+                jObj.careerId = careerId;
 		$.ajax({
 			method: 'PUT',
 			url: URL_COURSES + "/" + courseId,

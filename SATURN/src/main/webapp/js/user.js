@@ -31,13 +31,13 @@ function fDisplayAssistants() {
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			result = result.assistants; //Quitar cuando se pase a java
+			//result = result.assistants; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Assistants ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
 					 						USER_LIST_TEMPLATE2 + result[i].name + " " + result[i].lastName +
-											USER_LIST_TEMPLATE3 + result[i].id +
+											USER_LIST_TEMPLATE3 + result[i].userId +
 											USER_LIST_TEMPLATE4 + USR_TYPE_ASSISTANT +
-											USER_LIST_TEMPLATE5 + result[i].id +
+											USER_LIST_TEMPLATE5 + result[i].userId +
 											USER_LIST_TEMPLATE6 + USR_TYPE_ASSISTANT +
 											USER_LIST_TEMPLATE7);
 			}
@@ -61,9 +61,9 @@ function fShowAddAssistant() {
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			result = result.careers; //Quitar cuando se pase a java
+			//result = result.careers; //Quitar cuando se pase a java
 			for (i in result) {
-				$("#Select_AddUser_Career").append(	SELECT_OPTION_TEMPLATE1 + result[i].id +
+				$("#Select_AddUser_Career").append(	SELECT_OPTION_TEMPLATE1 + result[i].careerId +
 													SELECT_OPTION_TEMPLATE2 + result[i].university + " | " + result[i].careerName +
 													SELECT_OPTION_TEMPLATE3);
 			}
@@ -141,17 +141,17 @@ function fDisplayCoordinator() {
 	});
 	$.ajax({
 		method: 'GET',
-		url: URL_COORDINATORS + "/?" + "careerId=" + CAREER_ID,
+		url: URL_COORDINATORS + "/careerId/" + CAREER_ID,
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			result = result.coordinators; //Quitar cuando se pase a java
+			//result = result.coordinators; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Coordinator ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
 					 							USER_LIST_TEMPLATE2 + result[i].name + " " + result[i].lastName +
-												USER_LIST_TEMPLATE3 + result[i].id +
+												USER_LIST_TEMPLATE3 + result[i].userId +
 												USER_LIST_TEMPLATE4 + USR_TYPE_COORDINATOR +
-												USER_LIST_TEMPLATE5 + result[i].id +
+												USER_LIST_TEMPLATE5 + result[i].userId +
 												USER_LIST_TEMPLATE6 + USR_TYPE_COORDINATOR +
 												USER_LIST_TEMPLATE7);
 			}
@@ -232,17 +232,17 @@ function fDisplayTeachers() {
 	});
 	$.ajax({
 		method: 'GET',
-		url: URL_TEACHERS + "/?" + "careerId=" + CAREER_ID,
+		url: URL_TEACHERS + "/careerId/" + CAREER_ID,
 
 		success: function(result){
 			//alert(JSON.stringify(result));
-			result = result.teachers; //Quitar cuando se pase a java
+			//result = result.teachers; //Quitar cuando se pase a java
 			for (i in result) {
 				$("#Teachers ul").append(	USER_LIST_TEMPLATE1 + result[i].userName +
 					 						USER_LIST_TEMPLATE2 + result[i].name + " " + result[i].lastName +
-											USER_LIST_TEMPLATE3 + result[i].id +
+											USER_LIST_TEMPLATE3 + result[i].userId +
 											USER_LIST_TEMPLATE4 + USR_TYPE_TEACHER +
-											USER_LIST_TEMPLATE5 + result[i].id +
+											USER_LIST_TEMPLATE5 + result[i].userId +
 											USER_LIST_TEMPLATE6 + USR_TYPE_TEACHER +
 											USER_LIST_TEMPLATE7);
 			}
@@ -294,7 +294,7 @@ function fShowEditUser() {
 			$("#TextBox_AddUser_LastName").attr("placeholder", result.lastName);
 		},
 		error: function(request, status, error){
-			alert("Ha ocurrido un error inesperado, porfavor recargue la página e intente de nuevo");
+			//alert("Ha ocurrido un error inesperado, porfavor recargue la página e intente de nuevo");
 		}
 	});
 }

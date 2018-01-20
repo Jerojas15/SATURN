@@ -10,17 +10,16 @@ public class AlgorithmController {
     static ArrayList<Pair<Integer, Integer>> groups = new ArrayList<>();//capacidad de los grupos a insertar
     static ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> sessions = new ArrayList<>();//sesiones de grupos, con par(ID,(duracion, (idGrupo, Profesor)))
     static ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor = new ArrayList<>();//disponibilidad de profesores, (ID,(Dia,(inicio,salida)))
+    int times = 0;
     
     
-    
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        AlgorithmController a = new AlgorithmController(); 
+    public AlgorithmController(int times) throws SQLException, ClassNotFoundException {
         DatabaseController d = new DatabaseController();
-
-        a.capacity = d.getClassroomCapacity();
-        a.groups = d.getGroupCapacity();
-        a.sessions = d.getSessionData();
-        a.professor = d.getProfessorData();
+        this.times = times;
+        capacity = d.getClassroomCapacity();
+        groups = d.getGroupCapacity();
+        sessions = d.getSessionData();
+        professor = d.getProfessorData();
         /*
         for(int i = 0;i<a.capacity.size();i++){
             System.out.println(a.capacity.get(i));
@@ -71,8 +70,12 @@ public class AlgorithmController {
         
         
         */
-        GeneticAlgorithm solve = new GeneticAlgorithm(a.capacity, a.groups, a.sessions, a.professor);
-        ArrayList<Individual> solution = solve.StartAlgorithm(10, 3);
+        
+    }
+    public boolean start() throws SQLException, ClassNotFoundException{
+        DatabaseController d = new DatabaseController();
+        GeneticAlgorithm solve = new GeneticAlgorithm(capacity, groups, sessions, professor);
+        ArrayList<Individual> solution = solve.StartAlgorithm(50, times);
         
         for(int i = 0;i<solution.size();i++){
             solution.get(i).show_ind();
@@ -80,5 +83,6 @@ public class AlgorithmController {
         }
         
         d.insertAlgorithmResult(solution);
+        return true;
     }
 }

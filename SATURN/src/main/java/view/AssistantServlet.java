@@ -31,17 +31,19 @@ public class AssistantServlet {
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<User> getAssistants() throws SQLException, ClassNotFoundException {
 		DatabaseController d = new DatabaseController();
-		List<User> l = d.getUserbyType(User.TYPE.ASSISTANT.ordinal(), 1);
+		List<User> l = d.getUserbyType(User.TYPE.ASSISTANT.ordinal());
 
 		return l;
 	}
-
-	@GET
-	@Path("/{id}")
+        
+        @GET
+        @Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static User getAssistant(@PathParam("id") String idStr) {
-		User c =  new User();
-		return c;
+	public static List<User> getAssistant(@PathParam("id") Integer idStr) throws SQLException, ClassNotFoundException {
+		DatabaseController d = new DatabaseController();
+		List<User> l = d.getUserbyId(idStr);
+
+		return l;
 	}
 
 	@POST
@@ -51,7 +53,7 @@ public class AssistantServlet {
 		String status;
 		JSONObject object;		
 		DatabaseController d;
-
+                usr.setType(1);
 		try {
 			d = new DatabaseController();
 			if (d.insertNewUser(usr))

@@ -19,27 +19,13 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import controller.DatabaseController;
+import model.Afinity;
 import model.Availability;
 import model.Career;
 import model.User;
 
 @Path("/teachers")
 public class TeacherServlet {
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public static List<User> getTeachers() throws SQLException, ClassNotFoundException {
-		/*
-		DatabaseController d = new DatabaseController();
-		List<User> l = d.getUserbyType(User.TYPE.TEACHER.ordinal());
-		System.out.println(User.TYPE.TEACHER.ordinal());
-		*/
-		DatabaseController d = new DatabaseController();
-                
-		ArrayList<User> l = d.getUserbyType(3, 1);//3 profesor, 1 carrera compu
-                
-		return l;
-	}
 	
 	@GET
 	@Path("/careerId/{id}")
@@ -58,7 +44,8 @@ public class TeacherServlet {
 		DatabaseController d;
 		
 		
-		try {                  
+		try {          
+                        usr.setType(3);
 			d = new DatabaseController();
 			if (d.insertNewUser(usr))
 				status = "OK";
@@ -151,6 +138,48 @@ public class TeacherServlet {
                 if(d.insertAvailability(Integer.parseInt(idStr),list)){
                     status = "OK";
                 }
+		object = new JSONObject();
+		try {
+			object.put("status", status);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(object.toString()).build();
+	}
+        
+        @GET
+	@Path("/afinities/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public static List<Afinity> getAfinityById(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
+		DatabaseController d = new DatabaseController();
+		List<Afinity> l = d.getAfinity(Integer.parseInt(idStr));
+
+		return l;
+	}
+        
+        @POST
+        @Path("/afinities")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response setAfinity(List<Afinity> list) {
+		String status = "";
+		JSONObject object;		
+		DatabaseController d;
+		
+		
+		try {          
+                        
+			d = new DatabaseController();
+                        for(int i = 0;i<list.size();i++){
+                            if (d.insertAfinity(list.get(i)))
+				status = "OK";
+                            else
+				status = "ALREADY_EXISTS";
+                        }
+			
+		} catch (ClassNotFoundException | SQLException e1) {
+			return Response.status(500).entity(e1.toString()).build();
+		}
+		
 		object = new JSONObject();
 		try {
 			object.put("status", status);

@@ -1,5 +1,6 @@
 package controller;
 
+import databaseConnector.AfinityConnector;
 import databaseConnector.AvailabilityConnector;
 import databaseConnector.CareerConnector;
 import databaseConnector.ClassRoomConnector;
@@ -16,8 +17,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
+import model.Afinity;
 import model.Availability;
 import model.Career;
+import model.ClassNow;
 import model.Classroom;
 import model.Course;
 import model.Group;
@@ -27,13 +30,16 @@ import model.Session;
 import model.User;
 
 public class DatabaseController {
-        private Connection conn;
+        private static Connection conn = null;
         
 /*
  * FUNCIONES DE BD
  */
         public DatabaseController() throws SQLException, ClassNotFoundException{
-            conn = makeConnection();
+            if(conn == null){
+                conn = makeConnection();
+            }
+            
 
         }
 
@@ -143,6 +149,24 @@ public class DatabaseController {
             UserConnector connector = new UserConnector();
             ArrayList<User> list = new ArrayList<>();
             ResultSet rs = connector.getUserbyType(conn, Type, career);
+
+            while(rs.next()){
+                User u = new User();
+                u.setLastName(rs.getString("LastName"));
+                u.setName(rs.getString("Name"));
+                u.setType(rs.getInt("UserType"));
+                u.setUserName(rs.getString("UserName"));
+                u.setCareerId(rs.getInt("CareerId"));
+                u.setUserId(rs.getInt("UserId"));
+                list.add(u); 
+            }
+            return list;
+        }
+        
+        public ArrayList<User> getUserbyType(int Type) throws SQLException, ClassNotFoundException{
+            UserConnector connector = new UserConnector();
+            ArrayList<User> list = new ArrayList<>();
+            ResultSet rs = connector.getUserbyType(conn, Type);
 
             while(rs.next()){
                 User u = new User();
@@ -388,7 +412,7 @@ public class DatabaseController {
         SessionConnector sessionConnector = new SessionConnector();
         int version = -1;
         version = connector.getVersion(conn);
-        if(version == -1)version = 1;
+        if(version == -1)version = 0;
         for(int i = 0;i<solution.size();i++){
             version++;
             int start = 0;
@@ -472,5 +496,77 @@ public class DatabaseController {
                 result.add(a);
             }
             return result;
+    }
+
+    public List<Classroom> getClassroomsTypes() throws SQLException, ClassNotFoundException {
+        ClassRoomConnector connector = new ClassRoomConnector();
+        ResultSet rs = connector.getClassroomsType(conn);
+        ArrayList<Classroom> result = new ArrayList<>();
+        while(rs.next()){
+            Classroom c = new Classroom();
+            c.setId(1);
+            c.setType(rs.getInt("ClassroomType"));
+            result.add(c);
+        }
+        return result;
+    }
+
+    public int getClassroomsQuantity(int id) throws SQLException, ClassNotFoundException {
+        int status = -1;
+        UserConnector connector = new UserConnector();
+        ResultSet list = connector.getClassroomQuantity(conn, id);
+        while(list.next()){
+            status = list.getInt(1);
+        }
+        return status;
+    }
+
+    public String getClassNow(ClassNow c, int id) throws SQLException, ClassNotFoundException {
+        ScheduleConnector schedule = new ScheduleConnector();
+        ResultSet rs = schedule.getClassNow(conn,c, id);
+        String result = "";
+        while(rs.next()){
+            if(c.getTime()>=rs.getInt("StartHour") && c.getTime()<rs.getInt("EndHour")){
+                result = rs.getString("CourseName")+rs.getString("University");
+            }
+        }
+        return result;
+    }
+
+    public List<User> getUserbyId(Integer id) throws SQLException, ClassNotFoundException {
+        UserConnector connector = new UserConnector();
+        ArrayList<User> list = new ArrayList<>();
+        ResultSet rs = connector.getUserbyId(conn, id);
+
+        while(rs.next()){
+            User u = new User();
+            u.setLastName(rs.getString("LastName"));
+            u.setName(rs.getString("Name"));
+            u.setType(rs.getInt("UserType"));
+            u.setUserName(rs.getString("UserName"));
+            u.setCareerId(rs.getInt("CareerId"));
+            u.setUserId(rs.getInt("UserId"));
+            list.add(u); 
+        }
+        return list;
+    }
+
+    public boolean insertAfinity(Afinity a) throws ClassNotFoundException {
+        AfinityConnector connector = new AfinityConnector();
+        Boolean result = connector.insertNewAfinity(conn, a);
+        return result;
+    }
+
+    public ArrayList<Afinity> getAfinity(int id) throws ClassNotFoundException, SQLException {
+        AfinityConnector connector = new AfinityConnector();
+        ResultSet rs = connector.getAfinitybyProfessor(conn, id);
+        ArrayList<Afinity> result = new ArrayList<>();
+        while(rs.next()){
+            Afinity a = new Afinity();
+            a.setCourseId(rs.getInt("CourseId"));
+            a.setLevel(rs.getInt("Level"));
+            a.setProfessorId(id);
+        }
+        return result;
     }
 }

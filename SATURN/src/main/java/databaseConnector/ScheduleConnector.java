@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import model.ClassNow;
 import model.Schedule;
 
 public class ScheduleConnector {
@@ -60,6 +61,24 @@ public class ScheduleConnector {
             e.printStackTrace();
         }
         return version;
+    }
+
+    public ResultSet getClassNow(Connection conn, ClassNow c, int id) throws ClassNotFoundException {
+        ResultSet rs = null;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT distinct CourseName, University, StartHour, EndHour "
+                    + "from ((((timetables inner join Groups using (GroupId)) inner join Courses using(CourseId)) inner join careers using(CareerId) inner join Users))"
+                    + " where ProfessorId = UserId and Day = ? and TableVersion=? and ClassroomId = ?");
+            stmt.setInt(1, c.getDay());
+            stmt.setInt(2, id);
+            stmt.setInt(3, c.getClassroom());
+            rs = stmt.executeQuery();
+           
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rs;
     }
 
     
