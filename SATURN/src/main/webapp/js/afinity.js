@@ -187,6 +187,57 @@ function fShowTeacherAfinities() {
 				success: function(result){
 
 					//result = result.afinities;//Quitar cuando se pase a java
+
+		url: URL_TEACHERS + "/careerId/" + CAREER_ID,
+
+		success: function(result){
+			//alert(JSON.stringify(result));
+			result = result.teachers; //Quitar cuando se pase a java
+			for (i in result) {
+				$("#TeachersAfinity ul").append(TEACHERS_LIST_TEMPLATE1 + result[i].id +
+												TEACHERS_LIST_TEMPLATE2 + result[i].userName +
+												TEACHERS_LIST_TEMPLATE3 + result[i].name + " " + result[i].lastName +
+												TEACHERS_LIST_TEMPLATE4);
+			}
+		},
+		error: function(request, status, error){
+			console.log("[Login] Error: " + error);
+		}
+	});
+}
+
+function fShowTeacherAfinities() {
+	alert($(this).val());
+	$("#TeachersAfinity").hide();
+	$("#TeachersAfinityCourses").show();
+
+	$("#TeachersAfinityCourses li").each(function (index) {
+		if(index !== 0){
+			$(this).remove();
+		}
+	});
+
+	$.ajax({
+		method: 'GET',
+		url: URL_COURSES + "/careerId/" + CAREER_ID,
+
+		success: function(result){
+
+			result = result.courses;//Quitar cuando se pase a java
+			for (i in result) {
+				$("#TeachersAfinityCourses ul").append(	AFINITY_NONCLICKABLE_LIST_TEMPLATE1 + result[i].code +
+														AFINITY_NONCLICKABLE_LIST_TEMPLATE2 + result[i].courseName +
+														AFINITY_NONCLICKABLE_LIST_TEMPLATE3 + result[i].id +
+														AFINITY_NONCLICKABLE_LIST_TEMPLATE4);
+			}
+			$.ajax({
+				method: 'GET',
+				url: URL_TEACHERS_AFINITIES + "/" + USER_ID,
+
+				success: function(result){
+
+					result = result.afinities;//Quitar cuando se pase a java
+
 					for (i in result) {
 						jObj[result[i].courseId] = result[i].level;
 					}

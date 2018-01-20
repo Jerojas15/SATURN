@@ -281,4 +281,6 @@ $(document).ready(function(){
 		lastEditDeleteBtn = $(this).find("#Btn_Edit_Delete");
 		lastEditDeleteBtn.show();
 	});
+
 });
+
