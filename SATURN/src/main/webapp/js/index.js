@@ -55,12 +55,19 @@ function fReload() { //Sin terminar
 			fClearDeleteCourse();
 			fClearGroupForm();
 			fClearDeleteGroup();
-			//ocultar y limpiar muestra de afinidad de profesores
+			$("#TeachersAfinity").hide();
+			$("#TeachersAfinityCourses").hide();
 			$("#Courses").hide();
 			$("#Groups").hide();
 			$("#CoordinatorMenu").show();
 			break;
 		case USR_TYPE_TEACHER:
+			$("#Availability").hide();
+			$("#Btn_SaveAvailability").hide();
+			$("#Btn_CancelAvailability").hide();
+			$("#Afinity").hide();
+			$("#Btn_SaveAfinity").hide();
+			$("#Btn_CancelAfinity").hide();
 			$("#TeacherMenu").show();
 			break;
 	}
@@ -250,6 +257,17 @@ $(document).ready(function(){
 	$(document).on("click", "#Btn_SaveAvailability", fConfirmSaveAvailability);
 	$(document).on("click", "#Btn_CancelAvailability", fReloadAvailability);
 
+	$(document).on("click", "#Btn_Afinity", fDisplayAfinity);
+	$(document).on("click", "#Btn_SaveAfinity", fChangeAfinity);
+	$(document).on("click", "#Btn_CancelAfinity", fReloadAfinity);
+	$(document).on("click", ".star", fMarkStar);
+
+	$(document).on("click", "#Btn_Teachers2", fShowTeachers);
+
+	$(document).on("click", ".userAfinity", fShowTeacherAfinities);
+
+
+
 	/* Agregar un handler de tipo click a elementos de una lista que aun no han sido agregados */
 	$(document).on("click", "ul .clickable",function(){
 		if (lastEditDeleteBtn) {
@@ -259,9 +277,3 @@ $(document).ready(function(){
 		lastEditDeleteBtn.show();
 	});
 });
-
-/* Saber si un boton fue oprimido y optener valores del boton
-$(document).on('click','#list #Btn1',function(){
-    alert($(this).attr("value"));
-});
-*/
