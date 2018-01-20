@@ -150,10 +150,13 @@ public class TeacherServlet {
         @GET
 	@Path("/afinities/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static List<Afinity> getAfinityById(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException {
+	public static List<Afinity> getAfinityById(@PathParam("id") Integer idStr) throws SQLException, ClassNotFoundException {
 		DatabaseController d = new DatabaseController();
-		List<Afinity> l = d.getAfinity(Integer.parseInt(idStr));
-
+		List<Afinity> l = d.getAfinity(idStr);
+                for(int i = 0;i<l.size();i++){
+                    System.out.println("ID "+l.get(i).getCourseId());
+                }
+                
 		return l;
 	}
         

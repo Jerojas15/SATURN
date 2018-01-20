@@ -17,7 +17,7 @@ public class SessionConnector {
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, s.getGroup_ID());
         statement.setInt(2, s.getHours());
-        statement.setString(3, s.getClassroom_Type());
+        statement.setInt(3, s.getClassroom_Type());
 
 
         int rowsInserted = statement.executeUpdate();

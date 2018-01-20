@@ -116,7 +116,7 @@ function fAddGroup() {
 
 	if (code && courseId && userId && capacity && checkHours(arr)) {
                 var obj = JSON.stringify({"number" : code, "courseId" : courseId, "teacher" : userId, "capacity" : capacity, "sessions" : arr});
-                alert(obj);
+                
             $.ajax({
 			method: 'POST',
 			url: URL_GROUPS,

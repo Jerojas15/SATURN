@@ -4,11 +4,11 @@ public class Session {
     
 	int groupId;
 	int hours;
-	String classroomType;
+	int classroomType;
 	
         public Session() {}
         
-	public Session(int groupId, int hours, String classroomType) {
+	public Session(int groupId, int hours, int classroomType) {
 		this.groupId = groupId;
 		this.hours = hours;
 		this.classroomType = classroomType;
@@ -20,7 +20,7 @@ public class Session {
 	public int getHours() {
 		return hours;
 	}
-	public String getClassroom_Type() {
+	public int getClassroom_Type() {
 		return classroomType;
 	}
 	
@@ -30,7 +30,7 @@ public class Session {
 	public void setHours(int hours) {
 		this.hours = hours;
 	}
-	public void setClassroom_Type(String classroomType) {
+	public void setClassroom_Type(int classroomType) {
 		this.classroomType = classroomType;
 	}
 }
