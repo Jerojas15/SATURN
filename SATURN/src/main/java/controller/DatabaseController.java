@@ -336,7 +336,7 @@ public class DatabaseController {
             System.out.println("tam"+g.getSessions().size());
             for(int i = 0;i<g.getSessions().size();i++){
                 g.getSessions().get(i).setGroup_ID(id);
-                g.getSessions().get(i).setClassroom_Type("aula");
+                g.getSessions().get(i).setClassroom_Type(1);
                 session.insertSession(conn, g.getSessions().get(i));
             }
             */
@@ -381,7 +381,7 @@ public class DatabaseController {
                 Session a = new Session();
                 a.setGroup_ID(rs.getInt("GroupId"));
                 a.setHours(rs.getInt("Hour"));
-                a.setClassroom_Type(rs.getString("Type"));
+                a.setClassroom_Type(rs.getInt("Type"));
                 result.add(a);
             }
             return result;
@@ -567,6 +567,7 @@ public class DatabaseController {
             a.setCourseId(rs.getInt("CourseId"));
             a.setLevel(rs.getInt("Level"));
             a.setProfessorId(id);
+            result.add(a);
         }
         return result;
     }

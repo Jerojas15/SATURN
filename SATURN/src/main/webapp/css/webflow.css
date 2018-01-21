@@ -1664,3 +1664,6 @@ textarea.w-select {
 .w-condition-invisible {
   display: none !important;
 }
+.nonclickablestars {
+    pointer-events: none;
+}
