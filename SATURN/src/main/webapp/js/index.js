@@ -98,7 +98,7 @@ function fLogIn() {
 	var userName;
 	var pass;
 	var helloMsg;
-
+        var helloname = "";
 	userName = $("#TextBox_UserName").val();
 	pass = $("#TextBox_Password").val(); //se debe tranformar en el sha256 en vez del texto plano.....
 
@@ -122,27 +122,28 @@ function fLogIn() {
 					USER_ID = result.userId;
 					USER_TYPE = result.userType;
 					CAREER_ID = result.careerId;
+                                        helloname = result.name;
 					switch (USER_TYPE) {
 						case USR_TYPE_MANAGER:
 						$("#ManagerMenu").show();
-						helloMsg = "Bienvenido, Administrador";
+						helloMsg = "Bienvenido, Administrador "+helloname;
 						break;
 
 						case USR_TYPE_ASSISTANT:
 						$("#AssistantMenu").show();
-						helloMsg = "Bienvenido, Asistente";
+						helloMsg = "Bienvenido, Asistente "+helloname;
 						break;
 
 						case USR_TYPE_COORDINATOR:
 						$("#CoordinatorMenu").show();
-						helloMsg = "Bienvenido, Coordinador";
+						helloMsg = "Bienvenido, Coordinador "+helloname;
 						break;
 
 						case USR_TYPE_TEACHER:
                                                 
 						$("#TeacherMenu").show();
                                                 $("#Availability").hide();
-						helloMsg = "Bienvenido, Profesor";
+						helloMsg = "Bienvenido, Profesor "+helloname;
 						break;
 					}
 					fShowHelloMsg(helloMsg);

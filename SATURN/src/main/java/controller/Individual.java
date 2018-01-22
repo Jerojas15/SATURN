@@ -24,6 +24,14 @@ public class Individual {
     public int value(){
         return sessions.size();
     }
+
+    public ArrayList<Pair<Integer, Pair<Integer, Pair<Integer, Integer>>>> getLeft_sessions() {
+        return left_sessions;
+    }
+
+    public void setLeft_sessions(ArrayList<Pair<Integer, Pair<Integer, Pair<Integer, Integer>>>> left_sessions) {
+        this.left_sessions = left_sessions;
+    }
     
     private boolean canBeSet(int i, int j, int k, int remaining_time){
         if(k+remaining_time<PERIODS){

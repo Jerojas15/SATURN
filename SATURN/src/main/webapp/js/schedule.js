@@ -73,6 +73,7 @@ function fDisplaySchedule() {
         $("#Tab_Schedule_Thursday table").empty();
         $("#Tab_Schedule_Friday table").empty();
         $("#Tab_Schedule_Saturday table").empty();
+        $("#Left_Table table").empty();
 	$.ajax({
 		method: 'GET',
 		url: URL_CLASSROOMS,
@@ -100,14 +101,32 @@ function fDisplaySchedule() {
 		url: URL_CLASSROOMS_LENGTH + "/" + classroomId,
 
 		success: function(result){
+                        row = "<tr><th></th>";
+                        var cont = 1;
+                        var ClassType = "";
+                        ClassType = "Aula";
+                        
+                        for (j = 0; j < result.len; j++) {
+                            row+=("<th>"+ClassType+" "+cont+"</th>");
+                            cont+=1;
+                        }
+                        row += "</tr>";
+                        $("#Tab_Schedule_Monday table").append(row);
+                        $("#Tab_Schedule_Tuesday table").append(row);
+                        $("#Tab_Schedule_Wednesday table").append(row);
+                        $("#Tab_Schedule_Thursday table").append(row);
+                        $("#Tab_Schedule_Friday table").append(row);
+                        $("#Tab_Schedule_Saturday table").append(row);
                         row = "<tr>";
                         row += "<th>" + getHour(0) + "</th>";
+                        
                         for (i = 0; i < 15; i++) {
+                                
 				row = "<tr>";
 				row += "<th>" + getHour(i) + "</th>";
 
 				for (j = 0; j < result.len; j++) {
-					console.log(j);
+					
 					row += "<th></th>";
 				}
 				row += "</tr>";
@@ -120,7 +139,7 @@ function fDisplaySchedule() {
 			}
                         $("#Tab_Schedule_Monday table tr").each(function(index){
                             $(this).find("th").each(function(indexB){
-                                if(indexB>0){
+                                if(indexB>0 && index > 0){
                                     var aux= $(this);
                                     $.ajax({
                                             method: 'POST',
@@ -140,8 +159,8 @@ function fDisplaySchedule() {
                             });
                         });
                         $("#Tab_Schedule_Tuesday table tr").each(function(index){
-                            $(this).find("th").each(function(indexB){
-                                if(indexB>0){
+                                $(this).find("th").each(function(indexB){
+                                if(indexB>0 && index > 0){
                                     var aux= $(this);
                                     $.ajax({
                                             method: 'POST',
@@ -157,12 +176,14 @@ function fDisplaySchedule() {
                                             }
                                         });
                                     
-                                }
-                            });
+                                    }
+                                });
+                            
+                            
                         });
                         $("#Tab_Schedule_Wednesday table tr").each(function(index){
                             $(this).find("th").each(function(indexB){
-                                if(indexB>0){
+                                if(indexB>0 && index > 0){
                                     var aux= $(this);
                                     $.ajax({
                                             method: 'POST',
@@ -183,7 +204,7 @@ function fDisplaySchedule() {
                         });
                         $("#Tab_Schedule_Thursday table tr").each(function(index){
                             $(this).find("th").each(function(indexB){
-                                if(indexB>0){
+                                if(indexB>0 && index > 0){
                                     var aux= $(this);
                                     $.ajax({
                                             method: 'POST',
@@ -204,7 +225,7 @@ function fDisplaySchedule() {
                         });
                         $("#Tab_Schedule_Friday table tr").each(function(index){
                             $(this).find("th").each(function(indexB){
-                                if(indexB>0){
+                                if(indexB>0 && index > 0){
                                     var aux= $(this);
                                     $.ajax({
                                             method: 'POST',
@@ -225,7 +246,7 @@ function fDisplaySchedule() {
                         });
                         $("#Tab_Schedule_Saturday table tr").each(function(index){
                             $(this).find("th").each(function(indexB){
-                                if(indexB>0){
+                                if(indexB>0 && index > 0){
                                     var aux= $(this);
                                     $.ajax({
                                             method: 'POST',
@@ -249,6 +270,22 @@ function fDisplaySchedule() {
 			console.log("[Login] Error: " + error);
 		}
 	});
+        $.ajax({
+                method: 'GET',
+		url: URL_CLASSROOMS + "/leftSession/" + number,
+                success: function(result){
+                        console.log(result);
+			var res = ""
+                        for(i in result){
+                            console.log(result[i]);
+                            res+="<tr><th>"+result[i].left+"</th></tr>";
+                        }
+                        $("#Left_Table table").append(res);
+		},
+		error: function(request, status, error){
+			console.log("[Login] Error: " + error);
+		}
+        });
 }
                                 
 		

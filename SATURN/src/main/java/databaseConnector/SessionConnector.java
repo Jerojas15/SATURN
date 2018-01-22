@@ -120,5 +120,40 @@ public class SessionConnector {
         }
         return rs;
     }
+
+    public void insertLeftSession(Connection conn, Integer group, int version) throws ClassNotFoundException {
+        boolean state = false;
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "INSERT IGNORE INTO LeftSessions(GroupId, TableVersion) VALUES (?,?)";
+
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, group);
+        statement.setInt(2, version);
+
+        int rowsInserted = statement.executeUpdate();
+        if (rowsInserted > 0) {
+            System.out.println("A new Session was inserted successfully!");
+            state = true;
+        }
+
+        } catch(SQLException ex) {
+         ex.printStackTrace();
+        }
+    }
+
+    public ResultSet getLeftCourses(Connection conn, int id) throws ClassNotFoundException {
+        ResultSet rs = null;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("select CourseName from ((LeftSessions join Groups using (GroupId)) join Courses using (CourseId)) where TableVersion = ?");
+            stmt.setInt(1,id);
+            rs = stmt.executeQuery();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
     
 }

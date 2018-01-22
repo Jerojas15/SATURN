@@ -15,6 +15,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javafx.util.Pair;
 import model.Afinity;
@@ -28,10 +29,11 @@ import model.LogIn;
 import model.Schedule;
 import model.Session;
 import model.User;
+import controller.Individual;
 
 public class DatabaseController {
         private static Connection conn = null;
-        
+        int version = 0;
 /*
  * FUNCIONES DE BD
  */
@@ -444,6 +446,7 @@ public class DatabaseController {
             }
             
         }
+        
     }
     public List<Group> getGroupsById(int id) throws SQLException, ClassNotFoundException {
         GroupConnector connector = new GroupConnector();
@@ -567,6 +570,41 @@ public class DatabaseController {
             a.setLevel(rs.getInt("Level"));
             a.setProfessorId(id);
             result.add(a);
+        }
+        return result;
+    }
+
+    public String getUserName(int userId) throws ClassNotFoundException, SQLException {
+        UserConnector connector = new UserConnector();
+        
+        ResultSet rs = connector.getUserbyId(conn, userId);
+        String result = "";
+        while(rs.next()){
+            result = rs.getString("Name")+" "+rs.getString("LastName");
+
+        }
+        return result;
+    }
+
+    void insertLeft(ArrayList<Individual> solution) throws ClassNotFoundException {
+        SessionConnector connector = new SessionConnector();
+        ScheduleConnector connector2 = new ScheduleConnector();
+        for(int i = 0;i<solution.size();i++){
+            version++;
+            ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> leftSessions = solution.get(i).getLeft_sessions();
+            for(int j = 0;j<leftSessions.size();j++){
+                connector.insertLeftSession(conn, leftSessions.get(j).getValue().getValue().getKey(), version);
+            }
+        }
+        
+    }
+
+    public ArrayList<String> getLeftCourses(int id) throws SQLException, ClassNotFoundException {
+        SessionConnector connector = new SessionConnector();
+        ResultSet list = connector.getLeftCourses(conn, id);
+        ArrayList<String> result = new ArrayList<>();
+        while(list.next()){
+            result.add(list.getString("CourseName"));
         }
         return result;
     }

@@ -83,7 +83,6 @@ public class GeneticAlgorithm {
                     }
                 }
             }
-            // && (!firstSon.contains(findSession(firstSon.get(i)))||!secondSon.contains(findSession(secondSon.get(i))))
             for(int i = 0;i<Math.max(firstSon.size(), secondSon.size());i++){//llena las sesiones de los nuevos hijos
                 choice = rand.nextBoolean();
                 if(choice){
@@ -96,6 +95,8 @@ public class GeneticAlgorithm {
             }
             ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> leftSessions = firstParent.getLeftSession();//lista nueva para generar los hijos nuevos
             ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> leftSecondSessions = secondParent.getLeftSession();//lista nueva para generar los hijos nuevos
+            
+            
             for(int i = 0;i<Math.max(leftSessions.size(), leftSecondSessions.size());i++){//llena las sesiones que no se asignaron de los nuevos hijos
                 choice = rand.nextBoolean();
                 if(choice){
@@ -108,7 +109,9 @@ public class GeneticAlgorithm {
             }
             
             Individual newSon = new Individual(professor, capacity, groups, new ArrayList<>(newSessions));//crea los nuevos hijos
+            newSon.setLeft_sessions(leftSessions);
             Individual newSecondSon = new Individual(professor, capacity, groups, new ArrayList<>(newSecondSessions));
+            newSon.setLeft_sessions(leftSecondSessions);
             newGeneration.add(newSon);
             newGeneration.add(newSecondSon);
         }

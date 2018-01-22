@@ -83,6 +83,7 @@ public class AlgorithmController {
         }
         
         d.insertAlgorithmResult(solution);
+        d.insertLeft(solution);
         return true;
     }
 }

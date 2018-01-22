@@ -25,6 +25,7 @@ import model.Career;
 import model.Classroom;
 import model.User;
 import model.ClassNow;
+import model.LeftClass;
 @Path("/schedules")
 public class ScheduleServlet {
     
@@ -34,9 +35,27 @@ public class ScheduleServlet {
         public static List<Classroom> getTypes(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException, JSONException {
 		DatabaseController d = new DatabaseController();
 		List<Classroom> result = d.getClassroomsTypes();
-                JSONObject object = new JSONObject();
                 
                 return result;
+	}
+        
+        @GET
+        @Path("/leftSession/{id}")
+        @Produces(MediaType.APPLICATION_JSON)
+        public static List<LeftClass> getLeftSession(@PathParam("id") Integer idStr) throws SQLException, ClassNotFoundException, JSONException {
+		DatabaseController d = new DatabaseController();
+		List<String> result = d.getLeftCourses(idStr) ;
+                ArrayList<LeftClass> solution = new ArrayList<>();
+                for(int i = 0;i<result.size();i++){
+                    LeftClass l = new LeftClass();
+                    l.setLeft(result.get(i));
+                    solution.add(l);
+                }
+                for(int i = 0;i<result.size();i++){
+                    System.out.println(solution.get(i));
+                }
+                List<LeftClass> aux = solution;
+                return aux;
 	}
         
         @GET
