@@ -48,10 +48,10 @@ public class DatabaseController {
         public Connection makeConnection() throws SQLException, ClassNotFoundException{
             //manera de acceso a la base de Julio
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
+            //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
 
             //manera de acceso a la base de Jose Miguel
-            //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
             return conn;
         }
         
@@ -334,13 +334,14 @@ public class DatabaseController {
             SessionConnector session = new SessionConnector();
             Boolean status = connector.insertNewGroup(conn, g);
             int id = connector.getGroupId(conn);
-            
+            /*
             System.out.println("tam"+g.getSessions().size());
             for(int i = 0;i<g.getSessions().size();i++){
                 g.getSessions().get(i).setGroup_ID(id);
                 g.getSessions().get(i).setClassroom_Type(1);
                 session.insertSession(conn, g.getSessions().get(i));
             }
+            */
             return status;
         }
         public boolean deleteGroup(int id) throws ClassNotFoundException{
