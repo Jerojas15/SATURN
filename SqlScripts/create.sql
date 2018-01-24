@@ -112,3 +112,9 @@ CREATE TABLE Timetables (
         REFERENCES Classrooms(ClassroomId)
 );
 
+Create table LeftSessions (
+	GroupId int NOT NULL,
+    TableVersion int NOT NULL
+
+);
+

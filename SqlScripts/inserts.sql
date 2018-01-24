@@ -1,3 +1,4 @@
+use SaturnDB;
 ######CREACION DE CARRERAS###### LISTO
 INSERT INTO Plans (PlanName) VALUES ("410");
 INSERT INTO Plans (PlanName) VALUES ("420");
