@@ -68,7 +68,7 @@ public class ScheduleConnector {
         try{    
             Class.forName("com.mysql.jdbc.Driver");
             PreparedStatement stmt = conn.prepareStatement("SELECT distinct CourseName, University, StartHour, EndHour "
-                    + "from ((((timetables inner join Groups using (GroupId)) inner join Courses using(CourseId)) inner join careers using(CareerId) inner join Users))"
+                    + "from ((((Timetables inner join Groups using (GroupId)) inner join Courses using(CourseId)) inner join Careers using(CareerId) inner join Users))"
                     + " where ProfessorId = UserId and Day = ? and TableVersion=? and ClassroomId = ?");
             stmt.setInt(1, c.getDay());
             stmt.setInt(2, id);
