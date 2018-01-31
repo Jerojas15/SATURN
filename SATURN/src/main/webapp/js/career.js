@@ -78,7 +78,7 @@ function fAddCareer() {
 			}
 		});
 	} else {
-		alert("Se febe mostrar mensaje de que se requieren datos");
+		alert("Se deben insertar todos los datos");
 	}
 }
 
@@ -167,7 +167,7 @@ function fEditCareer() {
 			}
 		});
 	} else {
-		alert("Se febe mostrar mensaje de que se requieren datos");
+		alert("Se deben insertar todos los datos");
 	}
 }
 

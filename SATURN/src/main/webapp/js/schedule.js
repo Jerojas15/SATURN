@@ -31,7 +31,7 @@ function fCallAlgorithm() {
 			//alert(JSON.stringify(result));
 			//result = result.classrooms; //Quitar cuando se pase a java
 			if(result.status === "OK"){
-                            alert("algoritmo comenzado");
+                            alert("El algoritmo ha terminado su ejecución");
                         }
 			//$("#Select_Schedule_Classroom").val(0);
 		},

@@ -105,7 +105,7 @@ function fAddAssistant() {
 					fCancelAddAssistant();
 				}
 				else if(result.status === "ALREADY_EXISTS"){
-					alert("Se febe mostrar mensaje de que ya existe");
+					alert("El usuario a insertar ya existe");
 				}
 			},
 
@@ -114,7 +114,7 @@ function fAddAssistant() {
 			}
 		});
 	} else {
-		alert("Se febe mostrar mensaje de que se requieren datos");
+		alert("Se deben insertar todos los datos");
 	}
 }
 
@@ -197,7 +197,7 @@ function fAddCoordinator() {
 					fCancelAddCoordinator();
 				}
 				else if(result.status === "ALREADY_EXISTS"){
-					alert("Se febe mostrar mensaje de que ya existe");
+					alert("El usuario a insertar ya existe");
 				}
 			},
 
@@ -206,7 +206,7 @@ function fAddCoordinator() {
 			}
 		});
 	} else {
-		alert("Se febe mostrar mensaje de que se requieren datos");
+		alert("Se deben insertar todos los datos");
 	}
 }
 
@@ -338,7 +338,7 @@ function fAddTeacher() {
 						fCancelAddTeacher();
 					}
 					else if(result.status === "ALREADY_EXISTS"){
-						alert("Se febe mostrar mensaje de que ya existe el profesor");
+						alert("El usuario a insertar ya existe");
 					}
 				},
 
@@ -350,7 +350,7 @@ function fAddTeacher() {
 			alert("Contraseña no igual");
 		}
 	} else {
-		alert("Se febe mostrar mensaje de que se requieren datos");
+		alert("Se deben insertar todos los datos");
 	}
 }
 
@@ -432,7 +432,7 @@ function fEditUser() {
 		}
 
 	} else {
-		alert("Se debe mostrar mensaje de que al menos un valor debe cambiar");
+		alert("Al menos un valor debe cambiar");
 	}
 }
 

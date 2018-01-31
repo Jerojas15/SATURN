@@ -334,14 +334,14 @@ public class DatabaseController {
             SessionConnector session = new SessionConnector();
             Boolean status = connector.insertNewGroup(conn, g);
             int id = connector.getGroupId(conn);
-            /*
+            
             System.out.println("tam"+g.getSessions().size());
             for(int i = 0;i<g.getSessions().size();i++){
                 g.getSessions().get(i).setGroup_ID(id);
                 g.getSessions().get(i).setClassroom_Type(1);
                 session.insertSession(conn, g.getSessions().get(i));
             }
-            */
+            
             return status;
         }
         public boolean deleteGroup(int id) throws ClassNotFoundException{

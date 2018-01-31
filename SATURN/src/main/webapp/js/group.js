@@ -141,7 +141,7 @@ function fAddGroup() {
 			}
 		});
 	} else {
-		alert("Se febe mostrar mensaje de que se requieren datos");
+		alert("Se deben insertar todos los datos");
 	}
 }
 
@@ -325,7 +325,7 @@ function fEditGroup() {
 			}
 		});
 	} else {
-		alert("Se febe mostrar mensaje de que se requieren datos");
+		alert("Se deben insertar todos los datos");
 	}
 }
 
