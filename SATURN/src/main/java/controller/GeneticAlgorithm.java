@@ -1,26 +1,32 @@
 package controller;
 
+import static controller.AlgorithmController.capacity;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.util.Pair;
 
 public class GeneticAlgorithm {
-    private final static int CLASSROOM =5;//Aulas disponibles
+    private static int CLASSROOM;//Aulas disponibles
     private final static int PERIODS = 30;//Periodos de media hora disponibles
     private final static int DAYS = 6;//Dias de la semana disponibles
     
+    ArrayList<Integer> groupSessions;
     ArrayList<Integer> capacity = new ArrayList<>();//Capacidad de cada aula
     ArrayList<Pair<Integer,Integer>> groups = new ArrayList<>();//capacidad de los grupos a insertar
     ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> sessions = new ArrayList<>();//sesiones de grupos, con par(ID,(duracion, (idGrupo, Profesor)))
     ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor = new ArrayList<>();//disponibilidad de profesores, (ID,(Dia,(inicio,salida)))
     
-    public GeneticAlgorithm(ArrayList<Integer> capacity, ArrayList<Pair<Integer,Integer>>groups, 
+    public GeneticAlgorithm(ArrayList<Integer> groupSessions,
+                            ArrayList<Integer> capacity, ArrayList<Pair<Integer,Integer>>groups, 
                             ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> sessions, 
                             ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor){
+        this.groupSessions = groupSessions;
         this.capacity = capacity;
         this.groups = groups;
         this.sessions = sessions;
         this.professor = professor;
+        CLASSROOM = AlgorithmController.CLASSROOM;
     }
     
     public Individual getBestIndividual(ArrayList<Individual>generation){
@@ -44,7 +50,7 @@ public class GeneticAlgorithm {
         return null;
     }
     
-    private ArrayList<Individual> cross(ArrayList<Individual> parents){
+    private ArrayList<Individual> cross(ArrayList<Individual> parents) throws SQLException, ClassNotFoundException{
         Random rand = new Random();
         
         ArrayList<Individual> newGeneration = new ArrayList<>();//generacion resultante
@@ -54,7 +60,7 @@ public class GeneticAlgorithm {
         Individual firstParent, secondParent;//padres
         int[][][] selected, notSelected;//hijos nuevos
         
-        while(parents.size()>0){//mientras queden padres
+        while(parents.size()>1){//mientras queden padres
             
             ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> newSessions = new ArrayList<>();//lista nueva para generar los hijos nuevos
             ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> newSecondSessions = new ArrayList<>();//lista nueva para generar los hijos nuevos
@@ -108,9 +114,9 @@ public class GeneticAlgorithm {
                 }
             }
             
-            Individual newSon = new Individual(professor, capacity, groups, new ArrayList<>(newSessions));//crea los nuevos hijos
+            Individual newSon = new Individual(groupSessions, professor, capacity, groups, new ArrayList<>(newSessions));//crea los nuevos hijos
             newSon.setLeft_sessions(leftSessions);
-            Individual newSecondSon = new Individual(professor, capacity, groups, new ArrayList<>(newSecondSessions));
+            Individual newSecondSon = new Individual(groupSessions, professor, capacity, groups, new ArrayList<>(newSecondSessions));
             newSon.setLeft_sessions(leftSecondSessions);
             newGeneration.add(newSon);
             newGeneration.add(newSecondSon);
@@ -120,12 +126,12 @@ public class GeneticAlgorithm {
     }
     
     
-    public ArrayList<Individual> StartAlgorithm(int size, int need){
+    public ArrayList<Individual> StartAlgorithm(int size, int need) throws SQLException, ClassNotFoundException{
         ArrayList<Individual> generation = new ArrayList<>();
         ArrayList<Individual> newGeneration = new ArrayList<>(); 
         ArrayList<Individual> result = new ArrayList<>(); 
         for(int  i = 0;i<size;i++){//crea la primera poblacion
-            generation.add(new Individual(professor, capacity, groups, new ArrayList<>(sessions)));
+            generation.add(new Individual(groupSessions, professor, capacity, groups, new ArrayList<>(sessions)));
         }
         
         for(int i = 0;i<2;i++){
@@ -138,5 +144,17 @@ public class GeneticAlgorithm {
         return result;
     }
     
+    public static void main(String[] args) throws SQLException, ClassNotFoundException{
+        DatabaseController d = new DatabaseController();
+        ArrayList<Integer> groups = new ArrayList<>();
+        groups = d.getGroupIdBySession();
+        GeneticAlgorithm solve = new GeneticAlgorithm(groups, d.getClassroomCapacity(), d.getGroupCapacity(), d.getSessionData(), d.getProfessorData());
+        ArrayList<Individual> solution = solve.StartAlgorithm(10, 4);
+        System.out.println("HOOOLAAAAA");
+        for(int i = 0;i<solution.size();i++){
+            solution.get(i).show_ind();
+            System.out.println();
+        }
+    }
     
 }

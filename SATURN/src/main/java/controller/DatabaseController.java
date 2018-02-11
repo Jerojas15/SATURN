@@ -605,8 +605,30 @@ public class DatabaseController {
         ResultSet list = connector.getLeftCourses(conn, id);
         ArrayList<String> result = new ArrayList<>();
         while(list.next()){
-            result.add(list.getString("CourseName"));
+            result.add(list.getString("CourseName")+list.getString("University"));
         }
+        return result;
+    }
+
+    public ArrayList<Integer> getGroupIdBySession() throws ClassNotFoundException, SQLException {
+        ArrayList<Integer> result = new ArrayList<>();
+        SessionConnector connector = new SessionConnector();
+        ResultSet rs = connector.getTotalGroups(conn);
+        while(rs.next()){
+            result.add(rs.getInt("GroupId"));
+        }
+        return result;
+    }
+    
+    public int getLastGroupId() throws SQLException, ClassNotFoundException{
+        GroupConnector connector = new GroupConnector();
+        int result = connector.getLastGroupId(conn);
+        return result;
+    }
+
+    int getClassrooms(int type) throws ClassNotFoundException, SQLException {
+        ClassRoomConnector connector = new ClassRoomConnector();
+        int result = connector.getClassroomQuantity(conn, type);
         return result;
     }
 }

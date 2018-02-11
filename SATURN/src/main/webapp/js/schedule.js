@@ -23,10 +23,15 @@ function getHour(hour24) {
 function fCallAlgorithm() {
         var number = $("#TextBox_GenSchedule_Number").val();
         created +=number;
+        var type = $("#Select_Schedule_Classroom").val();
+        var obj = JSON.stringify({"times":number, "type":type});
+        alert(obj);
         $.ajax({
 		method: 'POST',
-		url: URL_CLASSROOMS+"/algorithm/"+number,
-
+		url: URL_CLASSROOMS+"/algorithm",
+                contentType: "application/json; charset=utf-8",
+		dataType: "json",
+                data : obj,
 		success: function(result){
 			//alert(JSON.stringify(result));
 			//result = result.classrooms; //Quitar cuando se pase a java
@@ -81,12 +86,11 @@ function fDisplaySchedule() {
 		success: function(result){
 			//alert(JSON.stringify(result));
 			//result = result.classrooms; //Quitar cuando se pase a java
+                        $("#Select_Schedule_Classroom").empty();
 			for (i in result) {
-                                if(result[i].type===1){
-                                    ClassType = "Aula";
-                                }
+                                
 				$("#Select_Schedule_Classroom").append(	SELECT_OPTION_TEMPLATE1 + result[i].id +
-														SELECT_OPTION_TEMPLATE2 + ClassType +
+														SELECT_OPTION_TEMPLATE2 + result[i].className +
 														SELECT_OPTION_TEMPLATE3);
 			}
 			//$("#Select_Schedule_Classroom").val(0);

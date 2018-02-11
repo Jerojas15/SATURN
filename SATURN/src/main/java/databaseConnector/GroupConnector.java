@@ -149,4 +149,21 @@ public class GroupConnector {
             }
             return rs;
         }
+
+    public int getLastGroupId(Connection conn) throws SQLException, ClassNotFoundException {
+        ResultSet rs = null;
+        int result = 0;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT MAX(GroupId) FROM Groups");
+            rs = stmt.executeQuery();
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        while(rs.next()){
+            result = rs.getInt("MAX(GroupId)");
+        }
+        return result;
+    }
 }

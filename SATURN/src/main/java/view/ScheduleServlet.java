@@ -20,6 +20,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import controller.DatabaseController;
+import model.AlgorithmInput;
 import model.Availability;
 import model.Career;
 import model.Classroom;
@@ -85,19 +86,21 @@ public class ScheduleServlet {
 	}
         
         @POST
-        @Path("/algorithm/{id}")
-	public Response createTeacher(@PathParam("id") String idStr) {
+        @Path("/algorithm")
+        @Consumes(MediaType.APPLICATION_JSON)
+	public Response startAlgorithm(AlgorithmInput input) throws SQLException, ClassNotFoundException {
 		String status;
 		JSONObject object;		
 		AlgorithmController d;
 		
-		
+		          
 		try {                  
-			d = new AlgorithmController(Integer.parseInt(idStr));
+			d = new AlgorithmController(input.getTimes(), input.getType());
+                        
 			if (d.start())
-				status = "OK";
+                            status = "OK";
 			else
-				status = "ALREADY_EXISTS";
+                            status = "ALREADY_EXISTS";
 		} catch (ClassNotFoundException | SQLException e1) {
 			return Response.status(500).entity(e1.toString()).build();
 		}

@@ -4,10 +4,19 @@ public class Classroom {
         int id;
         int capacity;
         int type;
+        String className;
 
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String ClassName) {
+        this.className = ClassName;
+    }
         public Classroom() {}
 
-        public Classroom(int id, int capacity, int type) {
+        public Classroom(String className, int id, int capacity, int type) {
+            this.className = className;
             this.id = id;
             this.capacity = capacity;
             this.type = type;
@@ -35,5 +44,10 @@ public class Classroom {
         
         public void setType(int type){
             this.type = type;
+            switch(type){
+                case 1:
+                    className = "Aula";
+            }
+                    
         }	
 }

@@ -147,8 +147,20 @@ public class SessionConnector {
         ResultSet rs = null;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("select CourseName from ((LeftSessions join Groups using (GroupId)) join Courses using (CourseId)) where TableVersion = ?");
+            PreparedStatement stmt = conn.prepareStatement("select CourseName, University from (((LeftSessions join Groups using (GroupId)) join Courses using (CourseId)) join Careers using (CareerId)) where TableVersion = ?");
             stmt.setInt(1,id);
+            rs = stmt.executeQuery();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public ResultSet getTotalGroups(Connection conn) throws ClassNotFoundException {
+        ResultSet rs = null;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT GroupId FROM Sessions");
             rs = stmt.executeQuery();
         } catch (SQLException e){
             e.printStackTrace();

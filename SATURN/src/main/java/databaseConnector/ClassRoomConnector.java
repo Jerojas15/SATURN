@@ -70,4 +70,22 @@ public class ClassRoomConnector {
             }
             return rs;
     }
+
+    public int getClassroomQuantity(Connection conn, int type) throws ClassNotFoundException, SQLException {
+        ResultSet rs = null;
+        int result = 0;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT MAX(ClassroomId) FROM Classrooms where ClassroomType = ?");
+            stmt.setInt(1, type);
+            rs = stmt.executeQuery();
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        while(rs.next()){
+            result = rs.getInt("MAX(ClassRoomId)");
+        }
+        return result;
+    }
 }

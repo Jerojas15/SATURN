@@ -1,17 +1,22 @@
 package controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.util.Pair;
 
 public class Individual {
-    private final static int CLASSROOM =5;//Aulas disponibles
+    private static int CLASSROOM;//Aulas disponibles
     private final static int PERIODS = 30;//Periodos de media hora disponibles
     private final static int DAYS = 6;//Dias de la semana disponibles
     
-    int[][][] ind = new int[DAYS][CLASSROOM][PERIODS];//Individuo, el valor es el grupo correspondiente
+    private boolean[][] occupied;
+    
+    int[][][] ind;//Individuo, el valor es el grupo correspondiente
     
     private ArrayList<Integer> capacity;//Capacidad de cada aula
+    
+    private ArrayList<Integer> groupSessions;
     
     private ArrayList<Pair<Integer,Integer>> groups;//capacidad de los grupos a insertar
     
@@ -74,7 +79,10 @@ public class Individual {
         return 0;
     }
     
-    private void setIndividual(){
+    private void setIndividual() throws SQLException, ClassNotFoundException{
+        DatabaseController d = new DatabaseController();
+        occupied = new boolean[DAYS][d.getLastGroupId()+1];
+        //boolean possible = true;
         boolean assigned = true;
         Random rand = new Random();
         int actual_session, remaining_time;
@@ -85,24 +93,28 @@ public class Individual {
                 for (int j= 0; j<CLASSROOM;j++){//AULAS
                     for (int k=0; k<PERIODS;k++){//PERIODOS - llena los individuos
                         if(ind[i][j][k]==0){//si no le ha asignado valor
-                            if(getGroupCapacity(actual_session)<=capacity.get(j)){//si cabe en el aula
-                                remaining_time = sessions.get(actual_session).getValue().getKey() * 2;
-                                if(canBeSet(i,j,k, remaining_time)){//si queda campo durante el dia
-                                    
-                                    if(hasDisponibility(i,k,k+remaining_time,sessions.get(actual_session).getValue().getValue().getValue())){//(ID, (duracion, (idGrupo, idProfesor)))
-                                        while(remaining_time>0){
-                                            ind[i][j][k] = sessions.get(actual_session).getKey();
-                                            remaining_time--;
-                                            k++;
+                            if(!occupied[i][sessions.get(actual_session).getValue().getValue().getKey()]){
+                               if(getGroupCapacity(actual_session)<=capacity.get(j)){//si cabe en el aula
+                                    remaining_time = sessions.get(actual_session).getValue().getKey() * 2;
+                                    if(canBeSet(i,j,k, remaining_time)){//si queda campo durante el dia
+
+                                        if(hasDisponibility(i,k,k+remaining_time,sessions.get(actual_session).getValue().getValue().getValue())){//(ID, (duracion, (idGrupo, idProfesor)))
+                                            while(remaining_time>0){
+                                                ind[i][j][k] = sessions.get(actual_session).getKey();
+                                                remaining_time--;
+                                                k++;
+                                            }
+                                            k--;
+                                            occupied[i][sessions.get(actual_session).getValue().getValue().getKey()] = true;
+                                            sessions.remove(actual_session);
+                                            assigned = true;
                                         }
-                                        k--;
-                                        sessions.remove(actual_session);
-                                        assigned = true;
-                                    }
+                                    } 
+                                }else{
+                                    break;
                                 } 
-                            }else{
-                                break;
                             }
+                            
                         }
                         if(assigned){break;}
                     }
@@ -121,12 +133,15 @@ public class Individual {
         }
     }
     
-    public Individual(ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor,ArrayList<Integer> capacity, ArrayList<Pair<Integer,Integer>> groups, ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> sessions) {
+    public Individual(ArrayList<Integer> groupSessions, ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor,ArrayList<Integer> capacity, ArrayList<Pair<Integer,Integer>> groups, ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> sessions) throws SQLException, ClassNotFoundException {
         this.capacity = capacity;
         this.groups = groups;
         this.sessions = sessions;
         this.professor = professor;
+        this.groupSessions = groupSessions;
         left_sessions = new ArrayList<>();
+        CLASSROOM = AlgorithmController.CLASSROOM;
+        ind = new int[DAYS][CLASSROOM][PERIODS];
         setIndividual();
         
     }
