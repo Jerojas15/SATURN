@@ -45,11 +45,12 @@ public class ClassRoomConnector {
             return rs;
         }
     
-        public ResultSet getClassroomCapacity(Connection conn) throws ClassNotFoundException{
+        public ResultSet getClassroomCapacity(Connection conn, int type) throws ClassNotFoundException{
             ResultSet rs = null;
             try{    
                 Class.forName("com.mysql.jdbc.Driver");
-                PreparedStatement stmt = conn.prepareStatement("SELECT Capacity FROM Classrooms");
+                PreparedStatement stmt = conn.prepareStatement("SELECT Capacity FROM Classrooms where ClassroomType = ?");
+                stmt.setInt(1, type);
                 rs = stmt.executeQuery();
 
             } catch (SQLException e){

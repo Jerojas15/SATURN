@@ -306,9 +306,9 @@ public class DatabaseController {
 /*
  * FUNCIONES DE AULA
  */
-        public ArrayList<Integer> getClassroomCapacity() throws ClassNotFoundException, SQLException{
+        public ArrayList<Integer> getClassroomCapacity(int type) throws ClassNotFoundException, SQLException{
             ClassRoomConnector connector = new ClassRoomConnector();
-            ResultSet rs = connector.getClassroomCapacity(conn);
+            ResultSet rs = connector.getClassroomCapacity(conn, type);
             ArrayList<Integer> result = new ArrayList<>();
             while(rs.next()){
                 result.add(new Integer(rs.getInt("Capacity")));
@@ -508,7 +508,7 @@ public class DatabaseController {
         ArrayList<Classroom> result = new ArrayList<>();
         while(rs.next()){
             Classroom c = new Classroom();
-            c.setId(1);
+            c.setId(rs.getInt("ClassroomId"));
             c.setType(rs.getInt("ClassroomType"));
             result.add(c);
         }

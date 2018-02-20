@@ -47,6 +47,8 @@ public class Classroom {
             switch(type){
                 case 1:
                     className = "Aula";
+                case 2:
+                    className = "Laboratorio";
             }
                     
         }	

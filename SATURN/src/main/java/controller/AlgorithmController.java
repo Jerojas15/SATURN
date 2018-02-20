@@ -17,13 +17,13 @@ public class AlgorithmController {
     public AlgorithmController(int times, int type) throws SQLException, ClassNotFoundException {
         DatabaseController d = new DatabaseController();
         this.times = times;
-        capacity = d.getClassroomCapacity();
-        groups = d.getGroupCapacity();
+        capacity = d.getClassroomCapacity(type);//saca la capacidad de las aules de tipo x
+        groups = d.getGroupCapacity();//saca la capacidad de los grupos 
         sessions = d.getSessionData();
         professor = d.getProfessorData();
         groupSessions = d.getGroupIdBySession();
 
-        CLASSROOM = d.getClassrooms(type);
+        CLASSROOM = d.getClassrooms(type);//cantidad de aulas de ese tipo que hay
         
         Random rand = new Random();
         
