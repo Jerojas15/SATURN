@@ -57,6 +57,17 @@ function nextNumber(){
 }
 
 function fDisplaySchedule() {
+        $.ajax({
+		method: 'GET',
+		url: URL_CLASSROOMS+"/lastSchedules/"+1,
+
+		success: function(result){
+			number = result.size;
+		},
+		error: function(request, status, error){
+			console.log("[Login] Error: " + error);
+		}
+	});
 	if(number<=1){
             $("#Btn_Previous_Schedule").hide();
         }else{
@@ -89,7 +100,7 @@ function fDisplaySchedule() {
                         $("#Select_Schedule_Classroom").empty();
 			for (i in result) {
                                 
-				$("#Select_Schedule_Classroom").append(	SELECT_OPTION_TEMPLATE1 + result[i].id +
+				$("#Select_Schedule_Classroom").append(	SELECT_OPTION_TEMPLATE1 + result[i].type +
 														SELECT_OPTION_TEMPLATE2 + result[i].className +
 														SELECT_OPTION_TEMPLATE3);
 			}
@@ -100,7 +111,7 @@ function fDisplaySchedule() {
 			console.log("[Login] Error: " + error);
 		}
 	});
-
+        classroomId = $("#Select_Schedule_Classroom").val();
 	$.ajax({
 		method: 'GET',
 		url: URL_CLASSROOMS_LENGTH + "/" + classroomId,

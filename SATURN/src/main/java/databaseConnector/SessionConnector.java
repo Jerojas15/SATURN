@@ -121,17 +121,17 @@ public class SessionConnector {
         return rs;
     }
 
-    public void insertLeftSession(Connection conn, Integer group, int version) throws ClassNotFoundException {
+    public void insertLeftSession(Connection conn, Integer group, int version, int type) throws ClassNotFoundException {
         boolean state = false;
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT IGNORE INTO LeftSessions(GroupId, TableVersion) VALUES (?,?)";
+        String sql = "INSERT IGNORE INTO LeftSessions(GroupId, TableVersion, ClassRoomType) VALUES (?, ?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, group);
         statement.setInt(2, version);
-
+        statement.setInt(3, type);
         int rowsInserted = statement.executeUpdate();
         if (rowsInserted > 0) {
             System.out.println("A new Session was inserted successfully!");
@@ -167,5 +167,6 @@ public class SessionConnector {
         }
         return rs;
     }
+
     
 }

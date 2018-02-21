@@ -46,9 +46,11 @@ public class Classroom {
             this.type = type;
             switch(type){
                 case 1:
-                    className = "Aula";
+                    this.className = "Aula";
+                    break;
                 case 2:
-                    className = "Laboratorio";
+                    this.className = "Laboratorio";
+                    break;
             }
                     
         }	
