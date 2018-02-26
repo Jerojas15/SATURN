@@ -13,7 +13,7 @@ public class ScheduleConnector {
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT INTO Timetables(Day, StartHour, EndHour, GroupId, ClassroomId, TableVersion) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Timetables(Day, StartHour, EndHour, GroupId, ClassroomId, TableVersion, ClassRoomType) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, s.getDay());
@@ -22,6 +22,7 @@ public class ScheduleConnector {
         statement.setInt(4, s.getGroup());
         statement.setInt(5, s.getClassroom());
         statement.setInt(6, s.getVersion());
+        statement.setInt(7, s.getType());
         int rowsInserted = statement.executeUpdate();
         if (rowsInserted > 0) {
             System.out.println("A new Schedule was inserted successfully!");
@@ -47,12 +48,13 @@ public class ScheduleConnector {
         return rs;
     }
 
-    public int getVersion(Connection conn) throws ClassNotFoundException {
+    public int getVersion(Connection conn, int type) throws ClassNotFoundException {
          ResultSet rs = null;
          int version = -1;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT TableVersion FROM Timetables");
+            PreparedStatement stmt = conn.prepareStatement("SELECT TableVersion FROM Timetables where ClassRoomType = ?");
+            stmt.setInt(1, type);
             rs = stmt.executeQuery();
             while(rs.next()){
                 version = rs.getInt("TableVersion");
@@ -79,6 +81,23 @@ public class ScheduleConnector {
             e.printStackTrace();
         }
         return rs;
+    }
+
+    public int getLeftVersion(Connection conn, int type) throws ClassNotFoundException {
+        ResultSet rs = null;
+        int version = -1;
+        try{    
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT TableVersion FROM LeftSessions where ClassRoomType = ?");
+            stmt.setInt(1, type);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                version = rs.getInt("TableVersion");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return version;
     }
 
     

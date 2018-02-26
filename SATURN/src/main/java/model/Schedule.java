@@ -7,17 +7,27 @@ public class Schedule {
         int group;
         int classroom;
         int version;
+        int type;
         
         public Schedule() {}
         
-        public Schedule(int day, int startTime, int finishTime, int group, int classroom, int version) {
+        public Schedule(int day, int startTime, int finishTime, int group, int classroom, int version, int type) {
             this.day = day;
             this.startTime = startTime;
             this.finishTime = finishTime;
             this.group = group;
             this.classroom = classroom;
             this.version = version;
+            this.type = type;
         }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public int getStartTime() {
         return startTime;

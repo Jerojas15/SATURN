@@ -134,6 +134,10 @@ INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (03, 20, 1)
 INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (04, 35, 1);
 INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (05, 25, 1);
 
+INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (06, 25, 2);
+INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (07, 25, 2);
+INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (08, 25, 2);
+
 
 #####CREACION DE SESIONES#####
 INSERT INTO Sessions (GroupId, Hour, Type) VALUES (1,2,1);

@@ -415,11 +415,11 @@ public class DatabaseController {
             return professor;
         }
 
-    void insertAlgorithmResult(ArrayList<Individual> solution) throws ClassNotFoundException {
+    void insertAlgorithmResult(ArrayList<Individual> solution, int type) throws ClassNotFoundException {
         ScheduleConnector connector = new ScheduleConnector();
         SessionConnector sessionConnector = new SessionConnector();
         int version = -1;
-        version = connector.getVersion(conn);
+        version = connector.getVersion(conn, type);
         if(version == -1)version = 0;
         for(int i = 0;i<solution.size();i++){
             version++;
@@ -436,7 +436,7 @@ public class DatabaseController {
                             if(individual[j][k][l] != activeSession){//si la sesion cambia
                                 active = false;
                                 end = l;
-                                Schedule s = new Schedule(j,(start/2)+7,(end/2)+7,sessionConnector.getGroupBySession(conn, activeSession),k+1, version);
+                                Schedule s = new Schedule(j,(start/2)+7,(end/2)+7,sessionConnector.getGroupBySession(conn, activeSession),k+1, version, type);
                                 connector.insertNewSchedule(conn, s);
                             }else{
                                 l++;
@@ -579,14 +579,17 @@ public class DatabaseController {
         return result;
     }
 
-    void insertLeft(ArrayList<Individual> solution) throws ClassNotFoundException {
+    void insertLeft(ArrayList<Individual> solution, int type) throws ClassNotFoundException {
         SessionConnector connector = new SessionConnector();
         ScheduleConnector connector2 = new ScheduleConnector();
+        int version = -1;
+        version = connector2.getLeftVersion(conn, type);
+        if(version == -1)version = 0;
         for(int i = 0;i<solution.size();i++){
             version++;
             ArrayList<Pair<Integer,Pair<Integer,Pair<Integer, Integer>>>> leftSessions = solution.get(i).getLeft_sessions();
             for(int j = 0;j<leftSessions.size();j++){
-                connector.insertLeftSession(conn, leftSessions.get(j).getValue().getValue().getKey(), version);
+                connector.insertLeftSession(conn, leftSessions.get(j).getValue().getValue().getKey(), version, type);
             }
         }
         
@@ -661,7 +664,7 @@ public class DatabaseController {
         return result;
     }
 
-    public boolean deleteClassroom(int id) {
+    public boolean deleteClassroom(int id) throws ClassNotFoundException {
         ClassroomConnector connector = new ClassroomConnector();
         Boolean result = connector.deleteClassroom(conn, id);
         return result;
@@ -709,6 +712,12 @@ public class DatabaseController {
     public boolean deleteClassroomType(int id) throws ClassNotFoundException {
         ClassroomConnector connector = new ClassroomConnector();
         Boolean result = connector.deleteClassroomType(conn, id);
+        return result;
+    }
+
+    public int getVersion(int type) throws ClassNotFoundException {
+        ScheduleConnector connector = new ScheduleConnector();
+        int result = connector.getVersion(conn, type);
         return result;
     }
 }

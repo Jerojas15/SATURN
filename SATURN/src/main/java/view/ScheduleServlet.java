@@ -20,6 +20,8 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import controller.DatabaseController;
+import databaseConnector.ScheduleConnector;
+import databaseConnector.SessionConnector;
 import model.AlgorithmInput;
 import model.Availability;
 import model.Career;
@@ -61,6 +63,18 @@ public class ScheduleServlet {
 	}
         
         @GET
+	@Path("/lastSchedules/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public static JSONObject getCreatedSchedules(@PathParam("id") Integer type) throws SQLException, ClassNotFoundException, JSONException {
+		DatabaseController d = new DatabaseController();
+		int result = d.getVersion(type);
+                JSONObject object = new JSONObject();
+                object.put("size", result);
+                
+                return object;
+	}
+        
+        @GET
 	@Path("/length/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static JSONObject getProfessor(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException, JSONException {
@@ -90,18 +104,21 @@ public class ScheduleServlet {
         @Path("/algorithm")
         @Consumes(MediaType.APPLICATION_JSON)
 	public Response startAlgorithm(AlgorithmInput input) throws SQLException, ClassNotFoundException {
-		String status;
+            DatabaseController controller = new DatabaseController();
+            String status = "";
 		JSONObject object;		
-		AlgorithmController d;
+		List<Classroom> types = controller.getClassroomsTypes();
 		
 		          
-		try {                  
-			d = new AlgorithmController(input.getTimes(), input.getType());
+		try {     
+                    //for(int i = 1;i<=1/*types.size()*/;i++){
+			AlgorithmController d = new AlgorithmController(input.getTimes(),input.getType());
                         
 			if (d.start())
                             status = "OK";
 			else
                             status = "ALREADY_EXISTS";
+                    //}
 		} catch (ClassNotFoundException | SQLException e1) {
 			return Response.status(500).entity(e1.toString()).build();
 		}

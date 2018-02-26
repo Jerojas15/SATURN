@@ -2,6 +2,7 @@ var SCHEDULE_TABLE_TEMPLATE1 = "<tr><tr>"
 var classroomId = 1;
 var number = 1;
 var created = 0;
+var classType = "";
 function getHour(hour24) {
 	var hour12;
 
@@ -25,7 +26,7 @@ function fCallAlgorithm() {
         created +=number;
         var type = $("#Select_Schedule_Classroom").val();
         var obj = JSON.stringify({"times":number, "type":type});
-        alert(obj);
+        
         $.ajax({
 		method: 'POST',
 		url: URL_SCHEDULES+"/algorithm",
@@ -56,6 +57,17 @@ function nextNumber(){
 }
 
 function fDisplaySchedule() {
+        $.ajax({
+		method: 'GET',
+		url: URL_CLASSROOMS+"/lastSchedules/"+1,
+
+		success: function(result){
+			number = result.size;
+		},
+		error: function(request, status, error){
+			console.log("[Login] Error: " + error);
+		}
+	});
 	if(number<=1){
             $("#Btn_Previous_Schedule").hide();
         }else{
@@ -68,7 +80,6 @@ function fDisplaySchedule() {
 
         }
 
-        var ClassType = "";
 	$("#ManagerMenu").hide();
 
 	$("#Schedules").show();
@@ -89,17 +100,20 @@ function fDisplaySchedule() {
                         $("#Select_Schedule_Classroom").empty();
 			for (i in result) {
 
+
 				$("#Select_Schedule_Classroom").append(	SELECT_OPTION_TEMPLATE1 + result[i].id +
+
 														SELECT_OPTION_TEMPLATE2 + result[i].className +
 														SELECT_OPTION_TEMPLATE3);
 			}
+                        
 			//$("#Select_Schedule_Classroom").val(0);
 		},
 		error: function(request, status, error){
 			console.log("[Login] Error: " + error);
 		}
 	});
-
+        classroomId = $("#Select_Schedule_Classroom").val();
 	$.ajax({
 		method: 'GET',
 		url: URL_SCHEDULES_LENGTH + "/" + classroomId,
@@ -107,11 +121,9 @@ function fDisplaySchedule() {
 		success: function(result){
                         row = "<tr><th></th>";
                         var cont = 1;
-                        var ClassType = "";
-                        ClassType = "Aula";
 
                         for (j = 0; j < result.len; j++) {
-                            row+=("<th>"+ClassType+" "+cont+"</th>");
+                            row+=("<th>"+$("#Select_Schedule_Classroom option:selected").text()+" "+cont+"</th>");
                             cont+=1;
                         }
                         row += "</tr>";

@@ -13,12 +13,14 @@ public class AlgorithmController {
     static ArrayList<Pair<Integer,Pair<Integer,Pair<Integer,Integer>>>> professor = new ArrayList<>();//disponibilidad de profesores, (ID,(Dia,(inicio,salida)))
     int times = 0;
     static int CLASSROOM;
+    int type;
     
     public AlgorithmController(int times, int type) throws SQLException, ClassNotFoundException {
+        this.type = type;
         DatabaseController d = new DatabaseController();
         this.times = times;
-        capacity = d.getClassroomCapacity();
-        groups = d.getGroupCapacity();
+        capacity = d.getClassroomCapacity(type);//saca la capacidad de las aules de tipo x
+        groups = d.getGroupCapacity();//saca la capacidad de los grupos 
         sessions = d.getSessionData();
         professor = d.getProfessorData();
         groupSessions = d.getGroupIdBySession();
@@ -40,8 +42,8 @@ public class AlgorithmController {
             System.out.println();
         }
         
-        d.insertAlgorithmResult(solution);
-        d.insertLeft(solution);
+        d.insertAlgorithmResult(solution, type);
+        d.insertLeft(solution, type);
         return true;
     }
 }

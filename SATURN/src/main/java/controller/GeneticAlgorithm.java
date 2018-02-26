@@ -148,7 +148,7 @@ public class GeneticAlgorithm {
         DatabaseController d = new DatabaseController();
         ArrayList<Integer> groups = new ArrayList<>();
         groups = d.getGroupIdBySession();
-        GeneticAlgorithm solve = new GeneticAlgorithm(groups, d.getClassroomCapacity(), d.getGroupCapacity(), d.getSessionData(), d.getProfessorData());
+        GeneticAlgorithm solve = new GeneticAlgorithm(groups, d.getClassroomCapacity(1), d.getGroupCapacity(), d.getSessionData(), d.getProfessorData());
         ArrayList<Individual> solution = solve.StartAlgorithm(10, 4);
         System.out.println("HOOOLAAAAA");
         for(int i = 0;i<solution.size();i++){
