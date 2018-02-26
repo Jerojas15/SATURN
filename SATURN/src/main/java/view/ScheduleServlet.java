@@ -28,16 +28,17 @@ import model.Career;
 import model.Classroom;
 import model.User;
 import model.ClassNow;
+import model.ClassroomType;
 import model.LeftClass;
 @Path("/schedules")
 public class ScheduleServlet {
     
         
-        @GET
+        @GET //Corregir
         @Produces(MediaType.APPLICATION_JSON)
-        public static List<Classroom> getTypes(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException, JSONException {
+        public static List<ClassroomType> getTypes(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException, JSONException {
 		DatabaseController d = new DatabaseController();
-		List<Classroom> result = d.getClassroomsTypes();
+		List<ClassroomType> result = d.getClassroomTypes();
                 
                 return result;
 	}

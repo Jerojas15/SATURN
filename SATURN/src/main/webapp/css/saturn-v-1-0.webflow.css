@@ -86,6 +86,10 @@
   margin-bottom: 200px;
 }
 
+.classroomstypes {
+	margin: 50px 100px 200px;
+}
+
 .careers {
   display: block;
   margin: 50px 100px 200px;
@@ -262,6 +266,7 @@
 
 .s_column2 {
   border-left: 4px solid #002746;
+  padding-right: 50px; 
 }
 
 .s_navlink2 {
@@ -578,4 +583,3 @@
 .teachersafinitycourses {
   margin: 50px 100px 200px;
 }
-

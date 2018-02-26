@@ -1,57 +1,50 @@
 package model;
 
 public class Classroom {
-        int id;
-        int capacity;
-        int type;
-        String className;
+    
+    private int classroomId,
+                classroomType,
+                capacity;
+    private String  name,
+                    classroomTypeName;
 
-    public String getClassName() {
-        return className;
+    public int getClassroomId() {
+        return classroomId;
     }
 
-    public void setClassName(String ClassName) {
-        this.className = ClassName;
+    public int getClassroomType() {
+        return classroomType;
     }
-        public Classroom() {}
 
-        public Classroom(String className, int id, int capacity, int type) {
-            this.className = className;
-            this.id = id;
-            this.capacity = capacity;
-            this.type = type;
-        }
+    public int getCapacity() {
+        return capacity;
+    }
 
-        public int getID() {
-            return id;
-        }
-        
-        public int getCapacity() {
-            return capacity;
-        }
-        
-        public int getType() {
-            return type;
-        }
+    public String getName() {
+        return name;
+    }
 
-        public void setId(int ID){
-            this.id = ID;
-        }
-        
-        public void setCapacity(int capacity){
-            this.capacity = capacity;
-        }
-        
-        public void setType(int type){
-            this.type = type;
-            switch(type){
-                case 1:
-                    this.className = "Aula";
-                    break;
-                case 2:
-                    this.className = "Laboratorio";
-                    break;
-            }
-                    
-        }	
+    public String getClassroomTypeName() {
+        return classroomTypeName;
+    }
+
+    public void setClassroomId(int classroomId) {
+        this.classroomId = classroomId;
+    }
+
+    public void setClassroomType(int classroomType) {
+        this.classroomType = classroomType;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setClassroomTypeName(String classroomTypeName) {
+        this.classroomTypeName = classroomTypeName;
+    }
 }

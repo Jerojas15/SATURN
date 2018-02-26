@@ -25,7 +25,7 @@ public class AlgorithmController {
         professor = d.getProfessorData();
         groupSessions = d.getGroupIdBySession();
 
-        CLASSROOM = d.getClassrooms(type);//cantidad de aulas de ese tipo que hay
+        CLASSROOM = d.getClassrooms().size(); //corregir
         
         Random rand = new Random();
         
