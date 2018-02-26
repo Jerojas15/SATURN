@@ -14,7 +14,7 @@ INSERT INTO CareersPlans (CareerId, PlanId) VALUES (3, 3);
 
 #####CREACION DE USUARIOS##### LISTO
 #ADMIN Y ASISTENTEs#
-INSERT INTO Users (UserType, UserName, Password, Name, LastName, CareerId) VALUES (0, "admin", "admin", "Julio", "Rojas",1);
+INSERT INTO Users (UserType, UserName, Password, Name, LastName) VALUES (0, "admin", "admin", "Julio", "Rojas");
 
 INSERT INTO Users (UserType, UserName, Password, Name, LastName, CareerId) VALUES (1, "asistTEC", "asist", "Ingrid", "Amador",1);
 INSERT INTO Users (UserType, UserName, Password, Name, LastName, CareerId) VALUES (1, "asistUCR", "asist", "Maria(UCR)", "Lopez",2);
@@ -128,16 +128,15 @@ INSERT INTO Afinities (ProfessorId, CourseId, Level) VALUES (13, 3, 1);
 INSERT INTO Afinities (ProfessorId, CourseId, Level) VALUES (14, 4, 4);
 
 #####CREACION DE AULAS ##### LISTO
-INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (01, 40, 1);
-INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (02, 30, 1);
-INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (03, 20, 1);
-INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (04, 35, 1);
-INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (05, 25, 1);
-
-INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (06, 25, 2);
-INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (07, 25, 2);
-INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (08, 25, 2);
-
+#INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (01, 40, 1);
+#INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (02, 30, 1);
+#INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (03, 20, 1);
+#INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (04, 35, 1);
+#INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (05, 25, 1);
+INSERT INTO ClassroomTypes (Name, Description) VALUES ("Aula", "Aula con pupitres");
+INSERT INTO ClassroomTypes (Name, Description) VALUES ("Lab", "Aula con computadoras");
+INSERT INTO Classrooms(Name, Capacity, ClassroomType) VALUES ("Aula1", 40, 1);
+INSERT INTO Classrooms(Name, Capacity, ClassroomType) VALUES ("Lab1", 30, 2);
 
 #####CREACION DE SESIONES#####
 INSERT INTO Sessions (GroupId, Hour, Type) VALUES (1,2,1);
