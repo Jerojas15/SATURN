@@ -215,9 +215,8 @@ function fShowEditGroup() {
 						$("#Select_AddGroup_Course").append(SELECT_OPTION_TEMPLATE1 + result[i].courseId +
 															SELECT_OPTION_TEMPLATE2 + result[i].name +
 															SELECT_OPTION_TEMPLATE3);
-						if (Number(courseId) === result[i].courseId)
-							$("#Select_AddGroup_Course").val(i);
 					}
+                                        $("#Select_AddGroup_Course").val(courseId);
 				},
 				error: function(request, status, error){
 					console.log("[Login] Error: " + error);

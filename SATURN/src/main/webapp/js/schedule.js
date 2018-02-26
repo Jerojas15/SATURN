@@ -9,14 +9,14 @@ function getHour(hour24) {
 
 	if(hour24 > 12)
 		hour12 = (hour24 - 12) + ":00pm"
-                
+
 	else
                 if(hour24 === 12){
                     hour12 = "12:00pm"
                 }else{
                     hour12 = hour24 + ":00am"
                 }
-		
+
 	return hour12;
 }
 
@@ -28,7 +28,7 @@ function fCallAlgorithm() {
         alert(obj);
         $.ajax({
 		method: 'POST',
-		url: URL_CLASSROOMS+"/algorithm",
+		url: URL_SCHEDULES+"/algorithm",
                 contentType: "application/json; charset=utf-8",
 		dataType: "json",
                 data : obj,
@@ -65,12 +65,12 @@ function fDisplaySchedule() {
             $("#Btn_Next_Schedule").hide();
         }else{
             $("#Btn_Next_Schedule").show();
-            
+
         }
-        
+
         var ClassType = "";
 	$("#ManagerMenu").hide();
-        
+
 	$("#Schedules").show();
         $("#Tab_Schedule_Monday table").empty();
         $("#Tab_Schedule_Tuesday table").empty();
@@ -81,14 +81,14 @@ function fDisplaySchedule() {
         $("#Left_Table table").empty();
 	$.ajax({
 		method: 'GET',
-		url: URL_CLASSROOMS,
+		url: URL_SCHEDULES,
 
 		success: function(result){
 			//alert(JSON.stringify(result));
 			//result = result.classrooms; //Quitar cuando se pase a java
                         $("#Select_Schedule_Classroom").empty();
 			for (i in result) {
-                                
+
 				$("#Select_Schedule_Classroom").append(	SELECT_OPTION_TEMPLATE1 + result[i].id +
 														SELECT_OPTION_TEMPLATE2 + result[i].className +
 														SELECT_OPTION_TEMPLATE3);
@@ -102,14 +102,14 @@ function fDisplaySchedule() {
 
 	$.ajax({
 		method: 'GET',
-		url: URL_CLASSROOMS_LENGTH + "/" + classroomId,
+		url: URL_SCHEDULES_LENGTH + "/" + classroomId,
 
 		success: function(result){
                         row = "<tr><th></th>";
                         var cont = 1;
                         var ClassType = "";
                         ClassType = "Aula";
-                        
+
                         for (j = 0; j < result.len; j++) {
                             row+=("<th>"+ClassType+" "+cont+"</th>");
                             cont+=1;
@@ -123,14 +123,14 @@ function fDisplaySchedule() {
                         $("#Tab_Schedule_Saturday table").append(row);
                         row = "<tr>";
                         row += "<th>" + getHour(0) + "</th>";
-                        
+
                         for (i = 0; i < 15; i++) {
-                                
+
 				row = "<tr>";
 				row += "<th>" + getHour(i) + "</th>";
 
 				for (j = 0; j < result.len; j++) {
-					
+
 					row += "<th></th>";
 				}
 				row += "</tr>";
@@ -149,7 +149,7 @@ function fDisplaySchedule() {
                                             method: 'POST',
                                             contentType: "application/json; charset=utf-8",
                                             dataType: "json",
-                                            url: URL_CLASSROOMS + "/timetables/" + number,
+                                            url: URL_SCHEDULES + "/timetables/" + number,
                                             data: JSON.stringify({"classroom":indexB,"time":index+7, "day":0}),
                                             success: function(result){
                                                 aux.append(result.name);
@@ -158,7 +158,7 @@ function fDisplaySchedule() {
                                                     console.log("[Login] Error: " + error);
                                             }
                                         });
-                                    
+
                                 }
                             });
                         });
@@ -170,7 +170,7 @@ function fDisplaySchedule() {
                                             method: 'POST',
                                             contentType: "application/json; charset=utf-8",
                                             dataType: "json",
-                                            url: URL_CLASSROOMS + "/timetables/" + number,
+                                            url: URL_SCHEDULES + "/timetables/" + number,
                                             data: JSON.stringify({"classroom":indexB,"time":index+7, "day":1}),
                                             success: function(result){
                                                 aux.append(result.name);
@@ -179,11 +179,11 @@ function fDisplaySchedule() {
                                                     console.log("[Login] Error: " + error);
                                             }
                                         });
-                                    
+
                                     }
                                 });
-                            
-                            
+
+
                         });
                         $("#Tab_Schedule_Wednesday table tr").each(function(index){
                             $(this).find("th").each(function(indexB){
@@ -193,7 +193,7 @@ function fDisplaySchedule() {
                                             method: 'POST',
                                             contentType: "application/json; charset=utf-8",
                                             dataType: "json",
-                                            url: URL_CLASSROOMS + "/timetables/" + number,
+                                            url: URL_SCHEDULES + "/timetables/" + number,
                                             data: JSON.stringify({"classroom":indexB,"time":index+7, "day":2}),
                                             success: function(result){
                                                 aux.append(result.name);
@@ -202,7 +202,7 @@ function fDisplaySchedule() {
                                                     console.log("[Login] Error: " + error);
                                             }
                                         });
-                                    
+
                                 }
                             });
                         });
@@ -214,7 +214,7 @@ function fDisplaySchedule() {
                                             method: 'POST',
                                             contentType: "application/json; charset=utf-8",
                                             dataType: "json",
-                                            url: URL_CLASSROOMS + "/timetables/" + number,
+                                            url: URL_SCHEDULES + "/timetables/" + number,
                                             data: JSON.stringify({"classroom":indexB,"time":index+7, "day":3}),
                                             success: function(result){
                                                 aux.append(result.name);
@@ -223,7 +223,7 @@ function fDisplaySchedule() {
                                                     console.log("[Login] Error: " + error);
                                             }
                                         });
-                                    
+
                                 }
                             });
                         });
@@ -235,7 +235,7 @@ function fDisplaySchedule() {
                                             method: 'POST',
                                             contentType: "application/json; charset=utf-8",
                                             dataType: "json",
-                                            url: URL_CLASSROOMS + "/timetables/" + number,
+                                            url: URL_SCHEDULES + "/timetables/" + number,
                                             data: JSON.stringify({"classroom":indexB,"time":index+7, "day":4}),
                                             success: function(result){
                                                 aux.append(result.name);
@@ -244,7 +244,7 @@ function fDisplaySchedule() {
                                                     console.log("[Login] Error: " + error);
                                             }
                                         });
-                                    
+
                                 }
                             });
                         });
@@ -256,7 +256,7 @@ function fDisplaySchedule() {
                                             method: 'POST',
                                             contentType: "application/json; charset=utf-8",
                                             dataType: "json",
-                                            url: URL_CLASSROOMS + "/timetables/" + number,
+                                            url: URL_SCHEDULES + "/timetables/" + number,
                                             data: JSON.stringify({"classroom":indexB,"time":index+7, "day":5}),
                                             success: function(result){
                                                 aux.append(result.name);
@@ -265,7 +265,7 @@ function fDisplaySchedule() {
                                                     console.log("[Login] Error: " + error);
                                             }
                                         });
-                                    
+
                                 }
                             });
                         });
@@ -276,7 +276,7 @@ function fDisplaySchedule() {
 	});
         $.ajax({
                 method: 'GET',
-		url: URL_CLASSROOMS + "/leftSession/" + number,
+		url: URL_SCHEDULES + "/leftSession/" + number,
                 success: function(result){
                         console.log(result);
 			var res = ""
@@ -291,5 +291,3 @@ function fDisplaySchedule() {
 		}
         });
 }
-                                
-		

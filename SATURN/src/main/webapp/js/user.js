@@ -63,9 +63,9 @@ function fShowAddAssistant() {
 			//alert(JSON.stringify(result));
 			//result = result.careers; //Quitar cuando se pase a java
 			for (i in result) {
-				$("#Select_AddUser_Career").append(	SELECT_OPTION_TEMPLATE1 + result[i].careerId +
-													SELECT_OPTION_TEMPLATE2 + result[i].university + " | " + result[i].careerName +
-													SELECT_OPTION_TEMPLATE3);
+				$("#Select_AddUser_Career").append( SELECT_OPTION_TEMPLATE1 + result[i].careerId +
+                                                                    SELECT_OPTION_TEMPLATE2 + result[i].university + " | " + result[i].careerName +
+                                                                    SELECT_OPTION_TEMPLATE3);
 			}
 		},
 		error: function(request, status, error){
