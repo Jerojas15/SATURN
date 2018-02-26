@@ -106,6 +106,7 @@ CREATE TABLE Timetables (
     GroupId     int         NOT NULL,
     ClassroomId int         NOT NULL,
     TableVersion int		NOT NULL,
+    ClassroomType int		NOT NULL,
     FOREIGN KEY (GroupId)
         REFERENCES Groups(GroupId),
     FOREIGN KEY (ClassroomId)
@@ -114,7 +115,7 @@ CREATE TABLE Timetables (
 
 Create table LeftSessions (
 	GroupId int NOT NULL,
-    TableVersion int NOT NULL
-
+    TableVersion int NOT NULL,
+	ClassRoomType int		NOT NULL
 );
 
