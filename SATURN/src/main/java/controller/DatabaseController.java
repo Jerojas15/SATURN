@@ -3,7 +3,7 @@ package controller;
 import databaseConnector.AfinityConnector;
 import databaseConnector.AvailabilityConnector;
 import databaseConnector.CareerConnector;
-import databaseConnector.ClassRoomConnector;
+import databaseConnector.ClassroomConnector;
 import databaseConnector.CourseConnector;
 import databaseConnector.GroupConnector;
 import databaseConnector.PlanConnector;
@@ -30,6 +30,7 @@ import model.Schedule;
 import model.Session;
 import model.User;
 import controller.Individual;
+import model.ClassroomType;
 
 public class DatabaseController {
         private static Connection conn = null;
@@ -46,12 +47,16 @@ public class DatabaseController {
         }
 
         public Connection makeConnection() throws SQLException, ClassNotFoundException{
-            //manera de acceso a la base de Julio
+            
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
+            //manera de acceso a la base de Julio
+            //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
 
             //manera de acceso a la base de Jose Miguel
             //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
+            
+            //manera de acceso a la base de Yock
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "password");
             return conn;
         }
         
@@ -307,7 +312,7 @@ public class DatabaseController {
  * FUNCIONES DE AULA
  */
         public ArrayList<Integer> getClassroomCapacity() throws ClassNotFoundException, SQLException{
-            ClassRoomConnector connector = new ClassRoomConnector();
+            ClassroomConnector connector = new ClassroomConnector();
             ResultSet rs = connector.getClassroomCapacity(conn);
             ArrayList<Integer> result = new ArrayList<>();
             while(rs.next()){
@@ -502,19 +507,6 @@ public class DatabaseController {
             return result;
     }
 
-    public List<Classroom> getClassroomsTypes() throws SQLException, ClassNotFoundException {
-        ClassRoomConnector connector = new ClassRoomConnector();
-        ResultSet rs = connector.getClassroomsType(conn);
-        ArrayList<Classroom> result = new ArrayList<>();
-        while(rs.next()){
-            Classroom c = new Classroom();
-            c.setId(1);
-            c.setType(rs.getInt("ClassroomType"));
-            result.add(c);
-        }
-        return result;
-    }
-
     public int getClassroomsQuantity(int id) throws SQLException, ClassNotFoundException {
         int status = -1;
         UserConnector connector = new UserConnector();
@@ -626,9 +618,97 @@ public class DatabaseController {
         return result;
     }
 
-    int getClassrooms(int type) throws ClassNotFoundException, SQLException {
-        ClassRoomConnector connector = new ClassRoomConnector();
-        int result = connector.getClassroomQuantity(conn, type);
+    public List<Classroom> getClassrooms() throws ClassNotFoundException, SQLException {
+        ClassroomConnector connector = new ClassroomConnector();
+        ResultSet rs = connector.getClassrooms(conn);
+        ArrayList<Classroom> result = new ArrayList<>();
+        while(rs.next()){
+            Classroom c = new Classroom();
+            c.setClassroomId(rs.getInt("ClassroomId"));
+            c.setName(rs.getString("Name"));
+            c.setCapacity(rs.getInt("Capacity"));
+            c.setClassroomType(rs.getInt("ClassroomType"));
+            c.setClassroomTypeName(rs.getString("ClassroomTypeName"));
+            result.add(c);
+        }
+        return result;
+    }
+    
+    public Classroom getClassroom(int id) throws ClassNotFoundException, SQLException {
+        ClassroomConnector connector = new ClassroomConnector();
+        ResultSet rs = connector.getClassroom(conn, id);
+        Classroom c = null;
+        if (rs.first()){
+            c = new Classroom();
+            c.setClassroomId(rs.getInt("ClassroomId"));
+            c.setName(rs.getString("Name"));
+            c.setCapacity(rs.getInt("Capacity"));
+            c.setClassroomType(rs.getInt("ClassroomType"));
+            c.setClassroomTypeName(rs.getString("ClassroomTypeName"));
+        }
+        return c;
+    }
+    
+    public boolean insertNewClassroom(Classroom classroom) throws ClassNotFoundException {
+        ClassroomConnector connector = new ClassroomConnector();
+        Boolean result = connector.insertNewClassroom(conn, classroom);
+        return result;
+    }
+    
+    public boolean updateClassroom(int id, Classroom classroom) throws ClassNotFoundException {
+        ClassroomConnector connector = new ClassroomConnector();
+        Boolean result = connector.updateClassroom(conn, id, classroom);
+        return result;
+    }
+
+    public boolean deleteClassroom(int id) {
+        ClassroomConnector connector = new ClassroomConnector();
+        Boolean result = connector.deleteClassroom(conn, id);
+        return result;
+    }
+    
+    public List<ClassroomType> getClassroomTypes() throws SQLException, ClassNotFoundException {
+        ClassroomConnector connector = new ClassroomConnector();
+        ResultSet rs = connector.getClassroomTypes(conn);
+        ArrayList<ClassroomType> result = new ArrayList<>();
+        while(rs.next()){
+            ClassroomType c = new ClassroomType();
+            c.setClassroomTypeId(rs.getInt("ClassroomType"));
+            c.setName(rs.getString("Name"));
+            c.setDescription(rs.getString("Description"));
+            result.add(c);
+        }
+        return result;
+    }
+    
+    public ClassroomType getClassroomType(int id) throws ClassNotFoundException, SQLException {
+        ClassroomConnector connector = new ClassroomConnector();
+        ResultSet rs = connector.getClassroomType(conn, id);
+        ClassroomType c = null;
+        if (rs.first()){
+            c = new ClassroomType();
+            c.setClassroomTypeId(rs.getInt("ClassroomType"));
+            c.setName(rs.getString("Name"));
+            c.setDescription(rs.getString("Description"));
+        }
+        return c;
+    }
+
+    public boolean insertNewClassroomType(ClassroomType classroomType) throws ClassNotFoundException {
+        ClassroomConnector connector = new ClassroomConnector();
+        Boolean result = connector.insertNewClassroomType(conn, classroomType);
+        return result;
+    }
+
+    public boolean updateClassroomType(int id, ClassroomType classroomType) throws ClassNotFoundException {
+        ClassroomConnector connector = new ClassroomConnector();
+        Boolean result = connector.updateClassroomType(conn, id, classroomType);
+        return result;
+    }
+
+    public boolean deleteClassroomType(int id) throws ClassNotFoundException {
+        ClassroomConnector connector = new ClassroomConnector();
+        Boolean result = connector.deleteClassroomType(conn, id);
         return result;
     }
 }
