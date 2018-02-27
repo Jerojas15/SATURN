@@ -14,7 +14,7 @@ INSERT INTO CareersPlans (CareerId, PlanId) VALUES (3, 3);
 
 #####CREACION DE USUARIOS##### LISTO
 #ADMIN Y ASISTENTEs#
-INSERT INTO Users (UserType, UserName, Password, Name, LastName) VALUES (0, "admin", "admin", "Julio", "Rojas");
+INSERT INTO Users (UserType, UserName, Password, Name, LastName) VALUES (0, "admin", "admin", "Administrador", "");
 
 INSERT INTO Users (UserType, UserName, Password, Name, LastName, CareerId) VALUES (1, "asistTEC", "asist", "Ingrid", "Amador",1);
 INSERT INTO Users (UserType, UserName, Password, Name, LastName, CareerId) VALUES (1, "asistUCR", "asist", "Maria(UCR)", "Lopez",2);
@@ -133,8 +133,8 @@ INSERT INTO Afinities (ProfessorId, CourseId, Level) VALUES (14, 4, 4);
 #INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (03, 20, 1);
 #INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (04, 35, 1);
 #INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (05, 25, 1);
-INSERT INTO ClassroomsTypes (Name, Description) VALUES ("Aula", "Aula con pupitres");
-INSERT INTO ClassroomsTypes (Name, Description) VALUES ("Lab", "Aula con computadoras");
+INSERT INTO ClassroomTypes (Name, Description) VALUES ("Aula", "Aula con pupitres");
+INSERT INTO ClassroomTypes (Name, Description) VALUES ("Lab", "Aula con computadoras");
 INSERT INTO Classrooms(Name, Capacity, ClassroomType) VALUES ("Aula1", 40, 1);
 INSERT INTO Classrooms(Name, Capacity, ClassroomType) VALUES ("Aula2", 40, 1);
 INSERT INTO Classrooms(Name, Capacity, ClassroomType) VALUES ("Aula3", 40, 1);

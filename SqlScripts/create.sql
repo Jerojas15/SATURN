@@ -80,7 +80,7 @@ CREATE TABLE Afinities (
         REFERENCES Courses(CourseId)
 );
 
-CREATE TABLE ClassroomsTypes (
+CREATE TABLE ClassroomTypes (
 	ClassroomType 	int 		auto_increment NOT NULL,
 	Name 			varchar(256)	NOT NULL,
 	Description		varchar(500)	NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE Classrooms (
     ClassroomType 	int			NOT NULL,
     PRIMARY KEY(ClassroomId),
 	FOREIGN KEY (ClassroomType)
-        REFERENCES ClassroomsTypes(ClassroomType)
+        REFERENCES ClassroomTypes(ClassroomType)
 );
 
 CREATE TABLE Sessions (
@@ -126,5 +126,5 @@ Create table LeftSessions (
     TableVersion int NOT NULL,
 	ClassroomType 	int			NOT NULL,
     FOREIGN KEY (ClassroomType)
-        REFERENCES ClassroomsTypes(ClassroomType)
+        REFERENCES ClassroomTypes(ClassroomType)
 );

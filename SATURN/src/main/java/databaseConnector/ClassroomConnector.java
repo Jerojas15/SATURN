@@ -13,9 +13,9 @@ public class ClassroomConnector {
         ResultSet rs = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement( "SELECT Classrooms.ClassroomId, Classrooms.Name, Classrooms.Capacity, ClassroomsTypes.ClassroomType, ClassroomsTypes.Name as ClassroomTypeName " +
-                                                            "FROM Classrooms, ClassroomsTypes " +
-                                                            "WHERE Classrooms.ClassroomType = ClassroomsTypes.ClassroomType;");
+            PreparedStatement stmt = conn.prepareStatement( "SELECT Classrooms.ClassroomId, Classrooms.Name, Classrooms.Capacity, ClassroomTypes.ClassroomType, ClassroomTypes.Name as ClassroomTypeName " +
+                                                            "FROM Classrooms, ClassroomTypes " +
+                                                            "WHERE Classrooms.ClassroomType = ClassroomTypes.ClassroomType;");
             rs = stmt.executeQuery();
 
         } catch (SQLException e) {
@@ -28,9 +28,9 @@ public class ClassroomConnector {
         ResultSet rs = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement( "SELECT ClassroomId, Classrooms.Name, Capacity, ClassroomsTypes.ClassroomType, ClassroomsTypes.Name as ClassroomTypeName " +
-                                                            "FROM Classrooms, ClassroomsTypes " +
-                                                            "WHERE Classrooms.ClassroomType = ClassroomsTypes.ClassroomType and ClassroomId = ?;");
+            PreparedStatement stmt = conn.prepareStatement( "SELECT ClassroomId, Classrooms.Name, Capacity, ClassroomTypes.ClassroomType, ClassroomTypes.Name as ClassroomTypeName " +
+                                                            "FROM Classrooms, ClassroomTypes " +
+                                                            "WHERE Classrooms.ClassroomType = ClassroomTypes.ClassroomType and ClassroomId = ?;");
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
 
@@ -176,7 +176,7 @@ public class ClassroomConnector {
         ResultSet rs = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM ClassroomsTypes");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM ClassroomTypes");
             rs = stmt.executeQuery();
 
         } catch (SQLException e) {
@@ -202,7 +202,7 @@ public class ClassroomConnector {
         ResultSet rs = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM ClassroomsTypes WHERE ClassroomsTypes.ClassroomType = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM ClassroomTypes WHERE ClassroomTypes.ClassroomType = ?");
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
 
@@ -217,7 +217,7 @@ public class ClassroomConnector {
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO ClassroomsTypes (Name, Description) VALUES (?, ?);");
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO ClassroomTypes (Name, Description) VALUES (?, ?);");
             statement.setString(1, classroomType.getName());
             statement.setString(2, classroomType.getDescription());
 
@@ -238,7 +238,7 @@ public class ClassroomConnector {
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
-            String sql = "UPDATE ClassroomsTypes SET Name = ?, Description = ? WHERE ClassroomType = ?;";
+            String sql = "UPDATE ClassroomTypes SET Name = ?, Description = ? WHERE ClassroomType = ?;";
 
             PreparedStatement statement = conn.prepareStatement(sql);
             
@@ -263,7 +263,7 @@ public class ClassroomConnector {
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
-            String sql = "DELETE FROM ClassroomsTypes WHERE ClassroomType = ?;";
+            String sql = "DELETE FROM ClassroomTypes WHERE ClassroomType = ?;";
 
             PreparedStatement statement = conn.prepareStatement(sql);
             
