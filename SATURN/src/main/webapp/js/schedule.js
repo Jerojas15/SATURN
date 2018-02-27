@@ -59,7 +59,7 @@ function nextNumber(){
 function fDisplaySchedule() {
         $.ajax({
 		method: 'GET',
-		url: URL_CLASSROOMS+"/lastSchedules/"+1,
+		url: URL_SCHEDULES+"/lastSchedules/"+1,
 
 		success: function(result){
 			number = result.size;
@@ -101,9 +101,9 @@ function fDisplaySchedule() {
 			for (i in result) {
 
 
-				$("#Select_Schedule_Classroom").append(	SELECT_OPTION_TEMPLATE1 + result[i].id +
+				$("#Select_Schedule_Classroom").append(	SELECT_OPTION_TEMPLATE1 + result[i].classroomTypeId +
 
-														SELECT_OPTION_TEMPLATE2 + result[i].className +
+														SELECT_OPTION_TEMPLATE2 + result[i].name +
 														SELECT_OPTION_TEMPLATE3);
 			}
                         

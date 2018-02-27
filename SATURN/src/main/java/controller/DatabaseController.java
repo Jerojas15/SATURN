@@ -50,13 +50,13 @@ public class DatabaseController {
             
             Class.forName("com.mysql.jdbc.Driver");
             //manera de acceso a la base de Julio
-            //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
 
             //manera de acceso a la base de Jose Miguel
             //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
             
             //manera de acceso a la base de Yock
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "password");
+            //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "password");
             return conn;
         }
         
@@ -320,6 +320,28 @@ public class DatabaseController {
             }
             return result;
         }
+        
+        public ArrayList<Integer> getClassroomCapacity(int type) throws ClassNotFoundException, SQLException{
+            ClassroomConnector connector = new ClassroomConnector();
+            ResultSet rs = connector.getClassroomCapacity(conn, type);
+            ArrayList<Integer> result = new ArrayList<>();
+            while(rs.next()){
+                result.add(new Integer(rs.getInt("Capacity")));
+            }
+            return result;
+        }
+        
+        public List<Classroom> getClassroomsTypes() throws SQLException, ClassNotFoundException {
+        ClassroomConnector connector = new ClassroomConnector();
+        ResultSet rs = connector.getClassroomsType(conn);
+        ArrayList<Classroom> result = new ArrayList<>();
+        while(rs.next()){
+            Classroom c = new Classroom();
+            //c.setType(rs.getInt("ClassroomType"));
+            result.add(c);
+        }
+        return result;
+    }
         
 /*
  * FUNCIONES DE GRUPO
@@ -633,6 +655,16 @@ public class DatabaseController {
             c.setClassroomType(rs.getInt("ClassroomType"));
             c.setClassroomTypeName(rs.getString("ClassroomTypeName"));
             result.add(c);
+        }
+        return result;
+    }
+    
+    public int getClassroomsbyType(int type) throws ClassNotFoundException, SQLException {
+        ClassroomConnector connector = new ClassroomConnector();
+        ResultSet rs = connector.getClassroombyType(conn, type);
+        int result = 0;
+        while(rs.next()){
+            result++;
         }
         return result;
     }

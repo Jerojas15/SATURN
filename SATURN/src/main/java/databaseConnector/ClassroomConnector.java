@@ -13,9 +13,9 @@ public class ClassroomConnector {
         ResultSet rs = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement( "SELECT Classrooms.ClassroomId, Classrooms.Name, Classrooms.Capacity, ClassroomTypes.ClassroomType, ClassroomTypes.Name as ClassroomTypeName " +
-                                                            "FROM Classrooms, ClassroomTypes " +
-                                                            "WHERE Classrooms.ClassroomType = ClassroomTypes.ClassroomType;");
+            PreparedStatement stmt = conn.prepareStatement( "SELECT Classrooms.ClassroomId, Classrooms.Name, Classrooms.Capacity, ClassroomsTypes.ClassroomType, ClassroomsTypes.Name as ClassroomTypeName " +
+                                                            "FROM Classrooms, ClassroomsTypes " +
+                                                            "WHERE Classrooms.ClassroomType = ClassroomsTypes.ClassroomType;");
             rs = stmt.executeQuery();
 
         } catch (SQLException e) {
@@ -28,9 +28,9 @@ public class ClassroomConnector {
         ResultSet rs = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement( "SELECT ClassroomId, Classrooms.Name, Capacity, ClassroomTypes.ClassroomType, ClassroomTypes.Name as ClassroomTypeName " +
-                                                            "FROM Classrooms, ClassroomTypes " +
-                                                            "WHERE Classrooms.ClassroomType = ClassroomTypes.ClassroomType and ClassroomId = ?;");
+            PreparedStatement stmt = conn.prepareStatement( "SELECT ClassroomId, Classrooms.Name, Capacity, ClassroomsTypes.ClassroomType, ClassroomsTypes.Name as ClassroomTypeName " +
+                                                            "FROM Classrooms, ClassroomsTypes " +
+                                                            "WHERE Classrooms.ClassroomType = ClassroomsTypes.ClassroomType and ClassroomId = ?;");
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
 
@@ -117,7 +117,7 @@ public class ClassroomConnector {
         ResultSet rs = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Classrooms where Type = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Classrooms where ClassroomType = ?");
             stmt.setInt(1, Type);
             rs = stmt.executeQuery();
 
@@ -139,6 +139,20 @@ public class ClassroomConnector {
         }
         return rs;
     }
+    
+    public ResultSet getClassroomCapacity(Connection conn, int type) throws ClassNotFoundException{
+            ResultSet rs = null;
+            try{    
+                Class.forName("com.mysql.jdbc.Driver");
+                PreparedStatement stmt = conn.prepareStatement("SELECT Capacity FROM Classrooms where ClassroomType = ?");
+                stmt.setInt(1, type);
+                rs = stmt.executeQuery();
+
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+            return rs;
+        }
 
     public int getClassroomQuantity(Connection conn, int type) throws ClassNotFoundException, SQLException {
         ResultSet rs = null;
@@ -162,7 +176,7 @@ public class ClassroomConnector {
         ResultSet rs = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM ClassroomTypes");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM ClassroomsTypes");
             rs = stmt.executeQuery();
 
         } catch (SQLException e) {
@@ -171,11 +185,24 @@ public class ClassroomConnector {
         return rs;
     }
     
+    public ResultSet getClassroomsType(Connection conn) throws ClassNotFoundException {
+        ResultSet rs = null;
+            try{    
+                Class.forName("com.mysql.jdbc.Driver");
+                PreparedStatement stmt = conn.prepareStatement("SELECT DISTINCT ClassroomType FROM Classrooms");
+                rs = stmt.executeQuery();
+
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+            return rs;
+    }
+    
     public ResultSet getClassroomType(Connection conn, int id) throws ClassNotFoundException {
         ResultSet rs = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM ClassroomTypes WHERE ClassroomTypes.ClassroomType = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM ClassroomsTypes WHERE ClassroomsTypes.ClassroomType = ?");
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
 
@@ -190,7 +217,7 @@ public class ClassroomConnector {
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO ClassroomTypes (Name, Description) VALUES (?, ?);");
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO ClassroomsTypes (Name, Description) VALUES (?, ?);");
             statement.setString(1, classroomType.getName());
             statement.setString(2, classroomType.getDescription());
 
@@ -211,7 +238,7 @@ public class ClassroomConnector {
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
-            String sql = "UPDATE ClassroomTypes SET Name = ?, Description = ? WHERE ClassroomType = ?;";
+            String sql = "UPDATE ClassroomsTypes SET Name = ?, Description = ? WHERE ClassroomType = ?;";
 
             PreparedStatement statement = conn.prepareStatement(sql);
             
@@ -236,7 +263,7 @@ public class ClassroomConnector {
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
-            String sql = "DELETE FROM ClassroomTypes WHERE ClassroomType = ?;";
+            String sql = "DELETE FROM ClassroomsTypes WHERE ClassroomType = ?;";
 
             PreparedStatement statement = conn.prepareStatement(sql);
             

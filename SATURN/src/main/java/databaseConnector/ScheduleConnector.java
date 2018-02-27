@@ -13,7 +13,7 @@ public class ScheduleConnector {
         try{
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "INSERT INTO Timetables(Day, StartHour, EndHour, GroupId, ClassroomId, TableVersion, ClassRoomType) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Timetables(Day, StartHour, EndHour, GroupId, ClassroomId, TableVersion, ClassroomType) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, s.getDay());
@@ -53,7 +53,7 @@ public class ScheduleConnector {
          int version = -1;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT TableVersion FROM Timetables where ClassRoomType = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT TableVersion FROM Timetables where ClassroomType = ?");
             stmt.setInt(1, type);
             rs = stmt.executeQuery();
             while(rs.next()){
@@ -88,7 +88,7 @@ public class ScheduleConnector {
         int version = -1;
         try{    
             Class.forName("com.mysql.jdbc.Driver");
-            PreparedStatement stmt = conn.prepareStatement("SELECT TableVersion FROM LeftSessions where ClassRoomType = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT TableVersion FROM LeftSessions where ClassroomType = ?");
             stmt.setInt(1, type);
             rs = stmt.executeQuery();
             while(rs.next()){
