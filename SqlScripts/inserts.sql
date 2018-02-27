@@ -133,9 +133,11 @@ INSERT INTO Afinities (ProfessorId, CourseId, Level) VALUES (14, 4, 4);
 #INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (03, 20, 1);
 #INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (04, 35, 1);
 #INSERT INTO Classrooms (ClassroomId, Capacity, ClassroomType) VALUES (05, 25, 1);
-INSERT INTO ClassroomTypes (Name, Description) VALUES ("Aula", "Aula con pupitres");
-INSERT INTO ClassroomTypes (Name, Description) VALUES ("Lab", "Aula con computadoras");
+INSERT INTO ClassroomsTypes (Name, Description) VALUES ("Aula", "Aula con pupitres");
+INSERT INTO ClassroomsTypes (Name, Description) VALUES ("Lab", "Aula con computadoras");
 INSERT INTO Classrooms(Name, Capacity, ClassroomType) VALUES ("Aula1", 40, 1);
+INSERT INTO Classrooms(Name, Capacity, ClassroomType) VALUES ("Aula2", 40, 1);
+INSERT INTO Classrooms(Name, Capacity, ClassroomType) VALUES ("Aula3", 40, 1);
 INSERT INTO Classrooms(Name, Capacity, ClassroomType) VALUES ("Lab1", 30, 2);
 
 #####CREACION DE SESIONES#####
