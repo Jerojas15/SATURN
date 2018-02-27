@@ -34,14 +34,7 @@ import model.LeftClass;
 public class ScheduleServlet {
     
         
-        @GET //Corregir
-        @Produces(MediaType.APPLICATION_JSON)
-        public static List<ClassroomType> getTypes(@PathParam("id") String idStr) throws SQLException, ClassNotFoundException, JSONException {
-		DatabaseController d = new DatabaseController();
-		List<ClassroomType> result = d.getClassroomTypes();
-                
-                return result;
-	}
+        
         
         @GET
         @Path("/leftSession/{id}")

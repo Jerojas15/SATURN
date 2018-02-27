@@ -92,7 +92,7 @@ function fDisplaySchedule() {
         $("#Left_Table table").empty();
 	$.ajax({
 		method: 'GET',
-		url: URL_SCHEDULES,
+		url: URL_CLASSROOM_TYPES,
 
 		success: function(result){
 			//alert(JSON.stringify(result));
