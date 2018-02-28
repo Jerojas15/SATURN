@@ -63,18 +63,40 @@ public class ClassroomConnector {
     }
     
     public Boolean updateClassroom(Connection conn, int id, Classroom classroom) throws ClassNotFoundException {
-        boolean state = false;
-        try {
+
+        boolean state =  false;
+        int cont = 1;
+        boolean first = false;
+        try{
             Class.forName("com.mysql.jdbc.Driver");
-
-            String sql = "UPDATE Classrooms SET Name = ?, Capacity = ?, ClassroomType = ? WHERE ClassroomId = ?;";
-
-            PreparedStatement statement = conn.prepareStatement(sql);
+            String sql = "UPDATE Classrooms SET ";
+            if(classroom.getName() != null){
+                sql += " Name = ?";
+                first = true;
+            }
+            if(classroom.getCapacity() != 0){
+                if(first)
+                    sql += ",";
+                sql += " Capacity = ?";
+                first = true;
+            }
+            if(classroom.getClassroomType() != 0){
+                if(first)
+                    sql += ","; 
+                sql += " ClassroomType = ?";
+                first = false;
+            }
+            sql += "  WHERE ClassroomId = ?;";
             
-            statement.setString(1, classroom.getName());
-            statement.setInt(2, classroom.getCapacity());
-            statement.setInt(3, classroom.getClassroomType());
-            statement.setInt(4, id);
+            PreparedStatement statement = conn.prepareStatement(sql);
+            if(classroom.getName() != null)
+                statement.setString(cont++, classroom.getName());
+            if(classroom.getCapacity() != 0)
+                statement.setInt(cont++, classroom.getCapacity());
+            if(classroom.getClassroomType() != 0)
+                statement.setInt(cont++, classroom.getClassroomType());
+            
+            statement.setInt(cont++, id);
             
             System.out.println(statement.toString());
 
@@ -234,18 +256,36 @@ public class ClassroomConnector {
     }
 
     public Boolean updateClassroomType(Connection conn, int id, ClassroomType classroomType) throws ClassNotFoundException {
-        boolean state = false;
-        try {
+        
+        
+        boolean state =  false;
+        int cont = 1;
+        boolean first = false;
+        try{
             Class.forName("com.mysql.jdbc.Driver");
-
-            String sql = "UPDATE ClassroomTypes SET Name = ?, Description = ? WHERE ClassroomType = ?;";
-
-            PreparedStatement statement = conn.prepareStatement(sql);
+            String sql = "UPDATE ClassroomTypes SET ";
+            if(classroomType.getName() != null){
+                sql += " Name = ?";
+                first = true;
+            }
+            if(classroomType.getDescription() != null){
+                if(first)
+                    sql += ",";
+                sql += " Description = ?";
+                first = true;
+            }
+            sql += "  WHERE ClassroomType = ?;";
             
-            statement.setString(1, classroomType.getName());
-            statement.setString(2, classroomType.getDescription());
-            statement.setInt(3, id);
+            PreparedStatement statement = conn.prepareStatement(sql);
+            if(classroomType.getName() != null)
+                statement.setString(cont++, classroomType.getName());
+            if(classroomType.getDescription() != null)
+                statement.setString(cont++, classroomType.getDescription());
+            
+            statement.setInt(cont++, id);
 
+            System.out.println(statement.toString());
+            
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("ClassroomType was updated successfully!");

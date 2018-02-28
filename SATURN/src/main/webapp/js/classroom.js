@@ -184,17 +184,10 @@ function fEditClassroom() {
     if (name || capacity || classroomType) {
         if (name)
             jObj.name = name;
-        else
-            jObj.name = $("#TextBox_AddClassroom_ClassroomName").attr("placeholder");
         if (capacity)
             jObj.capacity = capacity;
-        else
-            jObj.capacity = $("#TextBox_AddClassroom_ClassroomCapacity").attr("placeholder");
         if (classroomType)
             jObj.classroomType = classroomType;
-        else
-            JObj.classroomType = $("#Select_AddClassroom_ClassroomType option:selected").attr("placeholder");
-
 
         $.ajax({
             method: 'PUT',
@@ -383,13 +376,9 @@ function fEditClassroomType() {
     if (name || description) {
         if (name)
             jObj.name = name;
-        else
-            jObj.name = $("#TextBox_AddClassroomType_ClassroomTypeName").attr("placeholder");
         if (description)
             jObj.description = description;
-        else
-            jObj.description = $("#TextArea_AddClassroomType_Description").attr("placeholder");
-
+        
         $.ajax({
             method: 'PUT',
             url: URL_CLASSROOM_TYPES + "/" + classroomTypeId,
