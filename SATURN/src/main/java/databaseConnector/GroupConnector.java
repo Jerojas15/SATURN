@@ -63,20 +63,69 @@ public class GroupConnector {
     }
    
     public boolean updateGroup(Connection conn, Group g, int id) throws ClassNotFoundException{
+        
         boolean state =  false;
+        int cont = 1;
+        boolean first = false;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             
-            String sql = "UPDATE Groups SET Capacity = ?, CourseId = ?, ProfessorId = ?, Period = ?, GroupNumber = ?  where GroupId = ?";
-
+            String sql = "UPDATE Groups SET ";
+            if(g.getCapacity() != 0){
+                sql += " Capacity = ?";
+                first = true;
+            }
+            if(g.getCourseId() != 0){
+                if(first)
+                    sql += ",";
+                sql += " CourseId = ?";
+                first = true;
+            }
+            if(g.getTeacher() != 0){
+                if(first)
+                    sql += ","; 
+                sql += " ProfessorId = ?";
+                first = true;
+            }
+            if(g.getPeriod() != 0){
+                if(first)
+                    sql += ","; 
+                sql += " Period = ?";
+                first = true;
+            }
+            if(g.getNumber() != 0){
+                if(first)
+                    sql += ","; 
+                sql += " GroupNumber = ?";
+            }
+            sql += "  WHERE GroupId = ?;";
+            
             PreparedStatement statement = conn.prepareStatement(sql);
             
-            statement.setInt(1, g.getCapacity());
-            statement.setInt(2, g.getCourseId());
-            statement.setInt(3, g.getTeacher());
-            statement.setInt(4, g.getPeriod());
-            statement.setInt(5, g.getNumber());
-            statement.setInt(6, id);
+            if(g.getCapacity() != 0){
+                statement.setInt(cont++, g.getCapacity());
+            }
+            if(g.getCourseId() != 0){
+                statement.setInt(cont++, g.getCourseId());
+            }
+            if(g.getTeacher() != 0){
+                statement.setInt(cont++, g.getTeacher());
+            }
+            if(g.getPeriod() != 0){
+                statement.setInt(cont++, g.getPeriod());
+            }
+            if(g.getNumber() != 0){
+                statement.setInt(cont++, g.getNumber());
+            }
+            
+            statement.setInt(cont++, id);
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println(statement.toString());
+            System.out.println();
+            System.out.println();
+            System.out.println();
             
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
