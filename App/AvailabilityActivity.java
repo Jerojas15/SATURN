@@ -306,6 +306,7 @@ public class AvailabilityActivity extends AppCompatActivity {
         TOGGLES_SATURDAY.add(toggles2000);
         TOGGLES_SATURDAY.add(toggles2100);
 
+        setAvailabilities();
 
         /* OnClick Listener de Select all toggles */
         l_all.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -429,7 +430,7 @@ public class AvailabilityActivity extends AppCompatActivity {
             });
         }
 
-        setAvailabilities();
+
 
     }
 
@@ -522,46 +523,184 @@ public class AvailabilityActivity extends AppCompatActivity {
     }
 
     public void updateAvailabilities(Integer day) {
-        //session.updateAvailability(day, hour);
         Integer start = 0, end = 0;
         ToggleButton temp;
         Boolean flag = false;
 
         if (day == INDEX_MONDAY) {
-            // Todos seleccionados
             if (l_all.isChecked()) {
                 session.updateAvailability(INDEX_MONDAY, 7, 21);
-            }
+            } else {
+                for (int i = 0; i < TOGGLES_MONDAY.size(); i++) {
+                    temp = TOGGLES_MONDAY.get(i);
 
-            for (int i = 1; i < TOGGLES_MONDAY.size(); i++) {
-                temp = TOGGLES_MONDAY.get(i);
+                    if (temp.isChecked()) {
+                        if (!flag) {
+                            start = i + 7;
+                            flag = true;
+                        }
 
-                if (temp.isChecked()) {
-                    if (!flag) {
-                        start = i + 6;
-                        flag = true;
-                    }
+                        end = i + 7;
 
-                } else {
-                    if (flag) {
-                        end = i + 6;
-                        System.out.println("INDEX_MONDAY: " + INDEX_MONDAY + "start: " + start + "end: " + end );
-                        session.updateAvailability(INDEX_MONDAY, start, end);
+                        if (i == TOGGLES_MONDAY.size() - 1) {
+                            //System.out.println("Start: " + start + " End: " + end );
+                            session.updateAvailability(INDEX_MONDAY, start, end);
+                        }
+
+                    } else {
+                        if (flag) {
+                            //System.out.println("Start: " + start + " End: " + end );
+                            session.updateAvailability(INDEX_MONDAY, start, end);
+                            flag = false;
+                        }
                     }
                 }
             }
-
-
         } else if (day == INDEX_TUESDAY) {
+            if (l_all.isChecked()) {
+                session.updateAvailability(INDEX_TUESDAY, 7, 21);
+            } else {
+                for (int i = 0; i < TOGGLES_TUESDAY.size(); i++) {
+                    temp = TOGGLES_TUESDAY.get(i);
 
+                    if (temp.isChecked()) {
+                        if (!flag) {
+                            start = i + 7;
+                            flag = true;
+                        }
+
+                        end = i + 7;
+
+                        if (i == TOGGLES_TUESDAY.size() - 1) {
+                            //System.out.println("Start: " + start + " End: " + end );
+                            session.updateAvailability(INDEX_TUESDAY, start, end);
+                        }
+
+                    } else {
+                        if (flag) {
+                            //System.out.println("Start: " + start + " End: " + end );
+                            session.updateAvailability(INDEX_TUESDAY, start, end);
+                            flag = false;
+                        }
+                    }
+                }
+            }
         } else if (day == INDEX_WEDNESDAY) {
+            if (l_all.isChecked()) {
+                session.updateAvailability(INDEX_WEDNESDAY, 7, 21);
+            } else {
+                for (int i = 0; i < TOGGLES_WEDNESDAY.size(); i++) {
+                    temp = TOGGLES_WEDNESDAY.get(i);
 
+                    if (temp.isChecked()) {
+                        if (!flag) {
+                            start = i + 7;
+                            flag = true;
+                        }
+
+                        end = i + 7;
+
+                        if (i == TOGGLES_WEDNESDAY.size() - 1) {
+                            //System.out.println("Start: " + start + " End: " + end );
+                            session.updateAvailability(INDEX_WEDNESDAY, start, end);
+                        }
+
+                    } else {
+                        if (flag) {
+                            //System.out.println("Start: " + start + " End: " + end );
+                            session.updateAvailability(INDEX_WEDNESDAY, start, end);
+                            flag = false;
+                        }
+                    }
+                }
+            }
         } else if (day == INDEX_THURSDAY) {
+            if (l_all.isChecked()) {
+                session.updateAvailability(INDEX_THURSDAY, 7, 21);
+            } else {
+                for (int i = 0; i < TOGGLES_THURSDAY.size(); i++) {
+                    temp = TOGGLES_THURSDAY.get(i);
 
+                    if (temp.isChecked()) {
+                        if (!flag) {
+                            start = i + 7;
+                            flag = true;
+                        }
+
+                        end = i + 7;
+
+                        if (i == TOGGLES_THURSDAY.size() - 1) {
+                            //System.out.println("Start: " + start + " End: " + end );
+                            session.updateAvailability(INDEX_THURSDAY, start, end);
+                        }
+
+                    } else {
+                        if (flag) {
+                            //System.out.println("Start: " + start + " End: " + end );
+                            session.updateAvailability(INDEX_THURSDAY, start, end);
+                            flag = false;
+                        }
+                    }
+                }
+            }
         } else if (day == INDEX_FRIDAY) {
+            if (l_all.isChecked()) {
+                session.updateAvailability(INDEX_FRIDAY, 7, 21);
+            } else {
+                for (int i = 0; i < TOGGLES_FRIDAY.size(); i++) {
+                    temp = TOGGLES_FRIDAY.get(i);
 
+                    if (temp.isChecked()) {
+                        if (!flag) {
+                            start = i + 7;
+                            flag = true;
+                        }
+
+                        end = i + 7;
+
+                        if (i == TOGGLES_FRIDAY.size() - 1) {
+                            //System.out.println("Start: " + start + " End: " + end );
+                            session.updateAvailability(INDEX_FRIDAY, start, end);
+                        }
+
+                    } else {
+                        if (flag) {
+                            //System.out.println("Start: " + start + " End: " + end );
+                            session.updateAvailability(INDEX_FRIDAY, start, end);
+                            flag = false;
+                        }
+                    }
+                }
+            }
         } else if (day == INDEX_SATURDAY) {
+            if (l_all.isChecked()) {
+                session.updateAvailability(INDEX_SATURDAY, 7, 21);
+            } else {
+                for (int i = 0; i < TOGGLES_SATURDAY.size(); i++) {
+                    temp = TOGGLES_SATURDAY.get(i);
 
+                    if (temp.isChecked()) {
+                        if (!flag) {
+                            start = i + 7;
+                            flag = true;
+                        }
+
+                        end = i + 7;
+
+                        if (i == TOGGLES_SATURDAY.size() - 1) {
+                            //System.out.println("Start: " + start + " End: " + end );
+                            session.updateAvailability(INDEX_SATURDAY, start, end);
+                        }
+
+                    } else {
+                        if (flag) {
+                            //System.out.println("Start: " + start + " End: " + end );
+                            session.updateAvailability(INDEX_SATURDAY, start, end);
+                            flag = false;
+                        }
+                    }
+                }
+            }
         }
 
     }
