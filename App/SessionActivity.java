@@ -70,7 +70,7 @@ public class SessionActivity {
         return list;
     }
 
-    public void updateAvailability(Integer day, Integer hour) {
+    public void updateAvailability(Integer day, Integer start, Integer end) {
 
     }
 }
