@@ -64,6 +64,25 @@ public class ScheduleConnector {
         }
         return version;
     }
+    
+    //Saca todas las clases de una version del horario
+    public ResultSet getClass(Connection conn, int id, int type) throws ClassNotFoundException {
+        ResultSet rs = null;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement stmt = conn.prepareStatement("SELECT distinct CourseName, University, StartHour, EndHour, Day "
+                    + "from ((((Timetables inner join Groups using (GroupId)) inner join Courses using(CourseId)) inner join Careers using(CareerId) inner join Users))"
+                    + "where TableVersion=? and ClassroomType = ?");
+            stmt.setInt(1, id);
+            stmt.setInt(2, type);
+            rs = stmt.executeQuery();
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        return rs;
+    }
 
     public ResultSet getClassNow(Connection conn, ClassNow c, int id) throws ClassNotFoundException {
         ResultSet rs = null;

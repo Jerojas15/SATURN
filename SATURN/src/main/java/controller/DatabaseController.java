@@ -23,6 +23,7 @@ import model.Availability;
 import model.Career;
 import model.ClassNow;
 import model.Classroom;
+import model.ClassGroup;
 import model.Course;
 import model.Group;
 import model.LogIn;
@@ -50,10 +51,10 @@ public class DatabaseController {
             
             Class.forName("com.mysql.jdbc.Driver");
             //manera de acceso a la base de Julio
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
+           // conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "admin");
 
             //manera de acceso a la base de Jose Miguel
-            //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "root");
             
             //manera de acceso a la base de Yock
             //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SaturnDB", "root", "password");
@@ -537,6 +538,23 @@ public class DatabaseController {
             status = list.getInt(1);
         }
         return status;
+    }
+    
+    // Se encarga de guardar en una lista todas clases de un tipo de aula y una version de horario
+public List<ClassGroup> getClass(int id, int type) throws ClassNotFoundException, SQLException{
+        ScheduleConnector schedule = new ScheduleConnector();
+        ResultSet rs = schedule.getClass(conn, id, type);
+        ArrayList<ClassGroup> result = new ArrayList<>();
+        while(rs.next()){
+            ClassGroup a = new ClassGroup();
+            a.setCourseName(rs.getString("CourseName"));
+            a.setUniversity(rs.getString("University"));
+            a.setStartHour(rs.getInt("StartHour"));
+            a.setEndHour(rs.getInt("EndHour"));
+            a.setDay(rs.getInt("Day"));
+            result.add(a);
+        }
+        return result;
     }
 
     public String getClassNow(ClassNow c, int id) throws SQLException, ClassNotFoundException {

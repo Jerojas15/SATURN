@@ -3,6 +3,12 @@ var classroomId = 1;
 var number = 1;
 var created = 0;
 var classType = "";
+var version = 1;
+var typeClass = [];
+var pos;
+var type;
+var schedule = [];
+
 function getHour(hour24) {
 	var hour12;
 
@@ -38,6 +44,7 @@ function fCallAlgorithm() {
 			//result = result.classrooms; //Quitar cuando se pase a java
 			if(result.status === "OK"){
                             alert("El algoritmo ha terminado su ejecución");
+                            fDisplaySchedule();
                         }
 			//$("#Select_Schedule_Classroom").val(0);
 		},
@@ -45,7 +52,6 @@ function fCallAlgorithm() {
 			console.log("[Login] Error: " + error);
 		}
 	});
-        fDisplaySchedule();
 }
 
 function previousNumber(){
@@ -56,7 +62,81 @@ function nextNumber(){
     number++;
 }
 
+function write(i,column, result, dayTable, daynum){
+    while(result[i].day<daynum){
+        i++;
+    }
+    $("#"+dayTable+" table tr").each(function(index){
+        $(this).find("th#"+column).each(function(){
+         if(index > 0){
+                var aux= $(this);
+            //for (i in result){
+                if(result[i].day === daynum){
+                    var name = "";
+                    if(index+6 >= result[i].startHour && index+6 < result[i].endHour){
+                        name = result[i].courseName+result[i].university;
+                        aux.append(name);
+                    }
+                    if(index+7 === result[i].endHour){
+                        i++;
+                        if(result[i-1].endHour>result[i].startHour){
+                        column++;
+                        write(i,column,result, dayTable,daynum);
+                    }
+                    }
+
+                }
+                
+                
+            }
+        });
+    });
+}
+
+function fScheduleGennerator(number, type){
+    $.ajax({
+        method: 'GET',
+        url: URL_SCHEDULES + "/timetables/" + number + "/" + type,
+
+        success: function(result){
+           // schedule = result;
+           console.log("HOLLA ");
+           console.log(result);
+               write(0,0, result, "Tab_Schedule_Monday",0);
+               write(0,0, result, "Tab_Schedule_Tuesday",1);
+               write(0,0, result, "Tab_Schedule_Wednesday",2);
+               write(0,0, result, "Tab_Schedule_Thursday",3);
+               write(0,0, result, "Tab_Schedule_Friday",4);
+               write(0,0, result, "Tab_Schedule_Saturday",5);
+        },
+        error: function(request, status, error){
+           console.log("[Login] Error: " + error);
+        }
+    });
+}
+
 function fDisplaySchedule() {
+    // se encarga de mostrar la lista de tipos de aulas
+    $.ajax({
+        method: 'GET',
+        url: URL_CLASSROOM_TYPES,
+
+        success: function (result) {
+            
+            for (i in result) {
+                pos = typeClass.indexOf(result[i].name);
+                if(pos == -1){
+                    $("#Select_Schedule_Classroom").append(SELECT_OPTION_TEMPLATE1 + result[i].classroomTypeId +
+                        SELECT_OPTION_TEMPLATE2 + result[i].name +
+                        SELECT_OPTION_TEMPLATE3);
+                    typeClass.push(result[i].name);
+                }
+            }
+        },
+        error: function (request, status, error) {
+            console.log("[Login] Error: " + error);
+        }
+    });
         $.ajax({
 		method: 'GET',
 		url: URL_SCHEDULES+"/lastSchedules/"+1,
@@ -68,6 +148,8 @@ function fDisplaySchedule() {
 			console.log("[Login] Error: " + error);
 		}
 	});
+        Type = $("#Select_Schedule_Classroom").val(); // saber el tipo de aula
+        console.log("Tipo " + Type);
 	if(number<=1){
             $("#Btn_Previous_Schedule").hide();
         }else{
@@ -90,33 +172,11 @@ function fDisplaySchedule() {
         $("#Tab_Schedule_Friday table").empty();
         $("#Tab_Schedule_Saturday table").empty();
         $("#Left_Table table").empty();
-	$.ajax({
-		method: 'GET',
-		url: URL_CLASSROOM_TYPES,
-
-		success: function(result){
-			//alert(JSON.stringify(result));
-			//result = result.classrooms; //Quitar cuando se pase a java
-                        $("#Select_Schedule_Classroom").empty();
-			for (i in result) {
-
-
-				$("#Select_Schedule_Classroom").append(	SELECT_OPTION_TEMPLATE1 + result[i].classroomTypeId +
-
-														SELECT_OPTION_TEMPLATE2 + result[i].name +
-														SELECT_OPTION_TEMPLATE3);
-			}
-                        
-			//$("#Select_Schedule_Classroom").val(0);
-		},
-		error: function(request, status, error){
-			console.log("[Login] Error: " + error);
-		}
-	});
+        
         classroomId = $("#Select_Schedule_Classroom").val();
 	$.ajax({
 		method: 'GET',
-		url: URL_SCHEDULES_LENGTH + "/" + classroomId,
+		url: URL_SCHEDULES_LENGTH + "/" + Type,
 
 		success: function(result){
                         row = "<tr><th></th>";
@@ -143,7 +203,7 @@ function fDisplaySchedule() {
 
 				for (j = 0; j < result.len; j++) {
 
-					row += "<th></th>";
+					row += "<th id =\""+j+"\"></th>";
 				}
 				row += "</tr>";
 				$("#Tab_Schedule_Monday table").append(row);
@@ -153,139 +213,39 @@ function fDisplaySchedule() {
 				$("#Tab_Schedule_Friday table").append(row);
 				$("#Tab_Schedule_Saturday table").append(row);
 			}
+                        fScheduleGennerator(number, classroomId);
+                        /*
+                        console.log("HOLLLA"); 
+                        console.log(schedule);
                         $("#Tab_Schedule_Monday table tr").each(function(index){
                             $(this).find("th").each(function(indexB){
                                 if(indexB>0 && index > 0){
                                     var aux= $(this);
-                                    $.ajax({
-                                            method: 'POST',
-                                            contentType: "application/json; charset=utf-8",
-                                            dataType: "json",
-                                            url: URL_SCHEDULES + "/timetables/" + number,
-                                            data: JSON.stringify({"classroom":indexB,"time":index+7, "day":0}),
-                                            success: function(result){
-                                                aux.append(result.name);
-                                            },
-                                            error: function(request, status, error){
-                                                    console.log("[Login] Error: " + error);
+                                    for (i in schedule){
+                                        if(schedule[i].Day === 0){
+                                            var name = "";
+                                            if(index+7 >= schedule[i].StartHour && index+7 >= schedule[i].EndHour){
+                                                name = schedule[i].CourseName+schedule[i].University;
+                                                aux.append(name);
+                                                
                                             }
-                                        });
-
-                                }
-                            });
-                        });
-                        $("#Tab_Schedule_Tuesday table tr").each(function(index){
-                                $(this).find("th").each(function(indexB){
-                                if(indexB>0 && index > 0){
-                                    var aux= $(this);
-                                    $.ajax({
-                                            method: 'POST',
-                                            contentType: "application/json; charset=utf-8",
-                                            dataType: "json",
-                                            url: URL_SCHEDULES + "/timetables/" + number,
-                                            data: JSON.stringify({"classroom":indexB,"time":index+7, "day":1}),
-                                            success: function(result){
-                                                aux.append(result.name);
-                                            },
-                                            error: function(request, status, error){
-                                                    console.log("[Login] Error: " + error);
-                                            }
-                                        });
-
+                                            
+                                        }
+                                        
                                     }
-                                });
-
-
-                        });
-                        $("#Tab_Schedule_Wednesday table tr").each(function(index){
-                            $(this).find("th").each(function(indexB){
-                                if(indexB>0 && index > 0){
-                                    var aux= $(this);
-                                    $.ajax({
-                                            method: 'POST',
-                                            contentType: "application/json; charset=utf-8",
-                                            dataType: "json",
-                                            url: URL_SCHEDULES + "/timetables/" + number,
-                                            data: JSON.stringify({"classroom":indexB,"time":index+7, "day":2}),
-                                            success: function(result){
-                                                aux.append(result.name);
-                                            },
-                                            error: function(request, status, error){
-                                                    console.log("[Login] Error: " + error);
-                                            }
-                                        });
 
                                 }
                             });
                         });
-                        $("#Tab_Schedule_Thursday table tr").each(function(index){
-                            $(this).find("th").each(function(indexB){
-                                if(indexB>0 && index > 0){
-                                    var aux= $(this);
-                                    $.ajax({
-                                            method: 'POST',
-                                            contentType: "application/json; charset=utf-8",
-                                            dataType: "json",
-                                            url: URL_SCHEDULES + "/timetables/" + number,
-                                            data: JSON.stringify({"classroom":indexB,"time":index+7, "day":3}),
-                                            success: function(result){
-                                                aux.append(result.name);
-                                            },
-                                            error: function(request, status, error){
-                                                    console.log("[Login] Error: " + error);
-                                            }
-                                        });
-
-                                }
-                            });
-                        });
-                        $("#Tab_Schedule_Friday table tr").each(function(index){
-                            $(this).find("th").each(function(indexB){
-                                if(indexB>0 && index > 0){
-                                    var aux= $(this);
-                                    $.ajax({
-                                            method: 'POST',
-                                            contentType: "application/json; charset=utf-8",
-                                            dataType: "json",
-                                            url: URL_SCHEDULES + "/timetables/" + number,
-                                            data: JSON.stringify({"classroom":indexB,"time":index+7, "day":4}),
-                                            success: function(result){
-                                                aux.append(result.name);
-                                            },
-                                            error: function(request, status, error){
-                                                    console.log("[Login] Error: " + error);
-                                            }
-                                        });
-
-                                }
-                            });
-                        });
-                        $("#Tab_Schedule_Saturday table tr").each(function(index){
-                            $(this).find("th").each(function(indexB){
-                                if(indexB>0 && index > 0){
-                                    var aux= $(this);
-                                    $.ajax({
-                                            method: 'POST',
-                                            contentType: "application/json; charset=utf-8",
-                                            dataType: "json",
-                                            url: URL_SCHEDULES + "/timetables/" + number,
-                                            data: JSON.stringify({"classroom":indexB,"time":index+7, "day":5}),
-                                            success: function(result){
-                                                aux.append(result.name);
-                                            },
-                                            error: function(request, status, error){
-                                                    console.log("[Login] Error: " + error);
-                                            }
-                                        });
-
-                                }
-                            });
-                        });
+                        */
+                       
 		},
 		error: function(request, status, error){
 			console.log("[Login] Error: " + error);
 		}
+                    
 	});
+                   
         $.ajax({
                 method: 'GET',
 		url: URL_SCHEDULES + "/leftSession/" + number,

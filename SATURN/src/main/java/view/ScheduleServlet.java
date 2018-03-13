@@ -30,6 +30,7 @@ import model.User;
 import model.ClassNow;
 import model.ClassroomType;
 import model.LeftClass;
+import model.ClassGroup;
 @Path("/schedules")
 public class ScheduleServlet {
     
@@ -79,18 +80,15 @@ public class ScheduleServlet {
                 return object;
 	}
         
-        @POST
-        @Path("/timetables/{id}")
+        @GET
+        @Path("/timetables/{id}/{type}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public static Response getSchedules(@PathParam("id") Integer idStr, ClassNow cl) throws SQLException, ClassNotFoundException, JSONException {
-		DatabaseController d = new DatabaseController();
-		JSONObject object = new JSONObject();
-                String result2 = "";
-                result2 = d.getClassNow(cl, idStr);
-                object.put("name", result2);
-                
-                
-		return Response.status(200).entity(object.toString()).build();
+        @Produces(MediaType.APPLICATION_JSON)
+	public static List<ClassGroup> getSchedules(@PathParam("id") Integer idStr, @PathParam("type") Integer typeStr) throws SQLException, ClassNotFoundException, JSONException {
+		
+                DatabaseController d = new DatabaseController();
+                List<ClassGroup> result = d.getClass(idStr, typeStr);
+		return result;
 	}
         
         @POST
